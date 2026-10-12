@@ -1,4 +1,4 @@
-import { ArrowDown, Check, CreditCard, Plus } from "lucide-react";
+import { ArrowDown, Check, CreditCard, Plus, ScanLine } from "lucide-react";
 import { siteConfig } from "@/config/site";
 import { photos } from "@/lib/images";
 import { formatPrice, menu } from "@/lib/menu";
@@ -115,34 +115,37 @@ function HeroVisual() {
 
       {/* Product details placed around the portrait (decorative) */}
       <div aria-hidden="true">
-        {/* QR table tent */}
-        <div className="absolute top-[8%] -left-6 w-[118px] -rotate-3 animate-float-slow sm:-left-16 sm:w-[136px]">
-          <div className="rounded-2xl bg-paper p-2.5 text-paper-ink shadow-[0_24px_40px_-20px_rgba(0,0,0,0.8)]">
-            <p className="text-center font-mono text-[9.5px] font-semibold tracking-[0.18em]">STALAS 7</p>
-            <QrCode
-              value={`${siteConfig.url}/#kaip-veikia`}
-              label="QR kodas"
-              color="#1b1a17"
-              className="mt-1.5 block h-auto w-full"
-            />
-            <p className="mt-1 text-center text-[9.5px] leading-tight text-paper-muted">
-              Nuskenuokite ir užsakykite
-            </p>
+        {/* QR code card with a scanning line */}
+        <div className="absolute top-[8%] -left-6 w-[118px] animate-float-slow sm:-left-16 sm:w-[150px]">
+          <div className="rounded-2xl border border-white/10 bg-ink-850/90 p-3 shadow-[0_30px_60px_-20px_rgba(0,0,0,0.85)] backdrop-blur-xl">
+            <div className="relative overflow-hidden rounded-xl bg-white p-1.5">
+              <QrCode
+                value={`${siteConfig.url}/#kaip-veikia`}
+                label="QR kodas"
+                className="block h-auto w-full"
+              />
+              <span className="absolute inset-x-1.5 h-0.5 animate-scan rounded-full bg-accent-strong shadow-[0_0_14px_3px_rgba(124,92,240,0.7)]" />
+            </div>
+            <div className="mt-2.5 flex items-center justify-between text-[11px]">
+              <span className="font-medium text-fg">Stalas 7</span>
+              <ScanLine className="size-3.5 text-accent" />
+            </div>
           </div>
         </div>
 
         {/* Order confirmation */}
         <div className="absolute top-[3%] -right-5 animate-float-med [animation-delay:-2s] sm:-right-10 lg:-right-6 xl:-right-12">
           <div className="flex items-center gap-2.5 rounded-full border border-white/10 bg-ink-850/95 py-2 pr-4 pl-2 shadow-xl backdrop-blur">
-            <span className="flex size-7 items-center justify-center rounded-full bg-emerald-400/15">
-              <Check className="size-4 text-emerald-300" strokeWidth={2.5} />
+            <span className="relative flex size-7 items-center justify-center rounded-full bg-emerald-400/15">
+              <span className="absolute inset-0 animate-pulse-ring rounded-full bg-emerald-400/30" />
+              <Check className="relative size-4 text-emerald-300" strokeWidth={2.5} />
             </span>
             <span className="text-[13px] font-medium">Užsakymas priimtas</span>
           </div>
         </div>
 
         {/* Payment indicator */}
-        <div className="absolute top-[40%] -right-5 hidden sm:block sm:-right-14 lg:-right-8 xl:-right-14">
+        <div className="absolute top-[40%] -right-5 hidden animate-float-fast [animation-delay:-1s] sm:block sm:-right-14 lg:-right-8 xl:-right-14">
           <div className="w-[176px] rounded-2xl border border-white/10 bg-ink-850/95 p-3.5 shadow-xl backdrop-blur">
             <div className="flex items-center gap-2 text-[12px] text-fg-muted">
               <CreditCard className="size-4 text-accent" />
