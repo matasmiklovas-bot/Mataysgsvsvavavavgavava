@@ -30,11 +30,13 @@ type PhoneViewProps = {
   dispatch: Dispatch<DemoAction>;
   announce: (message: string) => void;
   onShowTeam: () => void;
+  /** Reports which of the four "how it works" steps the guest is on (0–3). */
+  onProgress: (step: number) => void;
 };
 
 const TABLES = Array.from({ length: 12 }, (_, i) => i + 1);
 
-export function PhoneView({ state, dispatch, announce, onShowTeam }: PhoneViewProps) {
+export function PhoneView({ state, dispatch, announce, onShowTeam, onProgress }: PhoneViewProps) {
   const [step, setStep] = useState<Step>("menu");
   const [category, setCategory] = useState<MenuCategory>("pagrindiniai");
   const [payment, setPayment] = useState<PaymentMethod>("kortele");
@@ -45,6 +47,11 @@ export function PhoneView({ state, dispatch, announce, onShowTeam }: PhoneViewPr
   const lines = cartLines(state.cart);
   const count = lines.reduce((sum, line) => sum + line.quantity, 0);
   const total = linesTotal(lines);
+
+  const progress = step === "done" ? 3 : step === "menu" ? (count > 0 ? 1 : 0) : 2;
+  useEffect(() => {
+    onProgress(progress);
+  }, [progress, onProgress]);
 
   // Bring the new screen into view and move focus to its heading on step change.
   const firstRender = useRef(true);
@@ -100,10 +107,10 @@ export function PhoneView({ state, dispatch, announce, onShowTeam }: PhoneViewPr
           <div className="shrink-0 border-b border-white/[0.07] px-5 pt-2 pb-4">
             <div className="flex items-start justify-between gap-3">
               <div>
-                <p className="text-[11px] tracking-wider text-violet-300/90 uppercase">
+                <p className="text-[11px] tracking-wider text-fg-subtle uppercase">
                   Pavyzdinis restoranas
                 </p>
-                <p className="mt-0.5 text-lg font-semibold tracking-tight">Bistro „Demo“</p>
+                <p className="mt-0.5 text-lg font-display font-semibold tracking-tight">Bistro „Demo“</p>
               </div>
               <label className="flex flex-col items-end gap-1 text-[10.5px] text-fg-subtle">
                 Staliukas
@@ -291,7 +298,7 @@ export function PhoneView({ state, dispatch, announce, onShowTeam }: PhoneViewPr
 
             {step === "paying" && (
               <div className="flex h-full flex-col items-center justify-center gap-4 px-8 text-center">
-                <Loader2 className="size-9 animate-spin text-violet-300" aria-hidden="true" />
+                <Loader2 className="size-9 animate-spin text-accent" aria-hidden="true" />
                 <h3 ref={headingRef} tabIndex={-1} className="text-lg font-semibold">
                   Imituojamas mokėjimas…
                 </h3>
@@ -304,7 +311,7 @@ export function PhoneView({ state, dispatch, announce, onShowTeam }: PhoneViewPr
             {step === "done" && (
               <div className="flex h-full flex-col items-center justify-center px-7 text-center">
                 <span className="relative flex size-16 items-center justify-center rounded-full bg-emerald-400/15">
-                  <span className="absolute inset-0 animate-pulse-ring rounded-full bg-emerald-400/25" />
+                  
                   <Check className="size-7 text-emerald-300" strokeWidth={2.5} aria-hidden="true" />
                 </span>
                 <h3 ref={headingRef} tabIndex={-1} className="mt-6 text-xl font-semibold tracking-tight">
@@ -337,11 +344,11 @@ export function PhoneView({ state, dispatch, announce, onShowTeam }: PhoneViewPr
               <button
                 type="button"
                 onClick={() => setStep("cart")}
-                className="flex h-14 w-full items-center gap-3 rounded-2xl bg-gradient-to-r from-violet-500 to-violet-600 px-4 text-left text-white shadow-[0_18px_40px_-12px_rgba(139,92,246,0.8)] transition-transform hover:-translate-y-0.5"
+                className="flex h-14 w-full items-center gap-3 rounded-2xl bg-accent-strong px-4 text-left text-white shadow-[0_18px_40px_-16px_rgba(124,92,240,0.8)] transition-transform hover:-translate-y-0.5"
               >
                 <span className="relative">
                   <ShoppingBag className="size-5" aria-hidden="true" />
-                  <span className="absolute -top-2 -right-2 flex size-4.5 items-center justify-center rounded-full bg-white text-[10px] font-semibold text-violet-700">
+                  <span className="absolute -top-2 -right-2 flex size-4.5 items-center justify-center rounded-full bg-white text-[10px] font-semibold text-accent-strong">
                     {count}
                   </span>
                 </span>
@@ -409,9 +416,9 @@ function PaymentOption({
   const checked = value === current;
   return (
     <label
-      className={`flex cursor-pointer flex-col gap-2 rounded-2xl border p-3 text-[13px] transition-colors has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-violet-300 ${
+      className={`flex cursor-pointer flex-col gap-2 rounded-2xl border p-3 text-[13px] transition-colors has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-accent ${
         checked
-          ? "border-violet-400/60 bg-violet-500/15 text-fg"
+          ? "border-accent/60 bg-accent/10 text-fg"
           : "border-white/10 bg-white/[0.03] text-fg-muted hover:border-white/20"
       }`}
     >
@@ -427,7 +434,7 @@ function PaymentOption({
         {icon}
         <span
           className={`flex size-4 items-center justify-center rounded-full border ${
-            checked ? "border-violet-300 bg-violet-400" : "border-white/25"
+            checked ? "border-accent bg-accent" : "border-white/25"
           }`}
         >
           {checked && <span className="size-1.5 rounded-full bg-white" />}

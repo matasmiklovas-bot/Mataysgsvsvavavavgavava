@@ -32,8 +32,6 @@ export const siteConfig = {
 
 export const navItems = [
   { href: "#kaip-veikia", label: "Kaip veikia" },
-  { href: "#demonstracija", label: "Demonstracija" },
   { href: "#naudos", label: "Naudos" },
   { href: "#kaina", label: "Kaina" },
-  { href: "#kontaktai", label: "Kontaktai" },
 ] as const;

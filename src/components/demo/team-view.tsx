@@ -26,7 +26,7 @@ const tabs: { id: TeamTab; label: string; icon: typeof ChefHat }[] = [
 ];
 
 const statusTone: Record<TicketStatus, string> = {
-  nauja: "bg-violet-400/15 text-violet-200",
+  nauja: "bg-white/10 text-fg",
   ruosiama: "bg-amber-400/15 text-amber-300",
   paruosta: "bg-emerald-400/15 text-emerald-300",
 };
@@ -67,7 +67,7 @@ export function TeamView({ state, dispatch, tab, onTabChange, announce }: TeamVi
   }
 
   return (
-    <div className="glass-strong flex h-full min-h-[560px] flex-col overflow-hidden rounded-[1.75rem] lg:h-[700px]">
+    <div className="panel flex min-h-[460px] flex-col overflow-hidden rounded-3xl">
       {/* Tablet top bar */}
       <div className="flex flex-wrap items-center justify-between gap-3 border-b border-white/[0.07] px-4 py-3 sm:px-5">
         <div
@@ -101,7 +101,7 @@ export function TeamView({ state, dispatch, tab, onTabChange, announce }: TeamVi
                 {badge > 0 && (
                   <span
                     className={`ml-0.5 rounded-full px-1.5 text-[10.5px] ${
-                      selected ? "bg-ink-950 text-white" : "bg-violet-500/30 text-violet-100"
+                      selected ? "bg-ink-950 text-white" : "bg-white/10 text-fg"
                     }`}
                   >
                     {badge}
@@ -167,6 +167,12 @@ function EmptyState({ text }: { text: string }) {
   );
 }
 
+const ticketStamp: Record<TicketStatus, string> = {
+  nauja: "border-paper-ink text-paper-ink",
+  ruosiama: "border-amber-700 text-amber-800",
+  paruosta: "border-emerald-700 text-emerald-800",
+};
+
 function StationPanel({
   station,
   orders,
@@ -184,65 +190,75 @@ function StationPanel({
       <EmptyState
         text={
           station === "virtuve"
-            ? "Virtuvei skirtų užsakymų dar nėra. Užsakykite patiekalų telefone arba įkelkite pavyzdinius užsakymus."
-            : "Barui skirtų užsakymų dar nėra. Užsakykite gėrimų telefone arba įkelkite pavyzdinius užsakymus."
+            ? "Virtuvei skirtų užsakymų nėra. Užsakykite patiekalų telefone arba įkelkite pavyzdinius užsakymus."
+            : "Barui skirtų užsakymų nėra. Užsakykite gėrimų telefone arba įkelkite pavyzdinius užsakymus."
         }
       />
     );
   }
 
   return (
-    <ul className="grid gap-3 sm:grid-cols-2">
-      {tickets.map((order) => {
-        const status = order.stations[station]!;
-        const lines = linesForStation(order.lines, station);
-        const action = actionLabel[status];
-        return (
-          <li
-            key={order.id}
-            className={`flex flex-col rounded-2xl border p-4 transition-colors ${
-              status === "paruosta"
-                ? "border-white/[0.05] bg-white/[0.02] opacity-70"
-                : "border-white/10 bg-white/[0.04]"
-            }`}
-          >
-            <div className="flex items-center justify-between gap-2">
-              <span className="font-mono text-[13px] text-fg">
-                {formatOrderNumber(order.id)} · St. {order.table}
-              </span>
-              <span className={`rounded-full px-2 py-0.5 text-[11px] font-medium ${statusTone[status]}`}>
-                {statusLabels[status]}
-              </span>
-            </div>
-            <p className="mt-0.5 text-[11.5px] text-fg-subtle">Gauta {formatTime(order.createdAt)}</p>
-            <ul className="mt-3 space-y-1.5">
-              {lines.map((line) => (
-                <li key={line.itemId} className="flex gap-2 text-[14px]">
-                  <span className="font-mono text-violet-200">{line.quantity}×</span>
-                  <span>{getItem(line.itemId).name}</span>
-                </li>
-              ))}
-            </ul>
-            {action && (
-              <button
-                type="button"
-                onClick={() => {
-                  dispatch({ type: "advance", orderId: order.id, station });
-                  announce(
-                    `${stationLabels[station]}: užsakymas ${formatOrderNumber(order.id)} — ${
-                      status === "nauja" ? "ruošiamas" : "paruoštas"
-                    }.`,
-                  );
-                }}
-                className="mt-4 h-9 rounded-full bg-white/[0.08] text-[13px] font-medium text-fg transition-colors hover:bg-white hover:text-ink-950"
+    <div>
+      {/* Ticket rail, like the steel bar above a kitchen pass */}
+      <div
+        aria-hidden="true"
+        className="h-2.5 rounded-full bg-gradient-to-b from-[#cfcfd4] via-[#8d8d95] to-[#55555d] shadow-[0_6px_14px_-6px_rgba(0,0,0,0.9)]"
+      />
+      <ul className="-mt-1 grid gap-x-4 gap-y-6 sm:grid-cols-2 xl:grid-cols-3">
+        {tickets.map((order) => {
+          const status = order.stations[station]!;
+          const lines = linesForStation(order.lines, station);
+          const action = actionLabel[status];
+          return (
+            <li key={order.id} className="flex flex-col">
+              <div
+                className={`ticket animate-print px-4 pt-4 text-[12.5px] leading-[1.6] transition-opacity ${
+                  status === "paruosta" ? "opacity-60" : ""
+                }`}
               >
-                {action}
-              </button>
-            )}
-          </li>
-        );
-      })}
-    </ul>
+                <div className="flex items-center justify-between font-semibold">
+                  <span>{stationLabels[station].toUpperCase()}</span>
+                  <span>{formatOrderNumber(order.id)}</span>
+                </div>
+                <div className="flex justify-between text-paper-muted">
+                  <span>Stalas {order.table}</span>
+                  <span>{formatTime(order.createdAt)}</span>
+                </div>
+                <div className="my-2.5 border-t border-dashed border-paper-ink/30" />
+                <ul>
+                  {lines.map((line) => (
+                    <li key={line.itemId}>
+                      {line.quantity}× {getItem(line.itemId).name}
+                    </li>
+                  ))}
+                </ul>
+                <p
+                  className={`mt-3 inline-block -rotate-2 rounded border-[1.5px] px-1.5 text-[11px] font-semibold tracking-[0.12em] uppercase ${ticketStamp[status]}`}
+                >
+                  {statusLabels[status]}
+                </p>
+              </div>
+              {action && (
+                <button
+                  type="button"
+                  onClick={() => {
+                    dispatch({ type: "advance", orderId: order.id, station });
+                    announce(
+                      `${stationLabels[station]}: užsakymas ${formatOrderNumber(order.id)} — ${
+                        status === "nauja" ? "ruošiamas" : "paruoštas"
+                      }.`,
+                    );
+                  }}
+                  className="mt-2 h-10 rounded-full border border-white/10 text-[13.5px] font-medium text-fg transition-colors hover:border-transparent hover:bg-fg hover:text-ink-950"
+                >
+                  {action}
+                </button>
+              )}
+            </li>
+          );
+        })}
+      </ul>
+    </div>
   );
 }
 
@@ -280,8 +296,8 @@ function StaffPanel({
           >
             <div className="flex flex-wrap items-start justify-between gap-3">
               <div className="flex items-center gap-3">
-                <span className="flex size-12 flex-col items-center justify-center rounded-xl bg-gradient-to-br from-violet-400/30 to-violet-700/20 leading-none">
-                  <span className="text-[9.5px] tracking-wider text-violet-200 uppercase">Stal.</span>
+                <span className="flex size-12 flex-col items-center justify-center rounded-xl bg-paper text-paper-ink leading-none">
+                  <span className="font-mono text-[9px] tracking-wider uppercase">Stalas</span>
                   <span className="mt-0.5 text-lg font-semibold">{order.table}</span>
                 </span>
                 <div>

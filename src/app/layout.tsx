@@ -1,17 +1,24 @@
 import type { Metadata, Viewport } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Funnel_Display, Funnel_Sans, IBM_Plex_Mono } from "next/font/google";
 import { siteConfig } from "@/config/site";
 import "./globals.css";
 
-const geist = Geist({
-  variable: "--font-geist",
+const display = Funnel_Display({
+  variable: "--font-display-face",
   subsets: ["latin", "latin-ext"],
   display: "swap",
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const body = Funnel_Sans({
+  variable: "--font-body",
   subsets: ["latin", "latin-ext"],
+  display: "swap",
+});
+
+const ticket = IBM_Plex_Mono({
+  variable: "--font-ticket",
+  subsets: ["latin", "latin-ext"],
+  weight: ["400", "500", "600"],
   display: "swap",
 });
 
@@ -59,7 +66,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#060608",
+  themeColor: "#08080a",
   colorScheme: "dark",
 };
 
@@ -67,11 +74,11 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="lt"
-      className={`${geist.variable} ${geistMono.variable} overflow-x-clip antialiased`}
+      className={`${display.variable} ${body.variable} ${ticket.variable} overflow-x-clip antialiased`}
     >
       <body className="min-h-dvh overflow-x-clip">
         <noscript>
-          <style>{`.reveal{opacity:1;transform:none;filter:none}`}</style>
+          <style>{`.reveal{opacity:1;transform:none}`}</style>
         </noscript>
         {children}
       </body>

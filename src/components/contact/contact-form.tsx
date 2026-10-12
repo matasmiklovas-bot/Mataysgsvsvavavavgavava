@@ -35,7 +35,7 @@ function validate(values: Values): Errors {
 
 const fieldOrder: Field[] = ["restaurant", "name", "email", "phone", "message"];
 
-export function ContactForm() {
+export function ContactForm({ compact = false }: { compact?: boolean }) {
   const [values, setValues] = useState<Values>(empty);
   const [errors, setErrors] = useState<Errors>({});
   const [touched, setTouched] = useState<Partial<Record<Field, boolean>>>({});
@@ -108,15 +108,16 @@ export function ContactForm() {
   const showError = (field: Field) => (touched[field] ? errors[field] : undefined);
 
   return (
-    <form noValidate onSubmit={onSubmit} className="glass-strong rounded-[1.75rem] p-6 sm:p-8">
+    <form
+      noValidate
+      onSubmit={onSubmit}
+      className={compact ? "relative" : "panel relative rounded-3xl p-6 sm:p-8"}
+    >
       {isDemoMode && (
-        <p className="mb-6 flex items-start gap-2.5 rounded-xl border border-amber-300/20 bg-amber-300/[0.06] px-3.5 py-2.5 text-[13.5px] leading-relaxed text-amber-100/90">
-          <Info className="mt-0.5 size-4 shrink-0 text-amber-300" aria-hidden="true" />
-          <span>
-            <strong className="font-medium text-amber-100">Demonstracinis režimas.</strong> Forma
-            dar neprijungta prie serverio ar el. pašto paslaugos, todėl duomenys niekur
-            nesiunčiami.
-          </span>
+        <p className="mb-6 flex items-start gap-2 text-[13px] leading-relaxed text-fg-subtle">
+          <Info className="mt-0.5 size-3.5 shrink-0" aria-hidden="true" />
+          Demonstracinis režimas: forma dar neprijungta prie el. pašto ar serverio, todėl duomenys
+          niekur nesiunčiami.
         </p>
       )}
 
@@ -194,7 +195,7 @@ export function ContactForm() {
         <button
           type="submit"
           disabled={status.kind === "sending"}
-          className="group inline-flex h-12 items-center justify-center gap-2 rounded-full bg-gradient-to-b from-white to-[#e7e2ff] px-7 text-[15px] font-medium text-ink-950 shadow-[0_0_0_1px_rgba(255,255,255,0.25),0_10px_30px_-10px_rgba(139,92,246,0.7)] transition-all duration-300 hover:-translate-y-0.5 disabled:opacity-60"
+          className="inline-flex h-12 items-center justify-center gap-2 rounded-full bg-fg px-7 text-[15px] font-semibold text-ink-950 transition-colors hover:bg-white disabled:opacity-60"
         >
           {status.kind === "sending" ? (
             <Loader2 className="size-4 animate-spin" aria-hidden="true" />
@@ -238,7 +239,7 @@ function Notice({
 }) {
   const styles = {
     success: "border-emerald-400/25 bg-emerald-400/[0.08] text-emerald-100",
-    info: "border-violet-300/25 bg-violet-400/[0.08] text-violet-100",
+    info: "border-white/15 bg-white/[0.04] text-fg",
     error: "border-red-400/25 bg-red-400/[0.08] text-red-100",
   }[tone];
   return (
@@ -294,7 +295,7 @@ function TextField({
     "aria-invalid": error ? true : undefined,
     "aria-describedby": describedBy,
     onBlur: () => onBlur(name),
-    className: `w-full rounded-xl border bg-ink-950/60 px-4 text-[15px] text-fg placeholder:text-fg-subtle/70 transition-colors outline-none focus:border-violet-300/60 focus:bg-ink-950 focus:ring-4 focus:ring-violet-500/15 ${
+    className: `w-full rounded-xl border bg-ink-950/60 px-4 text-[15px] text-fg placeholder:text-fg-subtle/70 transition-colors outline-none focus:border-accent/70 focus:bg-ink-950 focus:ring-4 focus:ring-accent/15 ${
       error ? "border-red-400/60" : "border-white/10 hover:border-white/20"
     }`,
   };
@@ -305,7 +306,7 @@ function TextField({
         <label htmlFor={id} className="text-[14px] font-medium text-fg">
           {label}
           {required && (
-            <span className="text-violet-300" aria-hidden="true">
+            <span className="text-accent" aria-hidden="true">
               {" "}
               *
             </span>

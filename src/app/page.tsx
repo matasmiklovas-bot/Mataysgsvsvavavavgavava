@@ -1,10 +1,10 @@
 import { Header } from "@/components/sections/header";
 import { Hero } from "@/components/sections/hero";
 import { HowItWorks } from "@/components/sections/how-it-works";
-import { DemoSection } from "@/components/sections/demo-section";
 import { Benefits } from "@/components/sections/benefits";
 import { Pricing } from "@/components/sections/pricing";
-import { Contact } from "@/components/sections/contact";
+import { MobileCta } from "@/components/sections/mobile-cta";
+import { ContactDialog } from "@/components/contact/contact-dialog";
 import { Footer } from "@/components/sections/footer";
 import { siteConfig } from "@/config/site";
 
@@ -46,12 +46,12 @@ export default function Home() {
       <main id="turinys" tabIndex={-1} className="focus:outline-none">
         <Hero />
         <HowItWorks />
-        <DemoSection />
         <Benefits />
         <Pricing />
-        <Contact />
       </main>
       <Footer />
+      <MobileCta />
+      <ContactDialog />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData).replace(/</g, "\\u003c") }}

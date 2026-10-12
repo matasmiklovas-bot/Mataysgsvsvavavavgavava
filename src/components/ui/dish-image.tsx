@@ -8,7 +8,7 @@ const fallbackStyle: Record<MenuItem["category"], { icon: typeof Salad; tone: st
   uzkandziai: { icon: Salad, tone: "from-emerald-400/25 to-emerald-900/10" },
   pagrindiniai: { icon: UtensilsCrossed, tone: "from-amber-400/25 to-orange-900/10" },
   desertai: { icon: CakeSlice, tone: "from-rose-400/25 to-rose-900/10" },
-  gerimai: { icon: Coffee, tone: "from-violet-400/30 to-violet-900/10" },
+  gerimai: { icon: Coffee, tone: "from-indigo-300/25 to-indigo-900/10" },
 };
 
 type DishImageProps = {
