@@ -18,7 +18,6 @@
   --color-danger: #f87171;
 
   --font-sans: var(--font-geist), ui-sans-serif, system-ui, sans-serif;
-  --font-serif: var(--font-instrument-serif), ui-serif, Georgia, serif;
   --font-mono: var(--font-geist-mono), ui-monospace, monospace;
 
   --animate-float-slow: float 9s ease-in-out infinite;

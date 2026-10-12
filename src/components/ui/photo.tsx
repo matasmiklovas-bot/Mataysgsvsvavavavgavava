@@ -24,7 +24,7 @@ export function Photo({ fallback, alt, ...props }: PhotoProps) {
       {...props}
       ref={checkLoaded}
       alt={alt}
-      loader={unsplashLoader}
+      loader={typeof props.src === "string" && props.src.startsWith("http") ? unsplashLoader : undefined}
       onError={() => setFailed(true)}
     />
   );

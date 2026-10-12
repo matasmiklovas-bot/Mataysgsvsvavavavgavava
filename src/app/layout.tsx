@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Geist, Geist_Mono, Instrument_Serif } from "next/font/google";
+import { Geist, Geist_Mono } from "next/font/google";
 import { siteConfig } from "@/config/site";
 import "./globals.css";
 
@@ -12,14 +12,6 @@ const geist = Geist({
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin", "latin-ext"],
-  display: "swap",
-});
-
-const instrumentSerif = Instrument_Serif({
-  variable: "--font-instrument-serif",
-  subsets: ["latin", "latin-ext"],
-  weight: "400",
-  style: ["normal", "italic"],
   display: "swap",
 });
 
@@ -75,7 +67,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="lt"
-      className={`${geist.variable} ${geistMono.variable} ${instrumentSerif.variable} overflow-x-clip antialiased`}
+      className={`${geist.variable} ${geistMono.variable} overflow-x-clip antialiased`}
     >
       <body className="min-h-dvh overflow-x-clip">
         <noscript>

@@ -25,6 +25,7 @@ export function Pricing() {
           eyebrow="Kainodara"
           title="Paprasta ir skaidri kaina"
           description="Vienas įdiegimo mokestis ir simbolinis mėnesinis mokestis."
+          align="center"
         />
 
         <Reveal className="mx-auto mt-16 max-w-4xl sm:mt-20">

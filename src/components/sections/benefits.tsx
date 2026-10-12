@@ -36,7 +36,7 @@ export function Benefits() {
           title={
             <>
               Mažiau rutinos. <br className="hidden sm:block" />
-              <span className="text-gradient">Daugiau sklandaus darbo.</span>
+              <span className="text-fg-muted">Daugiau sklandaus darbo.</span>
             </>
           }
         />

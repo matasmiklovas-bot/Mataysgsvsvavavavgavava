@@ -23,7 +23,7 @@ export function DemoSection() {
           description="Sudarykite užsakymą telefone, pasirinkite atsiskaitymo būdą ir stebėkite, kaip jis pasiskirsto virtuvės, baro ir personalo ekranuose."
         />
 
-        <Reveal className="mx-auto mt-8 flex max-w-2xl items-start gap-3 rounded-2xl border border-amber-300/20 bg-amber-300/[0.06] px-4 py-3 text-[14px] leading-relaxed text-amber-100/90">
+        <Reveal className="mt-8 flex max-w-2xl items-start gap-3 rounded-2xl border border-amber-300/20 bg-amber-300/[0.06] px-4 py-3 text-[14px] leading-relaxed text-amber-100/90">
           <FlaskConical className="mt-0.5 size-4 shrink-0 text-amber-300" aria-hidden="true" />
           <p>
             <strong className="font-medium text-amber-100">Demonstracinė aplinka.</strong> Užsakymai

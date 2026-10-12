@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useReducer, useRef, useState } from "react";
+import { useCallback, useEffect, useReducer, useRef, useState } from "react";
 import { demoReducer, initialDemoState } from "./store";
 import { PhoneView } from "./phone-view";
 import { TeamView, type TeamTab } from "./team-view";
@@ -10,6 +10,14 @@ export function InteractiveDemo() {
   const [tab, setTab] = useState<TeamTab>("virtuve");
   const [message, setMessage] = useState("");
   const teamRef = useRef<HTMLDivElement>(null);
+
+  // Open with two sample orders so the team screens show a working state right away.
+  const seeded = useRef(false);
+  useEffect(() => {
+    if (seeded.current) return;
+    seeded.current = true;
+    dispatch({ type: "seed", createdAt: Date.now() });
+  }, []);
 
   const announce = useCallback((text: string) => {
     // Clear first so repeating the same message is still announced.

@@ -23,31 +23,23 @@ export function Hero() {
     >
       <HeroBackdrop />
 
-      <div className="mx-auto grid max-w-6xl items-center gap-16 px-5 sm:px-6 lg:grid-cols-[1.12fr_1fr] lg:gap-8">
+      <div className="mx-auto grid max-w-6xl items-center gap-16 px-5 sm:px-6 lg:grid-cols-[1.2fr_1fr] lg:gap-8">
         <div className="relative z-10 flex flex-col items-start">
-          <span
-            className="rise inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] py-1.5 pr-4 pl-1.5 text-[13px] text-fg-muted"
+          <p
+            className="rise text-[13px] font-medium tracking-[0.08em] text-fg-subtle uppercase"
             style={{ "--rise-delay": "0ms" } as React.CSSProperties}
           >
-            <span className="rounded-full bg-violet-500/20 px-2.5 py-0.5 text-[12px] font-medium text-violet-200">
-              QR
-            </span>
-            Užsakymų sistema restoranams
-          </span>
+            QR užsakymų sistema restoranams
+          </p>
 
           <h1
             id="hero-title"
-            className="rise mt-7 text-[2.75rem] leading-[1] font-semibold tracking-[-0.045em] sm:text-6xl lg:text-[3.6rem] xl:text-[4rem]"
+            className="rise mt-6 text-[2.75rem] leading-[1.02] font-semibold tracking-[-0.045em] sm:text-6xl lg:text-[3.4rem] xl:text-[3.85rem]"
             style={{ "--rise-delay": "80ms" } as React.CSSProperties}
           >
             Jūsų restoranas.
             <br />
-            <span className="text-gradient pr-1">
-              <span className="font-serif text-[1.08em] font-normal tracking-[-0.01em] italic">
-                Išmanesni
-              </span>{" "}
-              užsakymai.
-            </span>
+            <span className="text-fg-muted">Išmanesni užsakymai.</span>
           </h1>
 
           <p

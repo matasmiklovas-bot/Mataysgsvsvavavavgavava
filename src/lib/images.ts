@@ -17,6 +17,7 @@ export function unsplashLoader({ src, width, quality }: ImageLoaderProps): strin
 export const unsplash = (id: string) => `https://images.unsplash.com/${id}`;
 
 export const photos = {
-  // Portrait for the hero: a smiling, confident professional (Unsplash License).
+  // Portrait for the hero. Put your own photo at public/hero.jpg and set this to "/hero.jpg".
+  // Default: a smiling, confident professional from Unsplash (Unsplash License).
   hero: unsplash("photo-1573496359142-b8d87734a5a2"),
 } as const;

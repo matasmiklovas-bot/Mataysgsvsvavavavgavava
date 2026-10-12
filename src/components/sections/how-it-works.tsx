@@ -45,14 +45,7 @@ export function HowItWorks() {
         <SectionHeading
           id="kaip-veikia-title"
           eyebrow="Kaip veikia"
-          title={
-            <>
-              Nuo staliuko iki virtuvės —{" "}
-              <span className="font-serif font-normal tracking-[-0.01em] text-violet-200 italic">
-                keturi žingsniai
-              </span>
-            </>
-          }
+          title="Nuo staliuko iki virtuvės per keturis žingsnius"
           description="Klientas užsako savo tempu, o jūsų komanda iš karto mato, ką ir kam reikia paruošti."
         />
 
@@ -64,7 +57,7 @@ export function HowItWorks() {
                   <span className="relative flex size-12 items-center justify-center rounded-2xl border border-white/10 bg-ink-850">
                     <step.icon className="size-5 text-violet-200" aria-hidden="true" />
                   </span>
-                  <span className="font-serif text-3xl text-violet-200/60 italic">{step.number}</span>
+                  <span className="font-mono text-[13px] text-fg-subtle">{step.number}</span>
                 </div>
                 <div className="mt-6 h-28 overflow-hidden rounded-2xl border border-white/[0.06] bg-ink-900/70">
                   {step.visual}
