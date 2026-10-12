@@ -1,10 +1,10 @@
 import { Header } from "@/components/sections/header";
 import { Hero } from "@/components/sections/hero";
-import { HowItWorks } from "@/components/sections/how-it-works";
-import { Benefits } from "@/components/sections/benefits";
+import { DemoSection } from "@/components/sections/demo-section";
+import { Team } from "@/components/sections/team";
 import { Pricing } from "@/components/sections/pricing";
-import { MobileCta } from "@/components/sections/mobile-cta";
-import { ContactDialog } from "@/components/contact/contact-dialog";
+import { Faq } from "@/components/sections/faq";
+import { Contact } from "@/components/sections/contact";
 import { Footer } from "@/components/sections/footer";
 import { siteConfig } from "@/config/site";
 
@@ -18,18 +18,8 @@ const structuredData = {
   url: siteConfig.url,
   inLanguage: "lt",
   offers: [
-    {
-      "@type": "Offer",
-      name: "Vienkartinis sistemos įdiegimas",
-      price: siteConfig.pricing.setup,
-      priceCurrency: "EUR",
-    },
-    {
-      "@type": "Offer",
-      name: "Mėnesinis sistemos mokestis",
-      price: siteConfig.pricing.monthly,
-      priceCurrency: "EUR",
-    },
+    { "@type": "Offer", name: "Įdiegimas", price: siteConfig.pricing.setup, priceCurrency: "EUR" },
+    { "@type": "Offer", name: "Mėnesio mokestis", price: siteConfig.pricing.monthly, priceCurrency: "EUR" },
   ],
 };
 
@@ -38,20 +28,20 @@ export default function Home() {
     <>
       <a
         href="#turinys"
-        className="sr-only fixed top-3 left-3 z-[100] rounded-full bg-white px-4 py-2 text-sm font-medium text-ink-950 focus:not-sr-only"
+        className="sr-only fixed top-2 left-2 z-[100] rounded-md bg-ink px-4 py-3 font-semibold text-white focus:not-sr-only"
       >
         Pereiti prie turinio
       </a>
       <Header />
       <main id="turinys" tabIndex={-1} className="focus:outline-none">
         <Hero />
-        <HowItWorks />
-        <Benefits />
+        <DemoSection />
+        <Team />
         <Pricing />
+        <Faq />
+        <Contact />
       </main>
       <Footer />
-      <MobileCta />
-      <ContactDialog />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData).replace(/</g, "\\u003c") }}

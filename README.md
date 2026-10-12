@@ -1,52 +1,31 @@
-# Stalas — QR užsakymų sistemos svetainė
+# Stalas: QR užsakymų svetainė
 
-Vieno puslapio prezentacinė svetainė QR restoranų užsakymų sistemai: hero sekcija su portretu ir
-plaukiojančiais UI elementais, „Kaip veikia“ žingsniai, interaktyvi demonstracija (meniu, krepšelis,
-mokėjimo būdas, virtuvės / baro / personalo ekranai), naudos, kainodara ir užklausos forma.
+Vieno puslapio svetainė QR užsakymų sistemai restoranams, kavinėms ir barams.
+Pagrindinė dalis yra interaktyvi demonstracija: svečio telefonas → virtuvės, baro ir personalo planšetės.
 
 ## Technologijos
 
-- Next.js 16 (App Router, Cache Components), React 19, TypeScript
-- Tailwind CSS 4
-- `lucide-react` ikonos, `qrcode` (tikras, nuskaitomas QR kodas generuojamas serveryje)
-
-## Paleidimas
+Next.js 16 (App Router), React 19, TypeScript, Tailwind CSS 4. `qrcode` generuoja tikrą QR kodą serveryje.
+Šriftai: Archivo Narrow (antraštės), Hanken Grotesk (tekstas), IBM Plex Mono (tik bilietai ir sąskaita).
 
 ```bash
 npm install
-npm run dev      # http://localhost:3000
+npm run dev        # http://localhost:3000
 npm run lint
 npm run build && npm start
 ```
 
-## Konfigūracija
+## Kur ką keisti
 
-Prekės ženklo pavadinimas, kainos ir nuorodos — `src/config/site.ts`.
-
-Aplinkos kintamieji (žr. `.env.example`):
-
-| Kintamasis | Paskirtis |
+| Ką | Kur |
 | --- | --- |
-| `NEXT_PUBLIC_SITE_URL` | Svetainės adresas (canonical, Open Graph, `robots.txt`, `sitemap.xml`, QR kodas hero sekcijoje). |
-| `NEXT_PUBLIC_CONTACT_ENDPOINT` | Neprivaloma. Adresas, priimantis formos JSON `POST` užklausą. Kol nenustatytas, forma veikia **demonstraciniu režimu** ir nieko nesiunčia. |
+| Kaina, kontaktai, įmonės duomenys, mygtuko tekstas | `src/config/site.ts` |
+| Meniu, staliukai, užsakymų numeracija, hero bilietas | `src/lib/data.ts` |
+| Formos siuntimas (Formspree / Web3Forms) | `.env` → `NEXT_PUBLIC_FORM_ENDPOINT`, `NEXT_PUBLIC_FORM_ACCESS_KEY` (žr. `.env.example`) |
+| Domenas (QR kodas, OG, sitemap) | `.env` → `NEXT_PUBLIC_SITE_URL` |
+| Privatumo politika | `src/app/privatumas/page.tsx` |
 
-## Svarbu
+Kol formos adresas nenurodytas, mygtukas atidaro lankytojo el. pašto programą su užpildytu laišku
+(`siteConfig.contacts.email`).
 
-- Demonstracija veikia tik naršyklėje: užsakymai niekur nesiunčiami, mokėjimai nevykdomi.
-- Nuotraukos kraunamos iš Unsplash CDN (`images.unsplash.com`, Unsplash licencija). Jei nuotrauka
-  nepasiekiama, rodoma atsarginė vizualizacija. Nuotraukas galima pakeisti `src/lib/images.ts` ir
-  `src/lib/menu.ts`.
-- Svetainėje nėra išgalvotų atsiliepimų, statistikos ar integracijų.
-
-## Struktūra
-
-```
-src/
-  app/                 layout, puslapis, OG paveikslėlis, robots, sitemap, ikona
-  components/
-    sections/          puslapio sekcijos (header, hero, how-it-works, demo, benefits, pricing, contact, footer)
-    demo/              interaktyvios demonstracijos būsena ir vaizdai
-    ui/                bendri komponentai (mygtukai, nuotraukos, QR, animacijos)
-  config/site.ts       pavadinimas, URL, kainos, navigacija
-  lib/                 meniu duomenys, nuotraukų loader'is
-```
+Visi neužpildyti dalykai puslapyje pažymėti geltonu `[TODO: …]`, kode komentarais `TODO`.

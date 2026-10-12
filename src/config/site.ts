@@ -1,8 +1,9 @@
 /**
- * Central site configuration. Change the brand name, URL and contact endpoint here.
+ * Site-wide settings. Everything marked TODO must be filled in by the site owner.
  */
 
 function resolveSiteUrl(): string {
+  // TODO: set NEXT_PUBLIC_SITE_URL to the real domain (used for canonical, OG, sitemap and the hero QR code).
   const explicit = process.env.NEXT_PUBLIC_SITE_URL;
   if (explicit) return explicit.replace(/\/$/, "");
   const vercel = process.env.VERCEL_PROJECT_PRODUCTION_URL;
@@ -12,26 +13,28 @@ function resolveSiteUrl(): string {
 
 export const siteConfig = {
   name: "Stalas",
-  tagline: "QR užsakymų sistema restoranams",
-  title: "Stalas — QR užsakymų sistema restoranams",
+  title: "Stalas · QR užsakymai restoranams, kavinėms ir barams",
   description:
-    "QR užsakymų sistema, kuri sujungia jūsų klientus, virtuvę, barą ir personalą į vieną sklandžiai veikiančią sistemą. Įdiegimas 400 €, mėnesinis mokestis 1 €.",
+    "Svečias nuskenuoja kodą ant staliuko ir užsisako telefone. Patiekalai iškart patenka į virtuvės planšetę, gėrimai į baro. 400 € už įdiegimą ir 1 € per mėnesį.",
   url: resolveSiteUrl(),
   locale: "lt_LT",
   pricing: {
     setup: 400,
     monthly: 1,
   },
-  /**
-   * Optional endpoint that accepts a JSON POST from the contact form
-   * (e.g. your own API or a form service). When empty, the form runs in demo mode
-   * and nothing is sent anywhere.
-   */
-  contactEndpoint: process.env.NEXT_PUBLIC_CONTACT_ENDPOINT ?? "",
+  cta: "Užsisakyti demonstraciją",
+  ctaShort: "Demonstracija",
+  // TODO: fill in real contact details and company data.
+  contacts: {
+    email: "[TODO: el. paštas]",
+    phone: "[TODO: telefonas]",
+    company: "[TODO: įmonės pavadinimas]",
+    companyCode: "[TODO: įmonės kodas]",
+  },
 } as const;
 
 export const navItems = [
-  { href: "#kaip-veikia", label: "Kaip veikia" },
-  { href: "#naudos", label: "Naudos" },
-  { href: "#kaina", label: "Kaina" },
+  { href: "/#demo", label: "Kaip veikia" },
+  { href: "/#kaina", label: "Kaina" },
+  { href: "/#duk", label: "DUK" },
 ] as const;

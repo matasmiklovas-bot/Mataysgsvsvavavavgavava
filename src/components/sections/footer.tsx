@@ -1,42 +1,47 @@
+import Link from "next/link";
 import { cacheLife } from "next/cache";
 import { navItems, siteConfig } from "@/config/site";
-import { Logo } from "@/components/ui/logo";
+import { Logo } from "@/components/logo";
 
 export function Footer() {
+  const { email, phone, company, companyCode } = siteConfig.contacts;
   return (
-    <footer className="relative border-t border-white/[0.07] pt-14 pb-28 md:pb-10">
-      <div className="mx-auto max-w-6xl px-5 sm:px-6">
-        <div className="flex flex-col justify-between gap-10 md:flex-row md:items-start">
-          <div className="max-w-sm">
-            <a href="#pradzia" className="inline-block rounded-lg" aria-label="Į puslapio pradžią">
-              <Logo />
-            </a>
-            <p className="mt-4 text-[15px] leading-relaxed text-fg-muted">
-              {siteConfig.tagline}: klientai, virtuvė, baras ir personalas — vienoje sistemoje.
-            </p>
-          </div>
-          <nav aria-label="Poraštės navigacija">
-            <ul className="grid grid-cols-2 gap-x-10 gap-y-3 sm:flex sm:gap-8">
-              {navItems.map((item) => (
-                <li key={item.href}>
-                  <a
-                    href={item.href}
-                    className="text-[14.5px] text-fg-muted transition-colors hover:text-fg"
-                  >
-                    {item.label}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </nav>
-        </div>
-        <div className="mt-14 flex flex-col gap-3 border-t border-white/[0.06] pt-6 text-[13px] text-fg-subtle sm:flex-row sm:justify-between">
-          <p>
-            © <CurrentYear /> {siteConfig.name}
+    <footer className="border-t border-line">
+      <div className="mx-auto grid grid-cols-1 max-w-6xl gap-8 px-4 py-12 sm:px-6 md:grid-cols-[1.2fr_1fr_1fr]">
+        <div>
+          <Logo />
+          <p className="mt-3 max-w-[22rem] text-[16px] text-ink-2">
+            QR užsakymai restoranams, kavinėms ir barams Lietuvoje.
           </p>
-          <p>Nuotraukos: Unsplash</p>
         </div>
+        <div className="text-[16px]">
+          <p className="font-semibold">Kontaktai</p>
+          <p className="mt-2 text-ink-2"><span className="todo">{email}</span></p>
+          <p className="mt-1 text-ink-2"><span className="todo">{phone}</span></p>
+          <p className="mt-3 text-ink-2">
+            <span className="todo">{company}</span>, <span className="todo">{companyCode}</span>
+          </p>
+        </div>
+        <nav aria-label="Poraštės nuorodos" className="text-[16px]">
+          <ul className="grid gap-1">
+            {navItems.map((item) => (
+              <li key={item.href}>
+                <a href={item.href} className="inline-flex min-h-11 items-center underline-offset-4 hover:underline">
+                  {item.label}
+                </a>
+              </li>
+            ))}
+            <li>
+              <Link href="/privatumas" className="inline-flex min-h-11 items-center underline-offset-4 hover:underline">
+                Privatumo politika
+              </Link>
+            </li>
+          </ul>
+        </nav>
       </div>
+      <p className="mx-auto max-w-6xl px-4 pb-8 text-[14px] text-ink-2 sm:px-6">
+        © <CurrentYear /> {siteConfig.name}
+      </p>
     </footer>
   );
 }

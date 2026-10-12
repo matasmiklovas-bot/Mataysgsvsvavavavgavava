@@ -1,22 +1,24 @@
 import type { Metadata, Viewport } from "next";
-import { Funnel_Display, Funnel_Sans, IBM_Plex_Mono } from "next/font/google";
+import { Archivo_Narrow, Hanken_Grotesk, IBM_Plex_Mono } from "next/font/google";
 import { siteConfig } from "@/config/site";
 import "./globals.css";
 
-const display = Funnel_Display({
-  variable: "--font-display-face",
+const display = Archivo_Narrow({
+  variable: "--font-archivo-narrow",
+  subsets: ["latin", "latin-ext"],
+  weight: ["500", "600", "700"],
+  display: "swap",
+});
+
+const body = Hanken_Grotesk({
+  variable: "--font-hanken",
   subsets: ["latin", "latin-ext"],
   display: "swap",
 });
 
-const body = Funnel_Sans({
-  variable: "--font-body",
-  subsets: ["latin", "latin-ext"],
-  display: "swap",
-});
-
+// Monospace is used only for kitchen tickets and the bill.
 const ticket = IBM_Plex_Mono({
-  variable: "--font-ticket",
+  variable: "--font-plex-mono",
   subsets: ["latin", "latin-ext"],
   weight: ["400", "500", "600"],
   display: "swap",
@@ -36,7 +38,7 @@ export const metadata: Metadata = {
     "restoranų užsakymų sistema",
     "užsakymai nuo staliuko",
     "virtuvės užsakymų ekranas",
-    "restorano technologijos",
+    "QR užsakymai kavinei",
   ],
   alternates: {
     canonical: "/",
@@ -66,8 +68,8 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#08080a",
-  colorScheme: "dark",
+  themeColor: "#f4efe6",
+  colorScheme: "light",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
@@ -77,9 +79,6 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       className={`${display.variable} ${body.variable} ${ticket.variable} overflow-x-clip antialiased`}
     >
       <body className="min-h-dvh overflow-x-clip">
-        <noscript>
-          <style>{`.reveal{opacity:1;transform:none}`}</style>
-        </noscript>
         {children}
       </body>
     </html>

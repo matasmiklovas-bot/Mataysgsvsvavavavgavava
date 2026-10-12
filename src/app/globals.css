@@ -1,101 +1,64 @@
 @import "tailwindcss";
 
 /*
-  Layout: near-black dining-room canvas; the only light surfaces are "paper" objects from a real
-  restaurant (QR table tents, kitchen tickets). Violet is used sparingly for interaction only.
+  "Kitchen ticket" visual language.
+  Light, warm thermal-paper page. The only dark surface is the kitchen display, because
+  kitchen screens are dark. Tomato/ticket red is reserved for the main action and new orders.
 */
 @theme {
-  --color-ink-950: #08080a;
-  --color-ink-900: #0e0e11;
-  --color-ink-850: #131317;
-  --color-ink-800: #18181d;
-  --color-ink-700: #222228;
-  --color-ink-600: #2e2e36;
+  --color-paper: #f4efe6;
+  --color-paper-2: #eae3d6;
+  --color-line: #d8cfbf;
+  --color-ink: #1d1b18;
+  --color-ink-2: #5b564d;
 
-  --color-fg: #f2f1ee;
-  --color-fg-muted: #a3a2a8;
-  --color-fg-subtle: #6f6e76;
+  --color-tomato: #c63d24;
+  --color-tomato-dark: #a8321c;
 
-  --color-paper: #f4f1ea;
-  --color-paper-ink: #1b1a17;
-  --color-paper-muted: #6d6a62;
+  --color-kds: #161513;
+  --color-kds-2: #201e1b;
+  --color-kds-line: #36322c;
+  --color-kds-text: #ece7dd;
+  --color-kds-muted: #aaa497;
+  --color-slip: #fbf8f1;
 
-  --color-accent: #9b87f5;
-  --color-accent-strong: #7c5cf0;
+  --color-ready: #2e7d4f;
+  --color-ready-on-dark: #63b783;
+  --color-timer: #b7791f;
 
-  --font-sans: var(--font-body), ui-sans-serif, system-ui, sans-serif;
-  --font-display: var(--font-display-face), var(--font-body), ui-sans-serif, sans-serif;
-  --font-mono: var(--font-ticket), ui-monospace, monospace;
+  --font-display: var(--font-archivo-narrow), "Arial Narrow", sans-serif;
+  --font-sans: var(--font-hanken), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-plex-mono), ui-monospace, monospace;
 
-  --animate-float-slow: float 9s ease-in-out infinite;
-  --animate-float-med: float 7s ease-in-out infinite;
-  --animate-float-fast: float 6s ease-in-out infinite;
-  --animate-scan: scan 3.2s ease-in-out infinite;
-  --animate-pulse-ring: pulse-ring 2.4s cubic-bezier(0.2, 0.6, 0.3, 1) infinite;
-  --animate-print: print 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  --animate-ticket-in: ticket-in 0.7s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  --animate-flash: flash 1.6s ease-out 2;
 
-  @keyframes float {
-    0%,
-    100% {
-      transform: translate3d(0, 0, 0);
-    }
-    50% {
-      transform: translate3d(0, -12px, 0);
-    }
-  }
-
-  @keyframes scan {
-    0%,
-    100% {
-      top: 5%;
-    }
-    50% {
-      top: 93%;
-    }
-  }
-
-  @keyframes pulse-ring {
-    0% {
-      transform: scale(0.8);
-      opacity: 0.7;
-    }
-    100% {
-      transform: scale(2.2);
-      opacity: 0;
-    }
-  }
-
-  @keyframes slide-in {
+  @keyframes ticket-in {
     from {
-      transform: translateX(24px);
       opacity: 0;
+      transform: translate3d(-28px, -18px, 0) rotate(-3deg);
     }
     to {
-      transform: none;
       opacity: 1;
-    }
-  }
-
-  @keyframes print {
-    from {
-      clip-path: inset(0 0 100% 0);
-      transform: translateY(-6px);
-    }
-    to {
-      clip-path: inset(0 0 0 0);
       transform: none;
     }
   }
-}
 
-:root {
-  color-scheme: dark;
+  @keyframes flash {
+    0%,
+    100% {
+      box-shadow: 0 0 0 0 rgb(198 61 36 / 0);
+    }
+    30% {
+      box-shadow: 0 0 0 4px rgb(198 61 36 / 0.9);
+    }
+  }
 }
 
 html {
-  background: var(--color-ink-950);
+  background: var(--color-paper);
   -webkit-text-size-adjust: 100%;
-  scroll-padding-top: 5rem;
+  scroll-padding-top: 4.5rem;
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -105,76 +68,58 @@ html {
 }
 
 body {
-  background: var(--color-ink-950);
-  color: var(--color-fg);
+  background: var(--color-paper);
+  color: var(--color-ink);
   font-family: var(--font-sans);
+  font-size: 1.0625rem;
+  line-height: 1.6;
   text-rendering: optimizeLegibility;
 }
 
 ::selection {
-  background: rgb(155 135 245 / 0.35);
-  color: #fff;
+  background: rgb(198 61 36 / 0.22);
 }
 
 :focus-visible {
-  outline: 2px solid var(--color-accent);
+  outline: 3px solid var(--color-tomato);
   outline-offset: 3px;
-  border-radius: 6px;
 }
 
-/* Thermal-paper ticket with a torn (zig-zag) bottom edge. */
-@utility ticket {
-  background: var(--color-paper);
-  color: var(--color-paper-ink);
+/* A paper slip: kitchen ticket or bill, with a torn zig-zag bottom edge. */
+@utility slip {
+  background: var(--color-slip);
+  color: var(--color-ink);
   font-family: var(--font-mono);
-  --tooth: 7px;
-  mask:
-    conic-gradient(from -45deg at bottom, #0000, #000 1deg 89deg, #0000 90deg) 50% / calc(2 * var(--tooth)) 100%;
-  padding-bottom: calc(var(--tooth) + 10px);
-  box-shadow: 0 18px 30px -18px rgb(0 0 0 / 0.7);
+  --tooth: 6px;
+  mask: conic-gradient(from -45deg at bottom, #0000, #000 1deg 89deg, #0000 90deg) 50% / calc(2 * var(--tooth))
+    100%;
+  padding-bottom: calc(var(--tooth) + 0.875rem);
 }
 
-@utility hairline {
-  border-color: rgb(255 255 255 / 0.08);
-}
-
-@utility panel {
-  background: var(--color-ink-900);
-  border: 1px solid rgb(255 255 255 / 0.08);
-}
-
-/* Scroll reveal used by <Reveal>. Content stays readable without JavaScript (see layout). */
-.reveal {
-  opacity: 0;
-  transform: translate3d(0, 16px, 0);
-  transition:
-    opacity 0.8s cubic-bezier(0.2, 0.7, 0.2, 1),
-    transform 0.8s cubic-bezier(0.2, 0.7, 0.2, 1);
-  transition-delay: var(--reveal-delay, 0ms);
-}
-.reveal[data-visible="true"] {
-  opacity: 1;
-  transform: none;
-}
-
-@keyframes rise {
-  from {
-    opacity: 0;
-    transform: translate3d(0, 14px, 0);
-  }
-  to {
-    opacity: 1;
-    transform: none;
+/* Hide scrollbars on small in-device scroll areas without disabling scrolling. */
+@utility no-scrollbar {
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
   }
 }
-.rise {
-  animation: rise 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) both;
-  animation-delay: var(--rise-delay, 0ms);
+
+/* TODO markers that are meant to be visible to the site owner. */
+.todo {
+  background: #fff3c4;
+  color: #5c4500;
+  border-radius: 3px;
+  padding: 0 0.25em;
+  font-size: 0.92em;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
 }
 
-dialog::backdrop {
-  background: rgb(4 4 6 / 0.72);
-  backdrop-filter: blur(6px);
+details > summary {
+  list-style: none;
+}
+details > summary::-webkit-details-marker {
+  display: none;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -185,9 +130,5 @@ dialog::backdrop {
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
-  }
-  .reveal {
-    opacity: 1;
-    transform: none;
   }
 }
