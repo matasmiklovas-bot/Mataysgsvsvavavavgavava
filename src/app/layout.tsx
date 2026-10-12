@@ -1,17 +1,10 @@
 import type { Metadata, Viewport } from "next";
-import { Archivo_Narrow, Hanken_Grotesk, IBM_Plex_Mono } from "next/font/google";
+import { Geist, IBM_Plex_Mono } from "next/font/google";
 import { siteConfig } from "@/config/site";
 import "./globals.css";
 
-const display = Archivo_Narrow({
-  variable: "--font-archivo-narrow",
-  subsets: ["latin", "latin-ext"],
-  weight: ["500", "600", "700"],
-  display: "swap",
-});
-
-const body = Hanken_Grotesk({
-  variable: "--font-hanken",
+const geist = Geist({
+  variable: "--font-geist",
   subsets: ["latin", "latin-ext"],
   display: "swap",
 });
@@ -68,7 +61,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#f4efe6",
+  themeColor: "#0c0b0a",
   colorScheme: "light",
 };
 
@@ -76,9 +69,12 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="lt"
-      className={`${display.variable} ${body.variable} ${ticket.variable} overflow-x-clip antialiased`}
+      suppressHydrationWarning
+      className={`${geist.variable} ${ticket.variable} overflow-x-clip`}
     >
       <body className="min-h-dvh overflow-x-clip">
+        {/* Marks JS as available so scroll reveals can start hidden; without JS everything stays visible. */}
+        <script dangerouslySetInnerHTML={{ __html: "document.documentElement.classList.add('js')" }} />
         {children}
       </body>
     </html>

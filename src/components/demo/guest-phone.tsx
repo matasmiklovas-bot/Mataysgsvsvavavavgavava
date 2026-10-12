@@ -68,17 +68,18 @@ export const GuestPhone = forwardRef<HTMLDivElement, GuestPhoneProps>(function G
 
   return (
     <div ref={ref} className="mx-auto w-full max-w-[370px]">
-      <div className="rounded-[2.6rem] bg-ink p-2.5 shadow-[0_30px_60px_-30px_rgb(29_27_24/0.7)]">
-        <div className="relative flex h-[600px] flex-col overflow-hidden rounded-[2.1rem] bg-[#fffdf9] sm:h-[640px]">
-          <div aria-hidden="true" className="flex h-8 shrink-0 items-center justify-center">
-            <span className="h-5 w-20 rounded-full bg-ink" />
+      <div className="rounded-[3.1rem] bg-[#2a2826] p-[3px] shadow-[0_50px_90px_-40px_rgb(0_0_0/0.65),inset_0_1px_0_rgb(255_255_255/0.18)]">
+        <div className="rounded-[2.95rem] bg-black p-[10px]">
+        <div className="relative flex h-[600px] flex-col overflow-hidden rounded-[2.4rem] bg-[#fffdf9] sm:h-[640px]">
+          <div aria-hidden="true" className="flex h-10 shrink-0 items-center justify-center">
+            <span className="h-[24px] w-[92px] rounded-full bg-black" />
           </div>
 
           <div className="shrink-0 border-b border-line px-5 pt-1 pb-3">
             <p className="text-[13px] text-ink-2">
               {restaurant.kind} „{restaurant.name}“
             </p>
-            <p className="font-display text-[1.6rem] leading-tight font-bold">Staliukas {state.table}</p>
+            <p className="text-[1.45rem] leading-tight font-semibold tracking-[-0.03em]">Staliukas {state.table}</p>
           </div>
 
           <div ref={scrollRef} className="no-scrollbar relative min-h-0 flex-1 overflow-y-auto overscroll-contain">
@@ -102,7 +103,7 @@ export const GuestPhone = forwardRef<HTMLDivElement, GuestPhoneProps>(function G
                 >
                   ← Meniu
                 </button>
-                <h3 ref={headingRef} tabIndex={-1} className="mt-1 font-display text-[1.6rem] font-bold focus:outline-none">
+                <h3 ref={headingRef} tabIndex={-1} className="mt-1 text-[1.5rem] font-semibold tracking-[-0.03em] focus:outline-none">
                   Jūsų užsakymas
                 </h3>
                 {lines.length === 0 ? (
@@ -138,7 +139,7 @@ export const GuestPhone = forwardRef<HTMLDivElement, GuestPhoneProps>(function G
                                       type="button"
                                       aria-pressed={on}
                                       onClick={() => dispatch({ type: "toggleNote", itemId: item.id, note })}
-                                      className={`min-h-9 rounded border px-2.5 text-[14px] transition-colors ${
+                                      className={`min-h-9 rounded-lg border px-2.5 text-[14px] transition-colors ${
                                         on
                                           ? "border-tomato bg-tomato/10 font-semibold text-tomato-dark"
                                           : "border-line text-ink-2 hover:border-ink-2"
@@ -158,7 +159,7 @@ export const GuestPhone = forwardRef<HTMLDivElement, GuestPhoneProps>(function G
 
                     <div className="flex items-baseline justify-between border-t-2 border-ink pt-3">
                       <span className="font-semibold">Iš viso</span>
-                      <span className="font-display text-[1.5rem] font-bold tabular-nums">{formatPrice(total)}</span>
+                      <span className="text-[1.4rem] font-semibold tabular-nums">{formatPrice(total)}</span>
                     </div>
 
                     <fieldset className="mt-5">
@@ -173,7 +174,7 @@ export const GuestPhone = forwardRef<HTMLDivElement, GuestPhoneProps>(function G
                     <button
                       type="button"
                       onClick={confirm}
-                      className="mt-5 flex h-13 w-full items-center justify-center rounded-md bg-tomato text-[16px] font-semibold text-white hover:bg-tomato-dark"
+                      className="mt-5 flex h-13 w-full items-center justify-center rounded-2xl bg-tomato text-[16px] font-semibold text-white hover:bg-tomato-bright"
                     >
                       {payment === "kortele" ? `Apmokėti ${formatPrice(total)}` : "Užsakyti"}
                     </button>
@@ -185,7 +186,7 @@ export const GuestPhone = forwardRef<HTMLDivElement, GuestPhoneProps>(function G
             {current === "paying" && (
               <div className="flex h-full flex-col items-center justify-center gap-4 px-8 text-center">
                 <span aria-hidden="true" className="size-10 animate-spin rounded-full border-4 border-line border-t-tomato" />
-                <h3 ref={headingRef} tabIndex={-1} className="font-display text-[1.5rem] font-bold focus:outline-none">
+                <h3 ref={headingRef} tabIndex={-1} className="text-[1.4rem] font-semibold focus:outline-none">
                   Apmokama…
                 </h3>
                 <p className="text-[15px] text-ink-2 tabular-nums">{formatPrice(total)}</p>
@@ -195,7 +196,7 @@ export const GuestPhone = forwardRef<HTMLDivElement, GuestPhoneProps>(function G
             {current === "done" && order && (
               <div className="px-5 pt-4 pb-6">
                 <p className="text-[14px] text-ink-2">Užsakymas</p>
-                <h3 ref={headingRef} tabIndex={-1} className="font-display text-[2.4rem] leading-none font-bold focus:outline-none">
+                <h3 ref={headingRef} tabIndex={-1} className="text-[2.6rem] leading-none font-semibold tracking-[-0.04em] focus:outline-none">
                   {formatOrderNumber(order.id)}
                 </h3>
                 <StatusTrack status={guestStatus(order)} />
@@ -239,15 +240,16 @@ export const GuestPhone = forwardRef<HTMLDivElement, GuestPhoneProps>(function G
               <button
                 type="button"
                 onClick={() => setScreen("cart")}
-                className="flex h-14 w-full items-center justify-between rounded-lg bg-ink px-4 text-white shadow-[0_10px_24px_-10px_rgb(0_0_0/0.6)]"
+                className="flex h-14 w-full items-center justify-between rounded-2xl bg-ink px-4 text-white shadow-[0_10px_24px_-10px_rgb(0_0_0/0.6)]"
               >
                 <span className="text-[15px] font-semibold">
-                  Krepšelis <span className="ml-1 rounded bg-tomato px-1.5 tabular-nums">{count}</span>
+                  Krepšelis <span className="ml-1 rounded-md bg-tomato px-1.5 tabular-nums">{count}</span>
                 </span>
                 <span className="text-[15px] font-semibold tabular-nums">Peržiūrėti · {formatPrice(total)}</span>
               </button>
             </div>
           )}
+        </div>
         </div>
       </div>
     </div>
@@ -288,7 +290,7 @@ function MenuScreen({
               type="button"
               aria-pressed={category === cat.id}
               onClick={() => onCategory(cat.id)}
-              className={`min-h-10 shrink-0 rounded px-3 text-[15px] font-semibold whitespace-nowrap transition-colors ${
+              className={`min-h-10 shrink-0 rounded-full px-3.5 text-[15px] font-semibold whitespace-nowrap transition-colors ${
                 category === cat.id ? "bg-ink text-white" : "text-ink-2 hover:bg-paper-2"
               }`}
             >
@@ -384,7 +386,7 @@ function PayOption({
   const checked = value === current;
   return (
     <label
-      className={`flex min-h-12 cursor-pointer items-center gap-3 rounded-md border-2 px-3.5 text-[15px] has-[:focus-visible]:outline-3 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-tomato ${
+      className={`flex min-h-12 cursor-pointer items-center gap-3 rounded-xl border-2 px-3.5 text-[15px] has-[:focus-visible]:outline-3 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-tomato ${
         checked ? "border-ink font-semibold" : "border-line text-ink-2"
       }`}
     >

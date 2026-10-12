@@ -104,8 +104,8 @@ export function ContactForm() {
 
   if (status === "sent" || status === "mail") {
     return (
-      <div role="status" className="rounded-lg border-2 border-ink bg-white p-6 sm:p-8">
-        <p className="font-display text-[2rem] leading-tight font-bold">Ačiū, {sentName}!</p>
+      <div role="status" className="py-6">
+        <p className="text-[2.2rem] leading-tight font-semibold tracking-[-0.03em]">Ačiū, {sentName}!</p>
         {status === "sent" ? (
           <p className="mt-3 text-ink-2">
             Susisieksime <span className="todo">[TODO: per kiek laiko]</span>.
@@ -148,7 +148,7 @@ export function ContactForm() {
             return (
               <label
                 key={option}
-                className={`flex min-h-11 cursor-pointer items-center rounded-md border-2 px-4 has-[:focus-visible]:outline-3 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-tomato ${
+                className={`flex min-h-11 cursor-pointer items-center rounded-full border px-5 has-[:focus-visible]:outline-3 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-tomato ${
                   checked ? "border-ink bg-ink text-white" : "border-line bg-white hover:border-ink-2"
                 }`}
               >
@@ -173,7 +173,7 @@ export function ContactForm() {
         <button
           type="submit"
           disabled={status === "sending"}
-          className="inline-flex h-13 w-full items-center justify-center rounded-md bg-tomato px-7 text-[1.0625rem] font-semibold text-white transition-colors hover:bg-tomato-dark disabled:opacity-70 sm:w-auto"
+          className="inline-flex h-13 w-full items-center justify-center rounded-full bg-tomato px-8 text-[1.0625rem] font-medium whitespace-nowrap text-white transition-colors hover:bg-tomato-bright disabled:opacity-70 sm:w-auto"
         >
           {status === "sending" ? "Siunčiama…" : siteConfig.cta}
         </button>
@@ -211,8 +211,8 @@ type InputProps = {
 function Input({ label, name, value, onChange, onBlur, error, hint, required, optional, multiline, autoComplete }: InputProps) {
   const id = useId();
   const describedBy = [error ? `${id}-error` : null, hint ? `${id}-hint` : null].filter(Boolean).join(" ") || undefined;
-  const className = `w-full rounded-md border-2 bg-white px-3.5 text-[1.0625rem] text-ink outline-none transition-colors focus:border-ink ${
-    error ? "border-tomato" : "border-line hover:border-ink-2"
+  const className = `w-full rounded-xl border bg-white px-4 text-[1.0625rem] text-ink outline-none transition-colors focus:border-ink focus:ring-4 focus:ring-ink/10 ${
+    error ? "border-tomato border-2" : "border-line hover:border-ink-2"
   }`;
   return (
     <div>

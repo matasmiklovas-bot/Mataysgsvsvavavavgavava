@@ -200,7 +200,7 @@ function StaffGroup({ title, empty, children }: { title: string; empty: string; 
 
 function TableBadge({ table }: { table: number }) {
   return (
-    <span className="flex size-11 shrink-0 items-center justify-center rounded bg-slip font-display text-[1.5rem] font-bold text-ink">
+    <span className="flex size-11 shrink-0 items-center justify-center rounded bg-slip font-display text-[1.5rem] font-semibold text-ink">
       {table}
     </span>
   );

@@ -1,0 +1,327 @@
+"use client";
+
+import { useEffect, useRef, useState, type ReactNode } from "react";
+import { formatOrderNumber, formatPrice, getItem, heroOrder, linesTotal, restaurant, seedOrders } from "@/lib/data";
+import { Ticket } from "@/components/ticket";
+
+/**
+ * A short, looping film of one order at table 4: the guest taps dishes, adds a note, pays,
+ * and ticket #024 lands on the kitchen rail and moves Naujas → Ruošiama → Paruošta.
+ * Everything comes from lib/data, so it matches the demo below.
+ */
+
+// [time in ms when the step starts]
+const timeline = [0, 1100, 1800, 2600, 3500, 4400, 5300, 6400, 8200, 9800, 11800];
+const LAST = timeline.length - 1;
+const FINAL_STILL = 8; // shown when motion is reduced
+
+const burger = getItem("mesainis");
+const soup = getItem("saltibarsciai");
+const cepelinai = getItem("cepelinai");
+const total = linesTotal(heroOrder.lines);
+const otherTickets = [seedOrders[1], seedOrders[0]];
+
+export function HeroStory({ stand }: { stand: ReactNode }) {
+  const [t, setT] = useState(0);
+  const rootRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      const id = window.setTimeout(() => setT(FINAL_STILL), 0);
+      return () => window.clearTimeout(id);
+    }
+    let timers: number[] = [];
+    let running = false;
+    const play = () => {
+      if (running) return;
+      running = true;
+      const loop = () => {
+        timeline.forEach((at, step) => {
+          timers.push(window.setTimeout(() => setT(step === LAST ? 0 : step), at));
+        });
+        timers.push(window.setTimeout(loop, timeline[LAST]));
+      };
+      loop();
+    };
+    const stop = () => {
+      running = false;
+      timers.forEach((id) => window.clearTimeout(id));
+      timers = [];
+    };
+    // Only play while the hero is on screen.
+    const observer = new IntersectionObserver(([entry]) => (entry.isIntersecting ? play() : stop()), {
+      threshold: 0,
+    });
+    if (rootRef.current) observer.observe(rootRef.current);
+    return () => {
+      observer.disconnect();
+      stop();
+    };
+  }, []);
+
+  const burgerQty = t >= 2 ? 2 : t >= 1 ? 1 : 0;
+  const soupQty = t >= 3 ? 1 : 0;
+  const count = burgerQty + soupQty;
+  const screen = t >= 7 ? "done" : t >= 6 ? "paying" : t >= 4 ? "cart" : "menu";
+  const noteOn = t >= 5;
+  const ticketStage = t >= 9 ? "paruosta" : t >= 8 ? "ruosiama" : t >= 7 ? "naujas" : null;
+  const guestStatus = t >= 9 ? 2 : t >= 8 ? 1 : 0;
+
+  return (
+    <div ref={rootRef} className="relative text-left">
+      <p className="sr-only">
+        Animacija: svečias prie 4 staliuko telefone užsisako du jautienos mėsainius be svogūnų ir
+        šaltibarščius, apmoka {formatPrice(total)}, o bilietas {heroOrder.id} atsiranda virtuvės planšetėje.
+      </p>
+      <div aria-hidden="true" className="flex items-end justify-center gap-6 lg:gap-10">
+        <div className="hidden pb-6 lg:block">{stand}</div>
+
+        {/* Phone */}
+        <div className="relative w-[272px] shrink-0 sm:w-[292px]">
+          <div className="rounded-[3rem] bg-[#2a2826] p-[3px] shadow-[0_40px_80px_-30px_rgb(0_0_0/0.9),inset_0_1px_0_rgb(255_255_255/0.18)]">
+            <div className="rounded-[2.85rem] bg-black p-[9px]">
+              <div className="relative flex h-[540px] flex-col overflow-hidden rounded-[2.35rem] bg-[#fffdf9] text-ink sm:h-[580px]">
+                <div className="flex h-9 shrink-0 items-center justify-center">
+                  <span className="h-[22px] w-[84px] rounded-full bg-black" />
+                </div>
+                <div className="border-b border-line px-5 pb-3">
+                  <p className="text-[12px] text-ink-2">
+                    {restaurant.kind} „{restaurant.name}“
+                  </p>
+                  <p className="text-[21px] font-semibold tracking-[-0.03em]">Staliukas {heroOrder.table}</p>
+                </div>
+
+                <div className="relative min-h-0 flex-1">
+                  {/* Menu */}
+                  <Screen show={screen === "menu"}>
+                    <div className="px-5 pt-3">
+                      <p className="text-[13px] font-semibold text-ink-2">Šiandien siūlome</p>
+                      <ul className="mt-1 divide-y divide-line">
+                        {[soup, burger, cepelinai].map((item) => {
+                          const qty = item.id === "mesainis" ? burgerQty : item.id === "saltibarsciai" ? soupQty : 0;
+                          const tapping =
+                            (item.id === "mesainis" && (t === 1 || t === 2)) || (item.id === "saltibarsciai" && t === 3);
+                          return (
+                            <li key={item.id} className="flex items-center gap-3 py-3.5">
+                              <div className="min-w-0 flex-1">
+                                <p className="text-[15px] leading-tight font-semibold">{item.name}</p>
+                                <p className="mt-0.5 text-[12.5px] leading-snug text-ink-2">{item.description}</p>
+                                <p className="mt-1 text-[14px] font-medium tabular-nums">{formatPrice(item.price)}</p>
+                              </div>
+                              <span
+                                className={`relative flex size-9 shrink-0 items-center justify-center rounded-full text-[15px] font-semibold transition-colors duration-300 ${
+                                  qty > 0 ? "bg-ink text-white" : "border-[1.5px] border-ink"
+                                }`}
+                              >
+                                {qty > 0 ? qty : "+"}
+                                {tapping && <Tap key={t} />}
+                              </span>
+                            </li>
+                          );
+                        })}
+                      </ul>
+                    </div>
+                    <div
+                      className={`absolute inset-x-3 bottom-3 transition-all duration-500 ease-[var(--ease-out-soft)] ${
+                        count > 0 ? "translate-y-0 opacity-100" : "translate-y-6 opacity-0"
+                      }`}
+                    >
+                      <span className="relative flex h-12 items-center justify-between rounded-2xl bg-ink px-4 text-[14px] font-semibold text-white">
+                        <span>
+                          Krepšelis <span className="ml-1 rounded-md bg-tomato px-1.5 tabular-nums">{count}</span>
+                        </span>
+                        <span className="tabular-nums">
+                          {formatPrice(burger.price * burgerQty + soup.price * soupQty)}
+                        </span>
+                        {t === 4 && <Tap key="cart" />}
+                      </span>
+                    </div>
+                  </Screen>
+
+                  {/* Cart */}
+                  <Screen show={screen === "cart"}>
+                    <div className="px-5 pt-3">
+                      <p className="text-[19px] font-semibold tracking-[-0.02em]">Jūsų užsakymas</p>
+                      <ul className="mt-2 divide-y divide-line text-[14px]">
+                        <li className="py-3">
+                          <div className="flex justify-between gap-2">
+                            <span className="font-semibold">2× {burger.name}</span>
+                            <span className="tabular-nums">{formatPrice(burger.price * 2)}</span>
+                          </div>
+                          <span
+                            className={`relative mt-2 inline-flex h-8 items-center rounded-lg border px-2.5 text-[13px] transition-colors duration-300 ${
+                              noteOn ? "border-tomato bg-tomato/10 font-semibold text-tomato-dark" : "border-line text-ink-2"
+                            }`}
+                          >
+                            {noteOn ? "✓ be svogūnų" : "+ be svogūnų"}
+                            {t === 5 && <Tap key="note" />}
+                          </span>
+                        </li>
+                        <li className="flex justify-between gap-2 py-3">
+                          <span className="font-semibold">1× {soup.name}</span>
+                          <span className="tabular-nums">{formatPrice(soup.price)}</span>
+                        </li>
+                      </ul>
+                      <div className="mt-1 flex items-baseline justify-between border-t border-ink pt-3">
+                        <span className="text-[14px] font-semibold">Iš viso</span>
+                        <span className="text-[20px] font-semibold tabular-nums">{formatPrice(total)}</span>
+                      </div>
+                      <p className="mt-4 text-[13px] font-semibold">Kaip mokėsite?</p>
+                      <div className="mt-1.5 flex h-11 items-center gap-2.5 rounded-xl border-[1.5px] border-ink px-3 text-[13.5px] font-semibold">
+                        <span className="size-3.5 rounded-full border-4 border-ink" /> Kortele dabar, telefonu
+                      </div>
+                    </div>
+                    <div className="absolute inset-x-4 bottom-4">
+                      <span className="relative flex h-12 items-center justify-center rounded-2xl bg-tomato text-[15px] font-semibold text-white">
+                        Apmokėti {formatPrice(total)}
+                        {t === 6 && <Tap key="pay" />}
+                      </span>
+                    </div>
+                  </Screen>
+
+                  {/* Paying */}
+                  <Screen show={screen === "paying"}>
+                    <div className="flex h-full flex-col items-center justify-center gap-3">
+                      <span className="size-9 animate-spin rounded-full border-[3px] border-line border-t-tomato" />
+                      <p className="text-[17px] font-semibold">Apmokama…</p>
+                    </div>
+                  </Screen>
+
+                  {/* Done */}
+                  <Screen show={screen === "done"}>
+                    <div className="px-5 pt-5">
+                      <p className="text-[13px] text-ink-2">Užsakymas</p>
+                      <p className="text-[38px] leading-none font-semibold tracking-[-0.04em]">{formatOrderNumber(heroOrder.id)}</p>
+                      <div className="mt-5 grid grid-cols-3 gap-1.5">
+                        {["Priimta", "Ruošiama", "Nešama"].map((label, i) => (
+                          <div key={label}>
+                            <span
+                              className={`block h-1.5 rounded-full transition-colors duration-700 ${
+                                i <= guestStatus ? "bg-tomato" : "bg-line"
+                              }`}
+                            />
+                            <span
+                              className={`mt-1.5 block text-[12.5px] ${i === guestStatus ? "font-semibold" : "text-ink-2"}`}
+                            >
+                              {label}
+                            </span>
+                          </div>
+                        ))}
+                      </div>
+                      <p className="mt-4 text-[14px]">
+                        {guestStatus === 0 && "Virtuvė jau mato jūsų užsakymą."}
+                        {guestStatus === 1 && "Ruošiama. Atnešime prie staliuko."}
+                        {guestStatus === 2 && "Paruošta, padavėjas jau neša."}
+                      </p>
+                      <p className="mt-4 border-t border-line pt-3 text-[13.5px] text-ink-2">
+                        Apmokėta kortele · <span className="tabular-nums">{formatPrice(total)}</span>
+                      </p>
+                    </div>
+                  </Screen>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Kitchen tablet */}
+        <div className="hidden w-[480px] shrink-0 md:block">
+          <div className="rounded-[2rem] bg-[#2a2826] p-[3px] shadow-[0_40px_80px_-30px_rgb(0_0_0/0.9),inset_0_1px_0_rgb(255_255_255/0.18)]">
+            <div className="rounded-[1.85rem] bg-black p-3">
+              <div className="h-[330px] overflow-hidden rounded-[1.1rem] bg-kds text-kds-text">
+                <div className="flex items-center justify-between border-b border-kds-line px-4 py-2.5 text-[13px]">
+                  <span className="font-semibold">Virtuvė</span>
+                  <span className="text-kds-muted">Ruošti: {ticketStage && ticketStage !== "paruosta" ? 3 : 2}</span>
+                </div>
+                <div className="mx-4 mt-3 h-1.5 rounded-full bg-[#8f8a80]" />
+                <div className="-mt-0.5 flex gap-3 px-4">
+                  <div
+                    className={`shrink-0 transition-[width,margin] duration-700 ease-[var(--ease-out-soft)] ${
+                      ticketStage ? "w-[192px]" : "-mr-3 w-0"
+                    }`}
+                  >
+                    {ticketStage && (
+                      <div key={`new-${ticketStage === "naujas" ? "in" : "stay"}`} className={ticketStage === "naujas" ? "animate-ticket-in" : ""}>
+                        <Ticket
+                          orderId={heroOrder.id}
+                          table={heroOrder.table}
+                          station="Virtuvė"
+                          time="ką tik"
+                          lines={heroOrder.lines}
+                          payment="Apmokėta"
+                          status={
+                            ticketStage === "paruosta"
+                              ? { label: "Paruošta", tone: "ready" }
+                              : ticketStage === "ruosiama"
+                                ? { label: "Ruošiama", tone: "cooking" }
+                                : { label: "Naujas", tone: "new" }
+                          }
+                          compact
+                          className={ticketStage === "naujas" ? "animate-flash" : ""}
+                        />
+                      </div>
+                    )}
+                  </div>
+                  {otherTickets.map((order) => (
+                    <div key={order.id} className="w-[192px] shrink-0">
+                      <Ticket
+                        orderId={order.id}
+                        table={order.table}
+                        station="Virtuvė"
+                        time={`prieš ${order.minutesAgo} min.`}
+                        lines={order.lines.filter((l) => getItem(l.itemId).station === "virtuve")}
+                        status={{ label: "Ruošiama", tone: "cooking" }}
+                        compact
+                      />
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Phones: the ticket appears under the device instead of on a tablet. */}
+      <div aria-hidden="true" className="mx-auto mt-6 h-[236px] w-[236px] md:hidden">
+        {ticketStage && (
+          <div key="mobile-ticket" className="animate-ticket-in">
+            <p className="mb-2 text-center text-[13px] text-night-muted">Tuo metu virtuvės planšetėje</p>
+            <Ticket
+              orderId={heroOrder.id}
+              table={heroOrder.table}
+              station="Virtuvė"
+              time="ką tik"
+              lines={heroOrder.lines}
+              status={
+                ticketStage === "paruosta"
+                  ? { label: "Paruošta", tone: "ready" }
+                  : ticketStage === "ruosiama"
+                    ? { label: "Ruošiama", tone: "cooking" }
+                    : { label: "Naujas", tone: "new" }
+              }
+              compact
+            />
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+function Screen({ show, children }: { show: boolean; children: ReactNode }) {
+  return (
+    <div
+      className={`absolute inset-0 transition-all duration-500 ease-[var(--ease-out-soft)] ${
+        show ? "translate-x-0 opacity-100" : "pointer-events-none translate-x-4 opacity-0"
+      }`}
+    >
+      {children}
+    </div>
+  );
+}
+
+/** A soft ring where the guest's finger touches the screen. */
+function Tap() {
+  return <span className="pointer-events-none absolute inset-0 m-auto size-10 animate-tap rounded-full bg-ink/30" />;
+}

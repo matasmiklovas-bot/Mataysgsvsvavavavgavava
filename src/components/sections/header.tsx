@@ -4,18 +4,18 @@ import { Logo } from "@/components/logo";
 
 export function Header() {
   return (
-    <header className="sticky top-0 z-50 border-b border-line bg-paper/95 backdrop-blur-sm">
-      <div className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-4 px-4 sm:px-6">
+    <header className="sticky top-0 z-50 border-b border-white/10 bg-night/80 backdrop-blur-xl backdrop-saturate-150">
+      <div className="mx-auto flex h-14 max-w-6xl items-center justify-between gap-4 px-4 sm:px-6">
         <Link href="/" className="flex min-h-11 items-center" aria-label="Stalas, į pradžią">
-          <Logo />
+          <Logo tone="light" />
         </Link>
         <nav aria-label="Pagrindinė navigacija" className="hidden md:block">
-          <ul className="flex items-center gap-7">
+          <ul className="flex items-center gap-8">
             {navItems.map((item) => (
               <li key={item.href}>
                 <a
                   href={item.href}
-                  className="inline-flex min-h-11 items-center text-[16px] font-medium text-ink-2 underline-offset-4 hover:text-ink hover:underline"
+                  className="inline-flex min-h-11 items-center text-[14px] text-night-text/80 transition-colors hover:text-white"
                 >
                   {item.label}
                 </a>
@@ -25,7 +25,7 @@ export function Header() {
         </nav>
         <Link
           href="/#forma"
-          className="inline-flex h-11 items-center rounded-md bg-tomato px-4 text-[15px] font-semibold text-white transition-colors hover:bg-tomato-dark sm:px-5"
+          className="inline-flex h-10 items-center rounded-full bg-tomato px-4 text-[14px] font-medium text-white transition-colors hover:bg-tomato-bright"
         >
           <span className="sm:hidden">{siteConfig.ctaShort}</span>
           <span className="max-sm:hidden">{siteConfig.cta}</span>

@@ -1,3 +1,4 @@
+import { Reveal } from "@/components/reveal";
 import type { ReactNode } from "react";
 
 const faq: { q: string; a: ReactNode }[] = [
@@ -23,27 +24,32 @@ const faq: { q: string; a: ReactNode }[] = [
 
 export function Faq() {
   return (
-    <section id="duk" aria-labelledby="duk-title" className="scroll-mt-16">
-      <div className="mx-auto grid grid-cols-1 max-w-6xl gap-8 px-4 py-16 sm:px-6 sm:py-24 lg:grid-cols-[1fr_2fr] lg:gap-16">
-        <h2 id="duk-title" className="font-display text-[2.25rem] leading-[1.02] font-bold sm:text-[3rem] lg:text-[3.4rem]">
-          Ko dažniausiai klausia savininkai
-        </h2>
-        <div className="divide-y divide-line border-y border-line">
+    <section id="duk" aria-labelledby="duk-title" className="scroll-mt-14 bg-white">
+      <div className="mx-auto max-w-3xl px-4 py-20 sm:px-6 sm:py-28">
+        <Reveal className="text-center">
+          <h2
+            id="duk-title"
+            className="text-[2.4rem] leading-[1.04] font-semibold tracking-[-0.04em] text-balance sm:text-[3.5rem]"
+          >
+            Ko dažniausiai klausia savininkai.
+          </h2>
+        </Reveal>
+        <Reveal className="mt-12 border-t border-line">
           {faq.map((item) => (
-            <details key={item.q} className="group">
-              <summary className="flex min-h-14 cursor-pointer items-center justify-between gap-4 py-4 text-[1.0625rem] font-semibold">
+            <details key={item.q} className="group border-b border-line">
+              <summary className="flex min-h-16 cursor-pointer items-center justify-between gap-6 py-5 text-[1.1875rem] font-medium tracking-[-0.01em]">
                 {item.q}
                 <span
                   aria-hidden="true"
-                  className="font-display text-[1.75rem] leading-none transition-transform group-open:rotate-45"
+                  className="flex size-8 shrink-0 items-center justify-center rounded-full bg-paper text-[1.25rem] leading-none transition-transform duration-300 group-open:rotate-45"
                 >
                   +
                 </span>
               </summary>
-              <div className="max-w-[60ch] pb-5 text-ink-2">{item.a}</div>
+              <div className="max-w-[60ch] pb-6 text-ink-2">{item.a}</div>
             </details>
           ))}
-        </div>
+        </Reveal>
       </div>
     </section>
   );

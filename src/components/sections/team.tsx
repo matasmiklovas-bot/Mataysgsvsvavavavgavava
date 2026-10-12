@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 import { formatPrice, heroOrder, heroOrderTime, linesTotal, seedOrders } from "@/lib/data";
 import { Ticket } from "@/components/ticket";
+import { Reveal } from "@/components/reveal";
 
 const barOrder = seedOrders[1];
 
@@ -17,16 +18,16 @@ const roles: Role[] = [
     headline: "Padavėjas nebebėgioja su užrašų knygele tarp staliuko ir virtuvės.",
     text: "Užsakymą įveda pats svečias. Planšetėje padavėjas mato, kas jau paruošta ir prie kurio staliuko nešti, o laiką skiria žmonėms salėje.",
     fragment: (
-      <div className="rounded-lg bg-kds p-3 text-kds-text">
+      <div className="rounded-2xl bg-kds p-3 text-kds-text">
         <div className="flex items-center gap-3 rounded-md bg-kds-2 p-3">
-          <span className="flex size-11 shrink-0 items-center justify-center rounded bg-slip font-display text-[1.5rem] font-bold text-ink">
+          <span className="flex size-11 shrink-0 items-center justify-center rounded bg-slip font-display text-[1.5rem] font-semibold text-ink">
             {heroOrder.table}
           </span>
           <div className="min-w-0 flex-1">
             <p className="font-semibold">Nešti į staliuką {heroOrder.table}</p>
             <p className="text-[14px] text-kds-muted">2× Jautienos mėsainis, 1× Šaltibarščiai</p>
           </div>
-          <span className="rounded-md bg-ready px-3 py-2 text-[14px] font-semibold text-white">Nunešta</span>
+          <span className="rounded-full bg-ready px-3.5 py-2 text-[14px] font-semibold text-white">Nunešta</span>
         </div>
       </div>
     ),
@@ -36,7 +37,7 @@ const roles: Role[] = [
     headline: "Pastaba „be svogūnų“ virtuvę pasiekia tiksliai taip, kaip ją parašė svečias.",
     text: "Bilietas atsiranda planšetėje, vos svečias patvirtina užsakymą. Nereikia iššifruoti ranka rašytų lapelių ir antrą kartą klausti padavėjo.",
     fragment: (
-      <div className="rounded-lg bg-kds px-5 pt-5 pb-1">
+      <div className="rounded-2xl bg-kds px-5 pt-5 pb-1">
         <Ticket
           orderId={heroOrder.id}
           table={heroOrder.table}
@@ -54,7 +55,7 @@ const roles: Role[] = [
     headline: "Baras gauna tik gėrimus ir pradeda jų nelaukdamas virtuvės.",
     text: "Jei užsakyme yra ir patiekalų, ir gėrimų, virtuvė ir baras gauna atskirus bilietus. Limonadas jau ant staliuko, kol sprandinė dar ant grotelių.",
     fragment: (
-      <div className="rounded-lg bg-kds px-5 pt-5 pb-1">
+      <div className="rounded-2xl bg-kds px-5 pt-5 pb-1">
         <Ticket
           orderId={barOrder.id}
           table={barOrder.table}
@@ -79,7 +80,7 @@ const roles: Role[] = [
     ),
     fragment: (
       // TODO: patikrinti, kaip tikroje sistemoje atrodo mokėjimo būdų nustatymai.
-      <div className="rounded-lg border border-line bg-white p-4">
+      <div className="rounded-2xl bg-white p-5 shadow-[0_20px_40px_-28px_rgb(0_0_0/0.35)]">
         <p className="text-[15px] font-semibold">Mokėjimo būdai svečiams</p>
         <ul className="mt-3 space-y-2 text-[15px]">
           <li className="flex items-center justify-between gap-3 border-t border-line pt-2">
@@ -111,26 +112,35 @@ function Switch({ on }: { on: boolean }) {
 
 export function Team() {
   return (
-    <section aria-labelledby="team-title" className="mx-auto max-w-6xl px-4 py-16 sm:px-6 sm:py-24">
-      <h2
-        id="team-title"
-        className="max-w-[20ch] font-display text-[2.25rem] leading-[1.02] font-bold text-balance sm:text-[3rem] lg:text-[3.4rem]"
-      >
-        Kas pasikeičia salėje, virtuvėje ir bare
-      </h2>
-      <div className="mt-10 divide-y divide-line border-y border-line sm:mt-14">
-        {roles.map((role) => (
-          <article key={role.role} className="grid grid-cols-1 gap-6 py-10 md:grid-cols-[1.1fr_1fr] md:items-center md:gap-12">
-            <div>
-              <p className="font-display text-[1.25rem] font-bold text-tomato-dark">{role.role}</p>
-              <h3 className="mt-2 font-display text-[1.75rem] leading-[1.1] font-bold text-balance sm:text-[2rem]">
-                {role.headline}
-              </h3>
-              <p className="mt-4 max-w-[34rem] text-ink-2">{role.text}</p>
-            </div>
-            <div className="md:max-w-[400px] md:justify-self-end md:w-full">{role.fragment}</div>
-          </article>
-        ))}
+    <section aria-labelledby="team-title" className="bg-white">
+      <div className="mx-auto max-w-6xl px-4 py-20 sm:px-6 sm:py-28">
+        <Reveal className="mx-auto max-w-3xl text-center">
+          <h2
+            id="team-title"
+            className="text-[2.4rem] leading-[1.04] font-semibold tracking-[-0.04em] text-balance sm:text-[3.5rem] lg:text-[4rem]"
+          >
+            Kas pasikeičia salėje, virtuvėje ir bare.
+          </h2>
+        </Reveal>
+        <div className="mt-12 grid grid-cols-1 gap-4 sm:mt-16 md:grid-cols-2 md:gap-5">
+          {roles.map((role, index) => (
+            <Reveal
+              as="article"
+              key={role.role}
+              delay={(index % 2) * 120}
+              className="flex flex-col justify-between gap-8 overflow-hidden rounded-[2rem] bg-paper p-7 sm:p-9"
+            >
+              <div>
+                <p className="text-[16px] font-semibold text-tomato-dark">{role.role}</p>
+                <h3 className="mt-2 text-[1.6rem] leading-[1.15] font-semibold tracking-[-0.03em] text-balance sm:text-[1.9rem]">
+                  {role.headline}
+                </h3>
+                <p className="mt-4 max-w-[32rem] text-ink-2">{role.text}</p>
+              </div>
+              <div className="w-full max-w-[400px] self-center">{role.fragment}</div>
+            </Reveal>
+          ))}
+        </div>
       </div>
     </section>
   );

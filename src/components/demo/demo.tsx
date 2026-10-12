@@ -158,7 +158,7 @@ export function Demo() {
   return (
     <div>
       {/* Steps + device tabs. Sticky on phones so the progress stays in view while tapping. */}
-      <div className="sticky top-16 z-30 -mx-4 border-b border-line bg-paper-2/95 px-4 pt-3 pb-2 backdrop-blur-sm sm:-mx-6 sm:px-6 lg:static lg:mx-0 lg:border-0 lg:bg-transparent lg:p-0 lg:backdrop-blur-none">
+      <div className="sticky top-14 z-30 -mx-4 border-b border-line bg-paper/85 px-4 pt-3 pb-2 backdrop-blur-xl sm:-mx-6 sm:px-6 lg:static lg:mx-0 lg:border-0 lg:bg-transparent lg:p-0 lg:backdrop-blur-none">
         <ol className="grid grid-cols-4 gap-2" aria-label="Užsakymo eiga">
           {steps.map((label, i) => {
             const done = i < activeStep;
@@ -222,7 +222,7 @@ export function Demo() {
         </div>
       </div>
 
-      <div ref={devicesRef} className="mt-6 grid scroll-mt-40 grid-cols-1 items-start gap-8 lg:mt-8 lg:grid-cols-[370px_minmax(0,1fr)]">
+      <div ref={devicesRef} className="mt-8 grid scroll-mt-40 grid-cols-1 items-start gap-10 lg:mt-12 lg:grid-cols-[370px_minmax(0,1fr)] lg:gap-14">
         <div id="demo-phone" role="tabpanel" aria-labelledby="view-tab-svecias" className={view === "svecias" ? "" : "max-lg:hidden"}>
           <GuestPhone ref={phoneRef} state={state} dispatch={dispatch} onScreenChange={onScreenChange} onSubmit={onSubmit} />
           {guestStation && (
@@ -241,7 +241,7 @@ export function Demo() {
           role="tabpanel"
           aria-labelledby={`view-tab-${currentTeam}`}
           ref={teamRef}
-          className={`overflow-hidden rounded-xl bg-kds text-kds-text ${view === "svecias" ? "max-lg:hidden" : ""}`}
+          className={`overflow-hidden rounded-[1.4rem] bg-kds text-kds-text shadow-[0_0_0_9px_#000,0_0_0_12px_#2a2826,0_50px_90px_-40px_rgb(0_0_0/0.6)] max-lg:mx-3 lg:mt-3 ${view === "svecias" ? "max-lg:hidden" : ""}`}
         >
           <div className="flex items-center justify-between gap-3 border-b border-kds-line px-4 py-3 sm:px-5">
             <div
@@ -262,7 +262,7 @@ export function Demo() {
                     aria-controls="demo-team-panel"
                     tabIndex={selected ? 0 : -1}
                     onClick={() => setTeamTab(t)}
-                    className={`min-h-11 rounded-md px-3.5 text-[15px] font-semibold ${
+                    className={`min-h-11 rounded-full px-4 text-[15px] font-semibold ${
                       selected ? "bg-slip text-ink" : "text-kds-muted hover:text-kds-text"
                     }`}
                   >
@@ -272,7 +272,7 @@ export function Demo() {
                 );
               })}
             </div>
-            <p className="font-display text-[1.3rem] font-bold lg:hidden">{viewLabels[currentTeam]}</p>
+            <p className="font-display text-[1.3rem] font-semibold lg:hidden">{viewLabels[currentTeam]}</p>
             <p className="text-[14px] text-kds-muted">Planšetė</p>
           </div>
 

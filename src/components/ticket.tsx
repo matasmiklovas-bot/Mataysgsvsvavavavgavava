@@ -11,6 +11,8 @@ type TicketProps = {
   payment?: "Apmokėta" | "Grynaisiais";
   status?: { label: string; tone: "new" | "cooking" | "ready" };
   className?: string;
+  /** Smaller type for tickets inside device mock-ups. */
+  compact?: boolean;
 };
 
 const statusTone = {
@@ -20,9 +22,13 @@ const statusTone = {
 };
 
 /** A kitchen ticket as it appears on the rail. Shared by the hero, the demo and the team section. */
-export function Ticket({ orderId, table, station, time, late, lines, payment, status, className = "" }: TicketProps) {
+export function Ticket({ orderId, table, station, time, late, lines, payment, status, className = "", compact = false }: TicketProps) {
   return (
-    <div className={`slip px-4 pt-3.5 text-[13px] leading-[1.5] shadow-[0_14px_24px_-14px_rgb(0_0_0/0.55)] ${className}`}>
+    <div
+      className={`slip leading-[1.5] shadow-[0_14px_24px_-14px_rgb(0_0_0/0.55)] ${
+        compact ? "px-3 pt-3 text-[11.5px]" : "px-4 pt-3.5 text-[13px]"
+      } ${className}`}
+    >
       <div className="flex items-baseline justify-between gap-3 font-semibold tracking-wide">
         <span>{station.toUpperCase()}</span>
         <span>{formatOrderNumber(orderId)}</span>
