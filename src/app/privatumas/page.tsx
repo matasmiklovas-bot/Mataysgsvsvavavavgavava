@@ -7,7 +7,7 @@ import { Footer } from "@/components/sections/footer";
 
 export const metadata: Metadata = {
   title: "Privatumo politika",
-  description: "Kaip „Stalas“ tvarko duomenis, kuriuos paliekate demonstracijos užsakymo formoje.",
+  description: "Kaip „Kvitas“ tvarko duomenis, kuriuos paliekate demonstracijos užsakymo formoje.",
   alternates: { canonical: "/privatumas" },
 };
 
@@ -36,7 +36,7 @@ export default function PrivacyPage() {
           </p>
 
           <Section title="Kas tvarko duomenis">
-            Duomenis tvarko {company || "„Stalas“"}
+            Duomenis tvarko {company || "„Kvitas“"}
             {companyCode ? `, įmonės kodas ${companyCode}` : ""}.
             {email ? ` Susisiekti galite el. paštu ${email}.` : " Susisiekti galite per svetainės formą."}
           </Section>

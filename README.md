@@ -1,4 +1,4 @@
-# Stalas: QR užsakymų svetainė
+# Kvitas: QR užsakymų svetainė
 
 Vieno puslapio svetainė QR užsakymų sistemai restoranams, kavinėms ir barams.
 Pagrindinė dalis yra interaktyvi demonstracija: svečio telefonas → virtuvės, baro ir personalo planšetės.

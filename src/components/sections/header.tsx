@@ -7,7 +7,7 @@ export function Header() {
   return (
     <header className="sticky top-0 z-50 border-b border-white/10 bg-night/80 backdrop-blur-xl backdrop-saturate-150">
       <div className="mx-auto flex h-14 max-w-6xl items-center justify-between gap-4 px-4 sm:px-6">
-        <Link href="/" className="flex min-h-11 items-center" aria-label="Stalas, į pradžią">
+        <Link href="/" className="flex min-h-11 items-center" aria-label={`${siteConfig.name}, į pradžią`}>
           <Logo tone="light" />
         </Link>
         <nav aria-label="Pagrindinė navigacija" className="hidden md:block">

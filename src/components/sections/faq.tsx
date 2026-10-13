@@ -2,13 +2,17 @@ import { Reveal } from "@/components/reveal";
 
 /*
   Answers only state what is known about the product and leave specifics for the demo.
-  TODO (site owner): replace with exact answers once confirmed (tablets, POS, card fees,
-  offline mode, launch time, menu editing, languages, allergens, contract terms).
+  TODO (site owner): replace with exact answers once confirmed (POS, card fees,
+  offline mode, launch time, languages, allergens, contract terms).
 */
 const faq: { q: string; a: string }[] = [
   {
     q: "Ar reikia pirkti planšetes?",
-    a: "Užsakymai rodomi virtuvės, baro ir personalo planšetėse. Kokių ir kiek jų reikia jūsų salei ir ar tiks jau turimos, pasakysime per demonstraciją.",
+    a: "Nebūtinai. Galite naudoti savo planšetes arba nuomotis visą reikalingą įrangą iš mūsų už 50 € per mėnesį. Kiek planšečių reikia jūsų salei, pasakysime per demonstraciją.",
+  },
+  {
+    q: "Kiek kainuoja priežiūra?",
+    a: "Nieko. Palaikymas neribotas, o meniu, kainų ar kitus pakeitimus, kurių paprašysite, atliekame nemokamai.",
   },
   {
     q: "Kaip su kasos aparatu ir čekiais?",
@@ -28,7 +32,7 @@ const faq: { q: string; a: string }[] = [
   },
   {
     q: "Ar galime patys keisti meniu ir kainas?",
-    a: "Meniu keičiasi kartu su sezonu, todėl apie tai kalbame pirmiausia. Per demonstraciją parodysime, kaip atnaujinami patiekalai ir kainos.",
+    a: "Užtenka parašyti mums, ką pakeisti: naujus patiekalus, kainas ar sezoninį meniu. Visus pakeitimus, kurių paprašysite, atliekame nemokamai.",
   },
   {
     q: "Ar meniu gali būti keliomis kalbomis?",
@@ -40,7 +44,7 @@ const faq: { q: string; a: string }[] = [
   },
   {
     q: "Ar yra minimalus sutarties terminas?",
-    a: "Sutarties sąlygas aptariame prieš pasirašant, kad viskas būtų aišku iš anksto. Kaina nesikeičia: 400 € už įdiegimą ir 1 € per mėnesį.",
+    a: "Sutarties sąlygas aptariame prieš pasirašant, kad viskas būtų aišku iš anksto. Kaina: 400 € už įdiegimą, 1 € per mėnesį, o jei nuomojatės įrangą, dar 50 € per mėnesį.",
   },
   {
     q: "Ką daryti svečiams, kurie nenori skenuoti?",

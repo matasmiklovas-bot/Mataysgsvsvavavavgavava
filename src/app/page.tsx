@@ -20,6 +20,7 @@ const structuredData = {
   offers: [
     { "@type": "Offer", name: "Įdiegimas", price: siteConfig.pricing.setup, priceCurrency: "EUR" },
     { "@type": "Offer", name: "Mėnesio mokestis", price: siteConfig.pricing.monthly, priceCurrency: "EUR" },
+    { "@type": "Offer", name: "Įrangos nuoma per mėnesį", price: siteConfig.pricing.equipmentRent, priceCurrency: "EUR" },
   ],
 };
 

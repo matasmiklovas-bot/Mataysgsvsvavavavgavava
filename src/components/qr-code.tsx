@@ -5,7 +5,7 @@ type QrCodeProps = {
   label: string;
   className?: string;
   color?: string;
-  /** Rounded dots, soft finder eyes and the Stalas mark in the middle. */
+  /** Rounded dots, soft finder eyes and the Kvitas mark in the middle. */
   styled?: boolean;
 };
 
@@ -69,7 +69,7 @@ export function QrCode({ value, label, className, color = "#1d1d1f", styled = fa
           <rect x={x + 2} y={y + 2} width={3} height={3} rx={0.9} fill={color} />
         </g>
       ))}
-      {/* Stalas mark in the clear centre */}
+      {/* Kvitas mark in the clear centre */}
       <rect x={lx + 0.4} y={lx + 0.4} width={ls - 0.8} height={ls - 0.8} rx={1.2} fill="#fff" />
       <svg x={lx + ls * 0.18} y={lx + ls * 0.14} width={ls * 0.64} height={ls * 0.72} viewBox="5 1 22 30">
         <path d="M6 2h20v24l-3.33 3.5-3.34-3.5-3.33 3.5-3.33-3.5-3.34 3.5L6 26z" fill={color} />

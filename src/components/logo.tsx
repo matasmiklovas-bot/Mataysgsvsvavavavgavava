@@ -1,6 +1,8 @@
+import { siteConfig } from "@/config/site";
+
 type Tone = "dark" | "light";
 
-/** "Stalas" mark: a kitchen ticket with a torn edge; the red line is the guest's note. */
+/** "Kvitas" mark: a kitchen ticket with a torn edge; the red line is the guest's note. */
 export function LogoMark({ className = "size-8", tone = "dark" }: { className?: string; tone?: Tone }) {
   const body = tone === "dark" ? "#1d1d1f" : "#f5f3ef";
   const line = tone === "dark" ? "#f5f4f1" : "#0c0b0a";
@@ -23,7 +25,7 @@ export function Logo({ tone = "dark" }: { tone?: Tone }) {
           tone === "dark" ? "text-ink" : "text-night-text"
         }`}
       >
-        Stalas
+        {siteConfig.name}
       </span>
     </span>
   );

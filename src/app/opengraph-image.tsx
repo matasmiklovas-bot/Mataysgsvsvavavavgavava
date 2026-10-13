@@ -1,7 +1,7 @@
 import { ImageResponse } from "next/og";
 import { siteConfig } from "@/config/site";
 
-export const alt = "Stalas: svečiai užsisako patys, o virtuvė užsakymą mato iškart";
+export const alt = "Kvitas: svečiai užsisako patys, o virtuvė užsakymą mato iškart";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -24,13 +24,13 @@ export default function OpengraphImage() {
         <div style={{ display: "flex", flexDirection: "column", maxWidth: 640 }}>
           <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
             <div style={{ display: "flex", width: 34, height: 44, background: "#f5f3ef", borderBottom: "6px solid #e5583c" }} />
-            <div style={{ fontSize: 40 }}>Stalas</div>
+            <div style={{ fontSize: 40 }}>Kvitas</div>
           </div>
           <div style={{ marginTop: 56, fontSize: 68, lineHeight: 1.05, letterSpacing: -2 }}>
             Svečiai užsisako patys, o virtuvė užsakymą mato iškart.
           </div>
           <div style={{ marginTop: 32, fontSize: 30, color: "#a39f97" }}>
-            {`${setup} € už įdiegimą ir ${monthly} € per mėnesį`}
+            {`${setup} € įdiegimas · ${monthly} € per mėnesį · priežiūra nemokama`}
           </div>
         </div>
         <div

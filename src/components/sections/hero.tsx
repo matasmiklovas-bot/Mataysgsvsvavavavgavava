@@ -55,11 +55,11 @@ export function Hero() {
           </a>
         </div>
         <p className="rise mt-6 text-[15px] text-night-muted" style={delay(300)}>
-          {setup}&nbsp;€ už įdiegimą ir {monthly}&nbsp;€ per mėnesį
+          {setup}&nbsp;€ už įdiegimą, {monthly}&nbsp;€ per mėnesį, priežiūra nemokama
         </p>
 
         <div className="rise mt-14 sm:mt-20" style={delay(420)}>
-          <HeroStory stand={<TableStand />} />
+          <HeroStory stand={<TableStand />} standCompact={<TableStand compact />} />
         </div>
       </div>
     </section>
@@ -67,20 +67,20 @@ export function Hero() {
 }
 
 /** Table stand with a real, scannable QR code that opens the demo on this page. */
-function TableStand() {
+function TableStand({ compact = false }: { compact?: boolean }) {
   return (
     <figure
       aria-label={`Staliuko ${heroOrder.table} stovelis su QR kodu`}
-      className="relative w-[184px] text-left [transform:perspective(1000px)_rotateY(9deg)] xl:w-[204px]"
+      className={`relative text-left ${compact ? "w-full" : "w-[184px] xl:w-[204px]"}`}
     >
-      <div className="relative rounded-[22px] bg-[#fbf8f1] p-3.5 text-ink shadow-[0_40px_60px_-30px_rgb(0_0_0/0.95),inset_0_1px_0_rgb(255_255_255/0.9)] ring-1 ring-black/5 xl:p-4">
+      <div className={`relative rounded-[22px] bg-[#fbf8f1] text-ink shadow-[0_40px_60px_-30px_rgb(0_0_0/0.95),inset_0_1px_0_rgb(255_255_255/0.9)] ring-1 ring-black/5 ${compact ? "p-3" : "p-3.5 xl:p-4"}`}>
         <div className="flex items-center gap-1.5 text-[11px] text-ink-2">
           <LogoMark className="size-3.5" />
           {restaurant.kind} „{restaurant.name}“
         </div>
         <div className="mt-2 flex items-end justify-between">
           <span className="pb-1 text-[10.5px] font-semibold tracking-[0.18em] text-ink-2 uppercase">Staliukas</span>
-          <span className="text-[3.9rem] leading-[0.78] font-semibold tracking-[-0.06em] xl:text-[4.4rem]">
+          <span className={`leading-[0.78] font-semibold tracking-[-0.06em] ${compact ? "text-[3.1rem]" : "text-[3.9rem] xl:text-[4.4rem]"}`}>
             {heroOrder.table}
           </span>
         </div>
@@ -98,7 +98,7 @@ function TableStand() {
           </span>
         </div>
 
-        <div className="mt-3 flex items-center gap-2">
+        <div className={`mt-3 items-center gap-2 ${compact ? "hidden" : "flex"}`}>
           <span className="flex size-7 shrink-0 items-center justify-center rounded-full bg-ink text-white">
             <svg viewBox="0 0 24 24" className="size-3.5" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
               <rect x="6" y="2.5" width="12" height="19" rx="3" />

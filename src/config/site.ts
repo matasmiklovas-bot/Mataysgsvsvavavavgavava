@@ -12,15 +12,21 @@ function resolveSiteUrl(): string {
 }
 
 export const siteConfig = {
-  name: "Stalas",
-  title: "Stalas · QR užsakymai restoranams, kavinėms ir barams",
+  name: "Kvitas",
+  title: "Kvitas · QR užsakymai restoranams, kavinėms ir barams",
   description:
-    "Svečias nuskenuoja kodą ant staliuko ir užsisako telefone. Patiekalai iškart patenka į virtuvės planšetę, gėrimai į baro. 400 € už įdiegimą ir 1 € per mėnesį.",
+    "Svečias nuskenuoja kodą ant staliuko ir užsisako telefone. Patiekalai iškart patenka į virtuvės planšetę, gėrimai į baro. 400 € už įdiegimą ir 1 € per mėnesį, priežiūra nemokama.",
   url: resolveSiteUrl(),
   locale: "lt_LT",
   pricing: {
+    /** One-time setup, EUR. */
     setup: 400,
+    /** System fee per month, EUR. */
     monthly: 1,
+    /** Optional rent of all equipment (tablets etc.) per month, EUR. */
+    equipmentRent: 50,
+    /** Support and changes on request, EUR. */
+    maintenance: 0,
   },
   cta: "Užsisakyti demonstraciją",
   ctaShort: "Demonstracija",

@@ -22,7 +22,7 @@ const cepelinai = getItem("cepelinai");
 const total = linesTotal(heroOrder.lines);
 const otherTickets = [seedOrders[1], seedOrders[0]];
 
-export function HeroStory({ stand }: { stand: ReactNode }) {
+export function HeroStory({ stand, standCompact }: { stand: ReactNode; standCompact: ReactNode }) {
   const [t, setT] = useState(0);
   const rootRef = useRef<HTMLDivElement>(null);
 
@@ -302,35 +302,44 @@ export function HeroStory({ stand }: { stand: ReactNode }) {
         </div>
       </div>
 
-      {/* Phones: the ticket appears under the device instead of on a tablet. */}
-      <div aria-hidden="true" className="mx-auto mt-6 h-[236px] w-[236px] md:hidden">
-        <p className="mb-2 text-center text-[13px] text-night-muted">
-          {ticketStage ? "Tuo metu virtuvės planšetėje" : "Virtuvės planšetė laukia užsakymo"}
-        </p>
-        {!ticketStage && (
-          <div className="flex h-[150px] items-center justify-center rounded-md border border-dashed border-night-line font-mono text-[12px] text-night-muted">
-            #024 · Staliukas 4
+      {/* Phones: the table stand and a small kitchen screen sit side by side under the phone. */}
+      <div aria-hidden="true" className="mx-auto mt-8 flex max-w-[360px] items-end justify-center gap-3 md:hidden">
+        <div className="w-[136px] shrink-0 min-[380px]:w-[148px]">{standCompact}</div>
+        <div className="h-[262px] w-[182px] shrink-0 overflow-hidden rounded-[1.25rem] bg-kds text-kds-text shadow-[0_0_0_6px_#000,0_0_0_8px_#2a2826,0_30px_50px_-25px_rgb(0_0_0/0.9)] min-[380px]:w-[192px]">
+          <div className="flex items-center justify-between border-b border-kds-line px-3 py-2 text-[11.5px]">
+            <span className="font-semibold">Virtuvė</span>
+            <span className="flex items-center gap-1.5 text-kds-muted">
+              <span className={`size-1.5 rounded-full ${ticketStage ? "bg-ready-on-dark" : "animate-pulse bg-tomato-bright"}`} />
+              {ticketStage === "paruosta" ? "Paruošta" : ticketStage === "ruosiama" ? "Ruošiama" : ticketStage ? "1 naujas" : "Laukiama"}
+            </span>
           </div>
-        )}
-        {ticketStage && (
-          <div key="mobile-ticket" className="animate-ticket-in">
-            <Ticket
-              orderId={heroOrder.id}
-              table={heroOrder.table}
-              station="Virtuvė"
-              time="ką tik"
-              lines={heroOrder.lines}
-              status={
-                ticketStage === "paruosta"
-                  ? { label: "Paruošta", tone: "ready" }
-                  : ticketStage === "ruosiama"
-                    ? { label: "Ruošiama", tone: "cooking" }
-                    : { label: "Naujas", tone: "new" }
-              }
-              compact
-            />
+          <div className="mx-3 mt-2.5 h-1 rounded-full bg-[#8f8a80]" />
+          <div className="-mt-0.5 px-3">
+            {ticketStage ? (
+              <div key="mobile-ticket" className="animate-ticket-in">
+                <Ticket
+                  orderId={heroOrder.id}
+                  table={heroOrder.table}
+                  station="Virtuvė"
+                  time="ką tik"
+                  lines={heroOrder.lines}
+                  status={
+                    ticketStage === "paruosta"
+                      ? { label: "Paruošta", tone: "ready" }
+                      : ticketStage === "ruosiama"
+                        ? { label: "Ruošiama", tone: "cooking" }
+                        : { label: "Naujas", tone: "new" }
+                  }
+                  compact
+                />
+              </div>
+            ) : (
+              <p className="pt-16 text-center text-[12px] leading-snug text-kds-muted">
+                Užsakymas atsiras čia, vos svečias jį patvirtins
+              </p>
+            )}
           </div>
-        )}
+        </div>
       </div>
     </div>
   );
