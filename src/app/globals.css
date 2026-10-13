@@ -38,6 +38,11 @@
 
   --ease-out-soft: cubic-bezier(0.2, 0.7, 0.2, 1);
 
+  /* Radius scale: controls are precise, panels a little softer, large surfaces softest. */
+  --radius-control: 10px;
+  --radius-panel: 14px;
+  --radius-surface: 20px;
+
   --animate-ticket-in: ticket-in 0.8s var(--ease-out-soft) both;
   --animate-flash: flash 1.6s ease-out 2;
   --animate-scan: scan 3.4s ease-in-out infinite;
@@ -47,7 +52,6 @@
   --animate-fade-up: fade-up 0.45s var(--ease-out-soft) both;
   --animate-fade-in: fade-in 0.3s ease-out both;
   --animate-menu-item: menu-item 0.45s var(--ease-out-soft) both;
-  --animate-glow: glow 18s ease-in-out infinite alternate;
   --animate-pop: pop 0.5s cubic-bezier(0.3, 1.4, 0.5, 1) both;
 
   @keyframes fade-in {
@@ -60,18 +64,6 @@
     from {
       opacity: 0;
       transform: translateY(-8px);
-    }
-  }
-
-  /* Slow drift of the warm light behind the hero devices. */
-  @keyframes glow {
-    from {
-      transform: translate3d(-6%, 0, 0) scale(1);
-      opacity: 0.75;
-    }
-    to {
-      transform: translate3d(6%, -4%, 0) scale(1.12);
-      opacity: 1;
     }
   }
 
@@ -213,10 +205,10 @@ body {
 /* Scroll reveal (see <Reveal>). Content is visible without JavaScript. */
 .js .reveal {
   opacity: 0;
-  transform: translate3d(0, 20px, 0);
+  transform: translate3d(0, 14px, 0);
   transition:
-    opacity 0.9s var(--ease-out-soft),
-    transform 0.9s var(--ease-out-soft);
+    opacity 0.7s var(--ease-out-soft),
+    transform 0.7s var(--ease-out-soft);
   transition-delay: var(--delay, 0ms);
 }
 .js .reveal[data-shown] {

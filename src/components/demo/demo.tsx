@@ -262,7 +262,7 @@ export function Demo() {
                     aria-controls="demo-team-panel"
                     tabIndex={selected ? 0 : -1}
                     onClick={() => setTeamTab(t)}
-                    className={`min-h-11 rounded-full px-4 text-[15px] font-semibold ${
+                    className={`min-h-11 rounded-control px-4 text-[15px] font-semibold ${
                       selected ? "bg-slip text-ink" : "text-kds-muted hover:text-kds-text"
                     }`}
                   >
@@ -299,12 +299,12 @@ export function Demo() {
         aria-label="Demonstracijos valdymas"
         className="mt-8 flex flex-wrap items-center justify-center gap-2 text-[15px] text-ink lg:mt-12"
       >
-        <label className="flex h-11 items-center gap-1 rounded-full bg-white pr-2 pl-4 ring-1 ring-line transition-shadow focus-within:ring-2 focus-within:ring-ink">
+        <label className="flex h-11 items-center gap-1 rounded-control bg-white pr-2 pl-4 ring-1 ring-line transition-shadow ring-inset focus-within:ring-2 focus-within:ring-ink">
           <span className="text-ink-2">Svečio staliukas</span>
           <select
             value={state.table}
             onChange={(e) => dispatch({ type: "setTable", table: Number(e.target.value) })}
-            className="h-11 cursor-pointer rounded-full bg-transparent pr-1 pl-1 font-semibold text-ink focus:outline-none"
+            className="h-11 cursor-pointer rounded-control bg-transparent pr-1 pl-1 font-semibold text-ink focus:outline-none"
           >
             {tables.map((t) => (
               <option key={t} value={t}>
@@ -321,7 +321,7 @@ export function Demo() {
             setNow(clock());
             announce(`Naujas užsakymas ${formatOrderNumber(id)} iš kito staliuko.`);
           }}
-          className="inline-flex h-11 items-center gap-2 rounded-full bg-white px-4 ring-1 ring-line transition-colors hover:bg-paper-2"
+          className="inline-flex h-11 items-center gap-2 rounded-control bg-white px-4 ring-1 ring-line ring-inset transition-[background-color,transform] hover:bg-paper-2 active:scale-[0.98]"
         >
           <span aria-hidden="true" className="text-ink-2">+</span>
           Užsakymas iš kito staliuko
@@ -335,7 +335,7 @@ export function Demo() {
             setTeamTab("virtuve");
             announce("Demonstracija pradėta iš naujo.");
           }}
-          className="inline-flex h-11 items-center gap-2 rounded-full bg-white px-4 ring-1 ring-line transition-colors hover:bg-paper-2"
+          className="inline-flex h-11 items-center gap-2 rounded-control bg-white px-4 ring-1 ring-line ring-inset transition-[background-color,transform] hover:bg-paper-2 active:scale-[0.98]"
         >
           <span aria-hidden="true" className="text-ink-2">↺</span>
           Pradėti iš naujo

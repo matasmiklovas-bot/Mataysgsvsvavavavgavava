@@ -42,8 +42,8 @@ export default function PrivacyPage() {
           </Section>
 
           <Section title="Kokius duomenis renkame">
-            Restorano pavadinimą, jūsų vardą, telefono numerį arba el. pašto adresą, staliukų
-            skaičių ir žinutę, jei ją parašote. Kitų duomenų forma nerenka.
+            Restorano pavadinimą, jūsų vardą, telefono numerį arba el. pašto adresą, pasirinktą
+            įrangos variantą ir žinutę, jei juos nurodote. Kitų duomenų forma nerenka.
           </Section>
 
           <Section title="Kam juos naudojame">

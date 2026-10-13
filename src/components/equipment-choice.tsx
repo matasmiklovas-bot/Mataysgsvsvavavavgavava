@@ -2,10 +2,12 @@
 
 import { useSyncExternalStore } from "react";
 import { siteConfig } from "@/config/site";
+import { formatPrice } from "@/lib/data";
+import { LogoMark } from "@/components/logo";
 
 export type Equipment = "savo" | "nuoma";
 
-// One choice shared by the pricing cards and the contact form.
+// One choice shared by the pricing section and the contact form.
 let current: Equipment | null = null;
 const listeners = new Set<() => void>();
 
@@ -34,43 +36,29 @@ export const equipmentLabel: Record<Equipment, string> = {
 
 const { setup, monthly, equipmentRent } = siteConfig.pricing;
 
-const options: {
-  value: Equipment;
-  title: string;
-  price: number;
-  perMonth?: boolean;
-  text: string;
-  badge?: string;
-}[] = [
-  { value: "savo", title: "Savo įranga", price: 0, text: "Planšetes perkate patys arba naudojate jau turimas." },
+const options: { value: Equipment; title: string; text: string; price: string }[] = [
+  { value: "savo", title: "Savo įranga", text: "Naudojate turimas planšetes arba perkate patys.", price: "0 €" },
   {
     value: "nuoma",
     title: "Įrangos nuoma",
-    price: equipmentRent,
-    perMonth: true,
-    text: "Visa reikalinga įranga iš mūsų už vieną mėnesio kainą.",
-    badge: "Nieko pirkti nereikia",
+    text: "Visa reikalinga įranga iš mūsų. Nieko pirkti nereikia.",
+    price: `${equipmentRent} € / mėn.`,
   },
 ];
 
-/** Pick own tablets or rent everything; shows the resulting price right away. */
+/** Own tablets or rent everything: a plain list of two choices. */
 export function EquipmentPicker() {
   const choice = useEquipment();
-  const total = monthly + (choice === "nuoma" ? equipmentRent : 0);
-
   return (
-    <div>
-      <div role="radiogroup" aria-label="Įranga" className="grid grid-cols-1 gap-3 md:grid-cols-2 md:gap-4">
+    <fieldset>
+      <legend className="text-[1.125rem] font-semibold tracking-[-0.01em]">Kokias planšetes naudosite?</legend>
+      <div className="mt-4 divide-y divide-line overflow-hidden rounded-surface bg-white ring-1 ring-line">
         {options.map((option) => {
           const selected = choice === option.value;
           return (
             <label
               key={option.value}
-              className={`group relative flex cursor-pointer flex-col rounded-[1.5rem] p-6 transition-[background-color,box-shadow,color,transform] duration-300 active:scale-[0.99] sm:rounded-[2rem] sm:p-7 has-[:focus-visible]:outline-3 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-tomato ${
-                selected
-                  ? "bg-night text-night-text shadow-[0_24px_40px_-24px_rgb(0_0_0/0.6)]"
-                  : "bg-white shadow-[0_1px_2px_rgb(0_0_0/0.04)] hover:shadow-[0_18px_36px_-24px_rgb(0_0_0/0.35)]"
-              }`}
+              className="flex cursor-pointer items-start gap-4 px-5 py-5 transition-colors hover:bg-[#fbfaf8] has-[:focus-visible]:outline-3 has-[:focus-visible]:-outline-offset-3 has-[:focus-visible]:outline-tomato-bright sm:px-6"
             >
               <input
                 type="radio"
@@ -80,60 +68,82 @@ export function EquipmentPicker() {
                 onChange={() => setEquipment(option.value)}
                 className="sr-only"
               />
-              <span className="flex items-start justify-between gap-3">
-                <span className={`text-[15px] font-semibold ${selected ? "text-night-muted" : "text-ink-2"}`}>
-                  {option.title}
-                </span>
-                <span
-                  aria-hidden="true"
-                  className={`flex size-6 shrink-0 items-center justify-center rounded-full transition-colors duration-300 ${
-                    selected ? "bg-tomato" : "ring-[1.5px] ring-[#d6d1c8] ring-inset group-hover:ring-ink-2"
-                  }`}
-                >
-                  <svg
-                    viewBox="0 0 16 16"
-                    className={`size-3.5 text-white transition-[opacity,transform] duration-300 ${
-                      selected ? "scale-100 opacity-100" : "scale-50 opacity-0"
-                    }`}
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2.4"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  >
-                    <path d="M3.5 8.5l3 3 6-7" />
-                  </svg>
-                </span>
+              <span
+                aria-hidden="true"
+                className={`mt-0.5 flex size-5 shrink-0 items-center justify-center rounded-full ring-inset transition-[box-shadow] duration-200 ${
+                  selected ? "ring-[6px] ring-ink" : "ring-[1.5px] ring-[#c9c4ba]"
+                }`}
+              />
+              <span className="min-w-0 flex-1">
+                <span className="block font-semibold">{option.title}</span>
+                <span className="mt-0.5 block text-[15px] text-ink-2">{option.text}</span>
               </span>
-              <span className="mt-2 text-[2.25rem] leading-none font-semibold tracking-[-0.04em]">
-                {option.price}&nbsp;€
-                {option.perMonth && (
-                  <span
-                    className={`ml-1 text-[1rem] font-normal tracking-normal ${selected ? "text-night-muted" : "text-ink-2"}`}
-                  >
-                    /mėn.
-                  </span>
-                )}
-              </span>
-              <span className={`mt-3 ${selected ? "text-night-muted" : "text-ink-2"}`}>{option.text}</span>
-              {option.badge && (
-                <span className="mt-4 w-fit rounded-full bg-tomato px-2.5 py-1 text-[12px] font-semibold text-white">
-                  {option.badge}
-                </span>
-              )}
+              <span className="shrink-0 font-semibold tabular-nums">{option.price}</span>
             </label>
           );
         })}
       </div>
+    </fieldset>
+  );
+}
 
-      <div aria-live="polite" className="mt-4 min-h-0">
-        {choice && (
-          <p className="animate-fade-up rounded-[1.25rem] bg-white px-5 py-4 text-center text-[16px] text-ink">
-            Jūsų kaina: <strong className="font-semibold">{setup}&nbsp;€</strong> už įdiegimą, toliau{" "}
-            <strong className="font-semibold">{total}&nbsp;€</strong> per mėnesį.
-          </p>
-        )}
+/** The price written out as a kitchen-style ticket; it follows the equipment choice. */
+export function PriceReceipt() {
+  const choice = useEquipment();
+  const perMonth = monthly + (choice === "nuoma" ? equipmentRent : 0);
+  const equipmentLine =
+    choice === "nuoma" ? `${formatPrice(equipmentRent * 100)} / mėn.` : choice === "savo" ? formatPrice(0) : "–";
+
+  return (
+    <div className="slip w-full max-w-[400px] px-6 pt-6 text-[14px] shadow-[0_30px_50px_-34px_rgb(0_0_0/0.4)]">
+      <div className="flex items-center justify-between gap-3">
+        <span className="flex items-center gap-2 font-semibold tracking-wide">
+          <LogoMark className="size-5" />
+          KVITAS
+        </span>
+        <span className="text-ink-2">Kainos pasiūlymas</span>
       </div>
+      <div className="my-4 border-t border-dashed border-ink/35" />
+      <dl className="space-y-2.5">
+        <Row term="Įdiegimas" note="vieną kartą" value={formatPrice(setup * 100)} />
+        <Row term="Sistema" value={`${formatPrice(monthly * 100)} / mėn.`} />
+        <Row term="Priežiūra" value={`${formatPrice(0)} / mėn.`} />
+        <Row
+          term="Įranga"
+          note={choice === "nuoma" ? "nuoma" : choice === "savo" ? "savo" : "nepasirinkta"}
+          value={equipmentLine}
+        />
+      </dl>
+      <div className="my-4 border-t border-dashed border-ink/35" />
+      <dl aria-live="polite" className="grid grid-cols-2 gap-4 pb-2">
+        <div>
+          <dt className="text-ink-2 uppercase">Dabar</dt>
+          <dd className="mt-1 font-sans text-[2.25rem] leading-none font-semibold tracking-[-0.04em] tabular-nums">
+            {setup}&nbsp;€
+          </dd>
+        </div>
+        <div>
+          <dt className="text-ink-2 uppercase">Kas mėnesį</dt>
+          <dd
+            key={perMonth}
+            className="mt-1 animate-fade-up font-sans text-[2.25rem] leading-none font-semibold tracking-[-0.04em] tabular-nums"
+          >
+            {perMonth}&nbsp;€
+          </dd>
+        </div>
+      </dl>
+    </div>
+  );
+}
+
+function Row({ term, note, value }: { term: string; note?: string; value: string }) {
+  return (
+    <div className="flex items-baseline justify-between gap-4">
+      <dt>
+        {term}
+        {note && <span className="text-ink-2"> · {note}</span>}
+      </dt>
+      <dd className="shrink-0 tabular-nums">{value}</dd>
     </div>
   );
 }

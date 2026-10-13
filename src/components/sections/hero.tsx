@@ -11,58 +11,45 @@ export function Hero() {
   const { setup, monthly } = siteConfig.pricing;
   return (
     <section aria-labelledby="hero-title" className="relative isolate -mt-14 overflow-hidden bg-night text-night-text">
-      {/* Light: a soft glow above the headline and a slowly drifting warm pool under the devices. */}
-      <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10">
-        <div className="absolute inset-x-0 top-0 h-[34rem] bg-[radial-gradient(50%_60%_at_50%_0%,rgb(255_236_214/0.07),transparent_70%)]" />
-        <div className="absolute inset-x-[-10%] bottom-[-8%] h-[72%] animate-glow bg-[radial-gradient(55%_50%_at_50%_70%,rgb(229_140_80/0.17),transparent_70%)] will-change-transform" />
-        <div className="absolute inset-x-0 bottom-0 h-px bg-[linear-gradient(90deg,transparent,rgb(255_255_255/0.08),transparent)]" />
-      </div>
-      <div className="mx-auto max-w-6xl px-4 pt-[7.5rem] pb-16 text-center sm:px-6 sm:pt-[9.5rem] lg:pt-[8.5rem] lg:pb-24 [@media(max-height:520px)]:pt-24">
-        <p
-          className="rise inline-flex items-center gap-2 rounded-full border border-white/12 bg-white/[0.04] px-3.5 py-1.5 text-[14px] text-night-text/85 sm:text-[15px]"
-          style={delay(0)}
-        >
-          <span aria-hidden="true" className="size-1.5 rounded-full bg-tomato-bright shadow-[0_0_10px_2px_rgb(229_88_60/0.6)]" />
-          QR užsakymai restoranams, kavinėms ir barams
-        </p>
+      {/* One quiet light source: a warm pool on the "table" where the devices stand. */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-x-0 bottom-0 -z-10 h-[60%] bg-[radial-gradient(55%_50%_at_50%_80%,rgb(229_140_80/0.12),transparent_70%)]"
+      />
+      <div className="mx-auto max-w-7xl px-4 pt-[7rem] pb-14 sm:px-6 sm:pt-[9rem] lg:pt-[9.5rem] lg:pb-20 [@media(max-height:520px)]:pt-24">
         <h1
           id="hero-title"
-          className="rise mx-auto mt-6 max-w-[15ch] text-[2.6rem] leading-[1.02] font-semibold tracking-[-0.045em] text-balance sm:text-[4.25rem] lg:text-[4.75rem] xl:max-w-none"
-          style={delay(80)}
+          className="rise text-[min(8.6vw,6rem)] leading-[1] sm:text-[min(7.6vw,6rem)] sm:leading-[0.98] font-semibold tracking-[-0.04em]"
+          style={delay(0)}
         >
-          Svečiai užsisako patys, <br className="max-xl:hidden" />o virtuvė užsakymą mato iškart.
+          Svečiai užsisako patys.
+          <span className="block text-night-muted">Virtuvė mato iškart.</span>
         </h1>
-        <p
-          className="rise mx-auto mt-6 max-w-[34rem] text-[1.125rem] leading-relaxed text-night-muted sm:text-[1.25rem]"
-          style={delay(160)}
-        >
-          Svečias nuskenuoja kodą ir užsisako telefone. Virtuvė, baras ir padavėjas mato iškart.
-        </p>
-        <div
-          className="rise mt-9 flex flex-col items-center justify-center gap-4 sm:flex-row sm:gap-8"
-          style={delay(240)}
-        >
-          <a
-            href="#forma"
-            className={buttonClass({ fullOnMobile: true })}
-          >
-            {siteConfig.cta}
-          </a>
-          <a
-            href="#demo"
-            className="group inline-flex min-h-11 items-center gap-1.5 text-[1.0625rem] font-medium text-night-text hover:text-white"
-          >
-            Išbandyti demonstraciją
-            <span aria-hidden="true" className="transition-transform duration-300 group-hover:translate-y-0.5">
-              ↓
-            </span>
-          </a>
+        <div className="rise mt-8 grid gap-y-7 sm:mt-10 lg:grid-cols-12 lg:items-end lg:gap-x-10" style={delay(120)}>
+          <p className="max-w-[32rem] text-[1.0625rem] leading-relaxed text-night-muted sm:text-[1.1875rem] lg:col-span-6">
+            Svečias nuskenuoja QR kodą ant staliuko ir užsisako savo telefone. Užsakymas iškart atsiranda
+            virtuvės ar baro planšetėje, o padavėjas mato, ką ir kur nešti.
+          </p>
+          <div className="lg:col-span-6 lg:justify-self-end">
+            <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
+              <a href="#forma" className={buttonClass({ fullOnMobile: true })}>
+                {siteConfig.cta}
+              </a>
+              <a href="#demo" className={buttonClass({ variant: "secondary", on: "dark", fullOnMobile: true })}>
+                Išbandyti demonstraciją
+              </a>
+            </div>
+            <p className="mt-4 flex flex-wrap gap-x-3 gap-y-1 text-[14px] text-night-muted lg:justify-end">
+              <span>{setup}&nbsp;€ įdiegimas</span>
+              <span aria-hidden="true">·</span>
+              <span>{monthly}&nbsp;€ per mėnesį</span>
+              <span aria-hidden="true">·</span>
+              <span>Be programėlės</span>
+            </p>
+          </div>
         </div>
-        <p className="rise mt-6 text-[15px] text-balance text-night-muted" style={delay(300)}>
-          {setup}&nbsp;€ už įdiegimą, toliau {monthly}&nbsp;€ per mėnesį
-        </p>
 
-        <div className="rise mt-14 sm:mt-16 lg:mt-14" style={delay(420)}>
+        <div className="rise mt-14 sm:mt-16 lg:mt-20" style={delay(260)}>
           <HeroStory stand={<TableStand />} standCompact={<TableStand compact />} />
         </div>
       </div>

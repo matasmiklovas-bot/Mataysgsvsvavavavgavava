@@ -111,7 +111,7 @@ export function ContactForm() {
   if (status === "sent" || status === "mail") {
     return (
       <div role="status" className="animate-fade-up py-8 text-center">
-        <span className="mx-auto flex size-16 animate-pop items-center justify-center rounded-full bg-ready text-white shadow-[0_16px_30px_-14px_rgb(46_125_79/0.8)]">
+        <span className="mx-auto flex size-16 animate-pop items-center justify-center rounded-full bg-ready text-white">
           <svg viewBox="0 0 24 24" className="size-8" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
             <path d="M5 12.5l4.5 4.5L19 7.5" />
           </svg>
@@ -159,7 +159,7 @@ export function ContactForm() {
             return (
               <label
                 key={option}
-                className={`flex min-h-11 cursor-pointer items-center justify-center rounded-full border px-2 text-center text-[15px] whitespace-nowrap sm:text-[1.0625rem] has-[:focus-visible]:outline-3 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-tomato ${
+                className={`flex min-h-11 cursor-pointer items-center justify-center rounded-control border px-2 text-center text-[15px] whitespace-nowrap sm:text-[1.0625rem] has-[:focus-visible]:outline-3 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-tomato ${
                   checked ? "border-ink bg-ink text-white" : "border-line bg-white hover:border-ink-2"
                 }`}
               >
@@ -237,7 +237,7 @@ type InputProps = {
 function Input({ label, name, value, onChange, onBlur, error, hint, required, optional, multiline, autoComplete }: InputProps) {
   const id = useId();
   const describedBy = [error ? `${id}-error` : null, hint ? `${id}-hint` : null].filter(Boolean).join(" ") || undefined;
-  const className = `w-full rounded-xl border bg-white px-4 text-[1.0625rem] text-ink outline-none transition-colors focus:border-ink focus:ring-4 focus:ring-ink/10 ${
+  const className = `w-full rounded-control border bg-white px-4 text-[1.0625rem] text-ink outline-none transition-colors focus:border-ink focus:ring-4 focus:ring-ink/10 ${
     error ? "border-tomato border-2" : "border-line hover:border-ink-2"
   }`;
   return (
