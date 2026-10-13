@@ -74,11 +74,13 @@ export function HeroStory({ stand }: { stand: ReactNode }) {
         Animacija: svečias prie 4 staliuko telefone užsisako du jautienos mėsainius be svogūnų ir
         šaltibarščius, apmoka {formatPrice(total)}, o bilietas {heroOrder.id} atsiranda virtuvės planšetėje.
       </p>
-      <div aria-hidden="true" className="flex items-end justify-center gap-6 lg:gap-10">
-        <div className="hidden pb-6 lg:block">{stand}</div>
+      <div aria-hidden="true" className="relative flex items-end justify-center gap-6 lg:gap-7 xl:gap-10">
+        {/* The table surface the devices stand on */}
+        <div className="pointer-events-none absolute inset-x-[6%] -bottom-8 -z-10 h-16 rounded-[50%] bg-black/70 blur-2xl" />
+        <div className="hidden pb-4 lg:block">{stand}</div>
 
         {/* Phone */}
-        <div className="relative w-[272px] shrink-0 sm:w-[292px]">
+        <div className="relative w-[272px] shrink-0 sm:w-[292px] lg:w-[272px] xl:w-[292px]">
           <div className="rounded-[3rem] bg-[#2a2826] p-[3px] shadow-[0_40px_80px_-30px_rgb(0_0_0/0.9),inset_0_1px_0_rgb(255_255_255/0.18)]">
             <div className="rounded-[2.85rem] bg-black p-[9px]">
               <div className="relative flex h-[540px] flex-col overflow-hidden rounded-[2.35rem] bg-[#fffdf9] text-ink sm:h-[580px]">
@@ -234,9 +236,9 @@ export function HeroStory({ stand }: { stand: ReactNode }) {
         </div>
 
         {/* Kitchen tablet */}
-        <div className="relative hidden w-[480px] shrink-0 md:block">
+        <div className="relative hidden shrink-0 md:block md:w-[380px] lg:w-[410px] xl:w-[480px]">
           {/* Connection from the phone: a dot travels across when the order is sent. */}
-          <div className="absolute top-[42%] right-full h-[2px] w-6 bg-[repeating-linear-gradient(to_right,rgb(163_159_151/0.45)_0_4px,transparent_4px_8px)] lg:w-10">
+          <div className="absolute top-[42%] right-full h-[2px] w-6 bg-[repeating-linear-gradient(to_right,rgb(163_159_151/0.45)_0_4px,transparent_4px_8px)] lg:w-7 xl:w-10">
             {t === 7 && (
               <span
                 key="travel"

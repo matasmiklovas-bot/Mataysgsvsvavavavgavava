@@ -40,7 +40,7 @@
 
   --animate-ticket-in: ticket-in 0.8s var(--ease-out-soft) both;
   --animate-flash: flash 1.6s ease-out 2;
-  --animate-scan: scan 2.6s ease-in-out infinite;
+  --animate-scan: scan 3.4s ease-in-out infinite;
   --animate-tap: tap 0.6s ease-out both;
   --animate-stamp: stamp 0.45s cubic-bezier(0.3, 1.4, 0.5, 1) both;
   --animate-travel: travel 0.9s cubic-bezier(0.4, 0, 0.2, 1) both;

@@ -1,7 +1,8 @@
 import { siteConfig } from "@/config/site";
-import { heroOrder } from "@/lib/data";
+import { heroOrder, restaurant } from "@/lib/data";
 import { HeroStory } from "@/components/hero-story";
 import { QrCode } from "@/components/qr-code";
+import { LogoMark } from "@/components/logo";
 
 const delay = (ms: number) => ({ "--delay": `${ms}ms` }) as React.CSSProperties;
 
@@ -65,22 +66,54 @@ export function Hero() {
   );
 }
 
-/** Table stand with a real QR code that opens the demo on this page. */
+/** Table stand with a real, scannable QR code that opens the demo on this page. */
 function TableStand() {
   return (
-    <figure aria-label={`Staliuko ${heroOrder.table} stovelis su QR kodu`} className="text-left">
-      <div className="w-[176px] rounded-t-2xl bg-[#fbf8f1] px-4 pt-4 pb-4 text-ink shadow-[0_30px_50px_-25px_rgb(0_0_0/0.9)]">
-        <div className="flex items-end justify-between">
-          <span className="text-[11px] font-semibold tracking-[0.16em] text-ink-2 uppercase">Staliukas</span>
-          <span className="text-[3.6rem] leading-[0.8] font-semibold tracking-[-0.05em]">{heroOrder.table}</span>
+    <figure
+      aria-label={`Staliuko ${heroOrder.table} stovelis su QR kodu`}
+      className="relative w-[184px] text-left [transform:perspective(1000px)_rotateY(9deg)] xl:w-[204px]"
+    >
+      <div className="relative rounded-[22px] bg-[#fbf8f1] p-3.5 text-ink shadow-[0_40px_60px_-30px_rgb(0_0_0/0.95),inset_0_1px_0_rgb(255_255_255/0.9)] ring-1 ring-black/5 xl:p-4">
+        <div className="flex items-center gap-1.5 text-[11px] text-ink-2">
+          <LogoMark className="size-3.5" />
+          {restaurant.kind} „{restaurant.name}“
         </div>
-        <div className="relative mt-3 overflow-hidden rounded-lg">
-          <QrCode value={`${siteConfig.url}/#demo`} label="QR kodas, atidarantis demonstraciją" className="block h-auto w-full" />
-          <span className="absolute inset-x-1 h-[2px] animate-scan rounded-full bg-tomato-bright shadow-[0_0_10px_2px_rgb(229_88_60/0.55)]" />
+        <div className="mt-2 flex items-end justify-between">
+          <span className="pb-1 text-[10.5px] font-semibold tracking-[0.18em] text-ink-2 uppercase">Staliukas</span>
+          <span className="text-[3.9rem] leading-[0.78] font-semibold tracking-[-0.06em] xl:text-[4.4rem]">
+            {heroOrder.table}
+          </span>
         </div>
-        <p className="mt-2.5 text-[12px] leading-snug text-ink-2">Nuskenuokite ir užsisakykite</p>
+
+        <div className="relative mt-3 overflow-hidden rounded-2xl bg-white p-2 ring-1 ring-black/[0.06]">
+          <QrCode
+            value={`${siteConfig.url}/#demo`}
+            label="QR kodas, atidarantis demonstraciją"
+            styled
+            className="block h-auto w-full"
+          />
+          {/* Soft scanning light */}
+          <span className="pointer-events-none absolute inset-x-0 h-12 -translate-y-1/2 animate-scan bg-[linear-gradient(to_bottom,transparent,rgb(229_88_60/0.16)_45%,rgb(229_88_60/0.16)_55%,transparent)]">
+            <span className="absolute inset-x-2 top-1/2 h-[1.5px] -translate-y-1/2 rounded-full bg-tomato-bright/90 shadow-[0_0_12px_2px_rgb(229_88_60/0.55)]" />
+          </span>
+        </div>
+
+        <div className="mt-3 flex items-center gap-2">
+          <span className="flex size-7 shrink-0 items-center justify-center rounded-full bg-ink text-white">
+            <svg viewBox="0 0 24 24" className="size-3.5" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+              <rect x="6" y="2.5" width="12" height="19" rx="3" />
+              <path d="M10.5 18.5h3" strokeLinecap="round" />
+            </svg>
+          </span>
+          <p className="text-[11.5px] leading-tight font-medium">
+            Nuskenuokite kamera
+            <span className="block font-normal text-ink-2">Meniu, užsakymas, apmokėjimas</span>
+          </p>
+        </div>
       </div>
-      <div aria-hidden="true" className="mx-auto h-2.5 w-[196px] -translate-x-[10px] rounded-b-md bg-[#3a3632]" />
+      {/* Stand foot and its shadow on the table */}
+      <div aria-hidden="true" className="mx-auto -mt-1 h-3 w-[86%] rounded-b-xl bg-[linear-gradient(to_bottom,#57514a,#2a2724)]" />
+      <div aria-hidden="true" className="mx-auto mt-1 h-3 w-full rounded-[50%] bg-black/70 blur-md" />
     </figure>
   );
 }
