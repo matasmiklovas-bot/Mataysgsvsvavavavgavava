@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useId, useState, type FormEvent } from "react";
 import { siteConfig } from "@/config/site";
+import { equipmentLabel, setEquipment, useEquipment, type Equipment } from "@/components/equipment-choice";
 
 /**
  * Form delivery. TODO: paste a Formspree form URL (https://formspree.io/f/...) or
@@ -14,12 +15,15 @@ const FORM_ACCESS_KEY = process.env.NEXT_PUBLIC_FORM_ACCESS_KEY ?? "";
 
 const CONTACT_EMAIL = siteConfig.contacts.email;
 
-type Values = { restaurant: string; name: string; contact: string; tables: string; message: string };
+type Values = { restaurant: string; name: string; contact: string; message: string };
 type Field = keyof Values;
 type Errors = Partial<Record<Field, string>>;
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
-const tableOptions = ["iki 10", "10–25", "25+"];
+const equipmentChips: Record<Equipment, string> = {
+  savo: "Savo įranga",
+  nuoma: `Nuoma ${siteConfig.pricing.equipmentRent} €/mėn.`,
+};
 
 function validate(v: Values): Errors {
   const errors: Errors = {};
@@ -34,11 +38,12 @@ function validate(v: Values): Errors {
 }
 
 export function ContactForm() {
-  const [values, setValues] = useState<Values>({ restaurant: "", name: "", contact: "", tables: "", message: "" });
+  const [values, setValues] = useState<Values>({ restaurant: "", name: "", contact: "", message: "" });
   const [errors, setErrors] = useState<Errors>({});
   const [touched, setTouched] = useState<Partial<Record<Field, boolean>>>({});
   const [status, setStatus] = useState<"idle" | "sending" | "sent" | "mail" | "error">("idle");
   const [sentName, setSentName] = useState("");
+  const equipment = useEquipment();
 
   function set(field: Field, value: string) {
     const next = { ...values, [field]: value };
@@ -62,7 +67,7 @@ export function ContactForm() {
       restaurant: values.restaurant.trim(),
       name: values.name.trim(),
       contact: values.contact.trim(),
-      tables: values.tables,
+      equipment: equipment ? equipmentLabel[equipment] : "",
       message: values.message.trim(),
     };
     setSentName(data.name);
@@ -72,7 +77,7 @@ export function ContactForm() {
         `Restoranas: ${data.restaurant}`,
         `Vardas: ${data.name}`,
         `Kontaktas: ${data.contact}`,
-        data.tables && `Staliukų: ${data.tables}`,
+        data.equipment && `Įranga: ${data.equipment}`,
         data.message && `\n${data.message}`,
       ]
         .filter(Boolean)
@@ -140,27 +145,27 @@ export function ContactForm() {
 
       <fieldset>
         <legend className="font-semibold">
-          Kiek turite staliukų? <span className="font-normal text-ink-2">(neprivaloma)</span>
+          Įranga <span className="font-normal text-ink-2">(neprivaloma)</span>
         </legend>
-        <div className="mt-2 flex flex-wrap gap-2">
-          {tableOptions.map((option) => {
-            const checked = values.tables === option;
+        <div className="mt-2 grid grid-cols-2 gap-2">
+          {(Object.keys(equipmentChips) as Equipment[]).map((option) => {
+            const checked = equipment === option;
             return (
               <label
                 key={option}
-                className={`flex min-h-11 cursor-pointer items-center rounded-full border px-5 has-[:focus-visible]:outline-3 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-tomato ${
+                className={`flex min-h-11 cursor-pointer items-center justify-center rounded-full border px-2 text-center text-[15px] whitespace-nowrap sm:text-[1.0625rem] has-[:focus-visible]:outline-3 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-tomato ${
                   checked ? "border-ink bg-ink text-white" : "border-line bg-white hover:border-ink-2"
                 }`}
               >
                 <input
                   type="radio"
-                  name="tables"
+                  name="equipment-form"
                   value={option}
                   checked={checked}
-                  onChange={() => set("tables", option)}
+                  onChange={() => setEquipment(option)}
                   className="sr-only"
                 />
-                {option}
+                {equipmentChips[option]}
               </label>
             );
           })}
@@ -173,7 +178,7 @@ export function ContactForm() {
         <button
           type="submit"
           disabled={status === "sending"}
-          className="inline-flex h-13 w-full items-center justify-center rounded-full bg-tomato px-8 text-[1.0625rem] font-medium whitespace-nowrap text-white transition-colors hover:bg-tomato-dark disabled:opacity-70 sm:w-auto"
+          className="inline-flex h-13 w-full items-center justify-center rounded-full bg-tomato px-8 text-[1.0625rem] font-medium whitespace-nowrap text-white transition-colors hover:bg-tomato-dark disabled:opacity-70"
         >
           {status === "sending" ? "Siunčiama…" : siteConfig.cta}
         </button>
@@ -238,7 +243,7 @@ function Input({ label, name, value, onChange, onBlur, error, hint, required, op
         <textarea
           id={id}
           name={name}
-          rows={4}
+          rows={3}
           value={value}
           onChange={(e) => onChange(name, e.target.value)}
           className={`${className} mt-2 py-3`}

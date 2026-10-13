@@ -1,8 +1,9 @@
 import { siteConfig } from "@/config/site";
 import { Reveal } from "@/components/reveal";
+import { EquipmentPicker } from "@/components/equipment-choice";
 
 export function Pricing() {
-  const { setup, monthly, equipmentRent } = siteConfig.pricing;
+  const { setup, monthly } = siteConfig.pricing;
   const tiles = [
     { label: "Įdiegimas", amount: setup, note: "vieną kartą" },
     { label: "Kas mėnesį", amount: monthly, note: "sistema, priežiūra ir pakeitimai" },
@@ -18,7 +19,7 @@ export function Pricing() {
             Aiški kaina be smulkaus šrifto.
           </h2>
           <p className="mx-auto mt-5 max-w-[30rem] text-[1.125rem] text-balance text-ink-2 sm:text-[1.25rem]">
-            Vieną kartą sumokate už įdiegimą. Sistema, priežiūra ir visi pakeitimai toliau nieko nekainuoja.
+            Sumokate tik už įdiegimą. Visa kita nemokama.
           </p>
         </Reveal>
 
@@ -46,38 +47,15 @@ export function Pricing() {
             Planšetės: savos arba nuomojamos
           </h3>
           <p className="mt-2 max-w-[40rem] text-ink-2">
-            Užsakymai rodomi virtuvės, baro ir personalo planšetėse. Pasirinkite, kaip jums patogiau.
+            Užsakymai rodomi planšetėse virtuvėje, bare ir salėje.
           </p>
-          <div className="mt-7 grid grid-cols-1 gap-4 md:grid-cols-2">
-            <div className="rounded-2xl border border-line p-6">
-              <p className="text-[15px] font-semibold text-ink-2">Savo įranga</p>
-              <p className="mt-2 text-[2.25rem] leading-none font-semibold tracking-[-0.04em]">0&nbsp;€</p>
-              <p className="mt-3 text-ink-2">Planšetes perkate patys arba naudojate jau turimas.</p>
-            </div>
-            <div className="relative rounded-2xl bg-night p-6 text-night-text">
-              <span className="absolute top-5 right-5 rounded-full bg-tomato px-2.5 py-1 text-[12px] font-semibold text-white">
-                Nieko pirkti nereikia
-              </span>
-              <p className="text-[15px] font-semibold text-night-muted">Įrangos nuoma</p>
-              <p className="mt-2 text-[2.25rem] leading-none font-semibold tracking-[-0.04em]">
-                {equipmentRent}&nbsp;€
-                <span className="ml-1 text-[1rem] font-normal tracking-normal text-night-muted">/mėn.</span>
-              </p>
-              <p className="mt-3 text-night-muted">Visa reikalinga įranga iš mūsų už vieną mėnesio kainą.</p>
-            </div>
+          <div className="mt-7">
+            <EquipmentPicker />
           </div>
 
-          <dl className="mt-8 divide-y divide-line border-t border-line">
-            <PriceRow term="Priežiūra">
-              Viskuo rūpinamės mes, neribotai ir nemokamai. Meniu, kainų ar kitus pakeitimus, kurių
-              paprašysite, atliekame be jokio mokesčio.
-            </PriceRow>
-            <PriceRow term="Ko reikia iš jūsų">Stabilaus interneto salėje, virtuvėje ir bare.</PriceRow>
-            <PriceRow term="Prieš apsisprendžiant">
-              Parodysime demonstraciją ir atsakysime į klausimus apie įrangą, mokėjimus kortele ir
-              sutarties sąlygas. Nieko nepasirašote, kol viskas aišku.
-            </PriceRow>
-          </dl>
+          <p className="mt-6 text-center text-[15px] text-ink-2">
+            Reikia tik stabilaus interneto. Nieko nepasirašote, kol viskas aišku.
+          </p>
           <div className="mt-8 text-center">
             <a
               href="#forma"
@@ -89,14 +67,5 @@ export function Pricing() {
         </Reveal>
       </div>
     </section>
-  );
-}
-
-function PriceRow({ term, children }: { term: string; children: React.ReactNode }) {
-  return (
-    <div className="grid grid-cols-1 gap-1 py-5 sm:grid-cols-[14rem_1fr] sm:gap-8">
-      <dt className="font-semibold">{term}</dt>
-      <dd className="text-ink-2">{children}</dd>
-    </div>
   );
 }

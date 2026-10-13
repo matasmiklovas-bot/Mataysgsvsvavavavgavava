@@ -8,47 +8,31 @@ import { Reveal } from "@/components/reveal";
 const faq: { q: string; a: string }[] = [
   {
     q: "Ar reikia pirkti planšetes?",
-    a: "Nebūtinai. Galite naudoti savo planšetes arba nuomotis visą reikalingą įrangą iš mūsų už 50 € per mėnesį. Kiek planšečių reikia jūsų salei, pasakysime per demonstraciją.",
+    a: "Ne. Galite naudoti savas arba nuomotis visą įrangą iš mūsų už 50 € per mėnesį.",
   },
   {
     q: "Kiek kainuoja priežiūra?",
-    a: "Nieko. Sistema ir priežiūra kainuoja 0 € per mėnesį. Viskuo rūpinamės mes: palaikymas neribotas, o meniu, kainų ar kitus pakeitimus, kurių paprašysite, atliekame nemokamai.",
+    a: "Nieko. Priežiūra ir visi pakeitimai, kurių paprašysite, nemokami.",
   },
   {
     q: "Kaip su kasos aparatu ir čekiais?",
-    a: "Tai priklauso nuo kasos, kurią naudojate dabar. Parašykite jos pavadinimą formoje arba pasakykite pokalbio metu, ir paaiškinsime, kaip viską suderinti.",
+    a: "Priklauso nuo jūsų kasos. Pasakykite jos pavadinimą, ir paaiškinsime, kaip viską suderinti.",
   },
   {
     q: "Kokie mokesčiai už mokėjimus kortele?",
-    a: "Mokėjimus kortele aptarnauja mokėjimų paslaugų teikėjas, kuris taiko savo įkainius. Kokie jie būtų jūsų restoranui, parodysime prieš pasirašant sutartį.",
+    a: "Juos taiko mokėjimų teikėjas. Tikslius įkainius parodysime prieš pasirašant.",
   },
   {
     q: "Kas nutinka, jei dingsta internetas?",
-    a: "Užsakymai keliauja internetu, todėl salėje, virtuvėje ir bare reikia stabilaus ryšio. Kaip elgtis, jei jis sutriktų, aptarsime pagal jūsų patalpas.",
+    a: "Užsakymams reikia interneto. Kaip apsidrausti, aptarsime pagal jūsų patalpas.",
   },
   {
     q: "Per kiek laiko viskas paleidžiama?",
-    a: "Tai priklauso nuo meniu dydžio ir staliukų skaičiaus. Tikslų terminą pasakysime per demonstraciją, kai pamatysime jūsų meniu.",
+    a: "Priklauso nuo meniu dydžio. Tikslų terminą pasakysime, kai pamatysime jūsų meniu.",
   },
   {
-    q: "Ar galime patys keisti meniu ir kainas?",
-    a: "Užtenka parašyti mums, ką pakeisti: naujus patiekalus, kainas ar sezoninį meniu. Visus pakeitimus, kurių paprašysite, atliekame nemokamai.",
-  },
-  {
-    q: "Ar meniu gali būti keliomis kalbomis?",
-    a: "Jei pas jus užsuka užsienio svečių, pasakykite, kokių kalbų reikia, ir aptarsime galimybes jūsų restoranui.",
-  },
-  {
-    q: "Ar galima nurodyti alergenus?",
-    a: "Prie patiekalo svečias gali pažymėti pastabą, ir ji paryškinta atsiranda virtuvės biliete, kaip „be svogūnų“ demonstracijoje. Kaip meniu pažymėti alergenus, aptarsime kartu.",
-  },
-  {
-    q: "Ar yra minimalus sutarties terminas?",
-    a: "Sutarties sąlygas aptariame prieš pasirašant, kad viskas būtų aišku iš anksto. Kaina: 400 € už įdiegimą, toliau 0 € per mėnesį. Jei nuomojatės įrangą, 50 € per mėnesį.",
-  },
-  {
-    q: "Ką daryti svečiams, kurie nenori skenuoti?",
-    a: "QR užsakymas yra papildomas būdas, ne vienintelis. Svečias visada gali pasikviesti padavėją ir užsisakyti kaip įprasta.",
+    q: "O jei svečias nenori skenuoti?",
+    a: "Jis užsisako kaip įprasta, per padavėją. QR yra papildomas būdas, ne vienintelis.",
   },
 ];
 
@@ -61,11 +45,8 @@ export function Faq() {
             id="duk-title"
             className="text-[2.4rem] leading-[1.04] font-semibold tracking-[-0.04em] text-balance sm:text-[3.5rem]"
           >
-            Ko dažniausiai klausia savininkai.
+            Dažni klausimai.
           </h2>
-          <p className="mx-auto mt-4 max-w-[30rem] text-[1.125rem] text-ink-2">
-            Neradote savo klausimo? Užduokite jį formoje, atsakysime per demonstraciją.
-          </p>
         </Reveal>
         <Reveal className="mt-12 border-t border-line">
           {faq.map((item) => (

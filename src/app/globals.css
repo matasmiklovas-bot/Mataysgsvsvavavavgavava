@@ -44,6 +44,14 @@
   --animate-tap: tap 0.6s ease-out both;
   --animate-stamp: stamp 0.45s cubic-bezier(0.3, 1.4, 0.5, 1) both;
   --animate-travel: travel 0.9s cubic-bezier(0.4, 0, 0.2, 1) both;
+  --animate-fade-up: fade-up 0.45s var(--ease-out-soft) both;
+
+  @keyframes fade-up {
+    from {
+      opacity: 0;
+      transform: translateY(6px);
+    }
+  }
 
   @keyframes ticket-in {
     from {

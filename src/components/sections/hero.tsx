@@ -30,8 +30,7 @@ export function Hero() {
           className="rise mx-auto mt-6 max-w-[34rem] text-[1.125rem] leading-relaxed text-night-muted sm:text-[1.25rem]"
           style={delay(160)}
         >
-          Svečias nuskenuoja kodą ant staliuko ir užsisako savo telefone, be programėlės. Virtuvė,
-          baras ir padavėjas viską mato tą pačią sekundę.
+          Svečias nuskenuoja kodą ir užsisako telefone. Virtuvė, baras ir padavėjas mato iškart.
         </p>
         <div
           className="rise mt-9 flex flex-col items-center justify-center gap-4 sm:flex-row sm:gap-8"

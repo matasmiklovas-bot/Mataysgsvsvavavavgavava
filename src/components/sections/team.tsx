@@ -15,8 +15,8 @@ type Role = {
 const roles: Role[] = [
   {
     role: "Padavėjams",
-    headline: "Padavėjas nebebėgioja su užrašų knygele tarp staliuko ir virtuvės.",
-    text: "Užsakymą įveda pats svečias. Planšetėje padavėjas mato, kas jau paruošta ir prie kurio staliuko nešti, o laiką skiria žmonėms salėje.",
+    headline: "Padavėjas nebebėgioja su užrašų knygele.",
+    text: "Planšetėje mato, kas paruošta ir prie kurio staliuko nešti.",
     fragment: (
       <div className="rounded-2xl bg-kds p-3 text-kds-text">
         <div className="flex flex-wrap items-center gap-3 rounded-xl bg-kds-2 p-3">
@@ -36,8 +36,8 @@ const roles: Role[] = [
   },
   {
     role: "Virtuvei",
-    headline: "Pastaba „be svogūnų“ virtuvę pasiekia tiksliai taip, kaip ją parašė svečias.",
-    text: "Bilietas atsiranda planšetėje, vos svečias patvirtina užsakymą. Nereikia iššifruoti ranka rašytų lapelių ir antrą kartą klausti padavėjo.",
+    headline: "Pastaba „be svogūnų“ pasiekia virtuvę tiksliai.",
+    text: "Jokių ranka rašytų lapelių ir pakartotinių klausimų.",
     fragment: (
       <div className="rounded-2xl bg-kds px-5 pt-5 pb-1">
         <Ticket
@@ -54,8 +54,8 @@ const roles: Role[] = [
   },
   {
     role: "Barui",
-    headline: "Baras gauna tik gėrimus ir pradeda jų nelaukdamas virtuvės.",
-    text: "Jei užsakyme yra ir patiekalų, ir gėrimų, virtuvė ir baras gauna atskirus bilietus. Limonadas jau ant staliuko, kol sprandinė dar ant grotelių.",
+    headline: "Baras gauna tik gėrimus ir pradeda iškart.",
+    text: "Virtuvė ir baras gauna atskirus bilietus.",
     fragment: (
       <div className="rounded-2xl bg-kds px-5 pt-5 pb-1">
         <Ticket
@@ -72,13 +72,8 @@ const roles: Role[] = [
   },
   {
     role: "Savininkui",
-    headline: "Svečiui nebereikia gaudyti padavėjo žvilgsnio, kad galėtų susimokėti.",
-    text: (
-      <>
-        Kuriuos mokėjimo būdus rodyti, nusprendžiate jūs: kortele telefonu, grynaisiais padavėjui
-        arba abu. Kas sumokėjo telefonu, tas nelaukia sąskaitos ir išeina, kai nori.
-      </>
-    ),
+    headline: "Svečiai susimoka patys, kada nori.",
+    text: "Kortele telefonu, grynaisiais padavėjui arba abu. Renkatės jūs.",
     fragment: (
       // TODO: patikrinti, kaip tikroje sistemoje atrodo mokėjimo būdų nustatymai.
       <div className="rounded-2xl bg-white p-5 shadow-[0_20px_40px_-28px_rgb(0_0_0/0.35)]">
@@ -138,7 +133,9 @@ export function Team() {
                 </h3>
                 <p className="mt-4 max-w-[32rem] text-ink-2">{role.text}</p>
               </div>
-              <div className="w-full max-w-[400px] self-center">{role.fragment}</div>
+              <div className="flex w-full flex-1 items-center justify-center">
+                <div className="w-full max-w-[400px]">{role.fragment}</div>
+              </div>
             </Reveal>
           ))}
         </div>
