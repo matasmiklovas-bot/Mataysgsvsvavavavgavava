@@ -15,7 +15,7 @@ export function Header() {
         </nav>
         <Link
           href="/#forma"
-          className="inline-flex h-10 items-center rounded-full bg-tomato px-4 text-[14px] font-medium text-white transition-colors hover:bg-tomato-dark"
+          className="inline-flex h-10 items-center rounded-full bg-tomato px-4 text-[14px] font-medium text-white transition-[background-color,transform] hover:bg-tomato-dark active:scale-[0.98]"
         >
           <span className="sm:hidden">{siteConfig.ctaShort}</span>
           <span className="max-sm:hidden">{siteConfig.cta}</span>

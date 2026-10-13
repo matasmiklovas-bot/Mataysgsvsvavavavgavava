@@ -178,7 +178,7 @@ export function ContactForm() {
         <button
           type="submit"
           disabled={status === "sending"}
-          className="inline-flex h-13 w-full items-center justify-center rounded-full bg-tomato px-8 text-[1.0625rem] font-medium whitespace-nowrap text-white transition-colors hover:bg-tomato-dark disabled:opacity-70"
+          className="inline-flex h-13 w-full items-center justify-center rounded-full bg-tomato px-8 text-[1.0625rem] font-medium whitespace-nowrap text-white transition-[background-color,transform] hover:bg-tomato-dark active:scale-[0.98] disabled:opacity-70"
         >
           {status === "sending" ? "Siunčiama…" : siteConfig.cta}
         </button>

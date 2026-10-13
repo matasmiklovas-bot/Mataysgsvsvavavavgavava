@@ -15,16 +15,16 @@ export function Hero() {
         aria-hidden="true"
         className="pointer-events-none absolute inset-x-0 bottom-0 -z-10 h-[70%] bg-[radial-gradient(60%_55%_at_50%_75%,rgb(229_150_90/0.14),transparent_70%)]"
       />
-      <div className="mx-auto max-w-6xl px-4 pt-16 pb-16 text-center sm:px-6 sm:pt-24 lg:pt-28 lg:pb-24">
+      <div className="mx-auto max-w-6xl px-4 pt-16 pb-16 text-center sm:px-6 sm:pt-24 lg:pt-20 lg:pb-24">
         <p className="rise text-[15px] text-night-muted sm:text-[17px]" style={delay(0)}>
           QR užsakymai restoranams, kavinėms ir barams
         </p>
         <h1
           id="hero-title"
-          className="rise mx-auto mt-4 max-w-[15ch] text-[2.6rem] leading-[1.02] font-semibold tracking-[-0.045em] text-balance sm:text-[4.25rem] lg:text-[5.4rem]"
+          className="rise mx-auto mt-4 max-w-[15ch] text-[2.6rem] leading-[1.02] font-semibold tracking-[-0.045em] text-balance sm:text-[4.25rem] lg:text-[4.75rem] xl:max-w-none"
           style={delay(80)}
         >
-          Svečiai užsisako patys, o virtuvė užsakymą mato iškart.
+          Svečiai užsisako patys, <br className="max-xl:hidden" />o virtuvė užsakymą mato iškart.
         </h1>
         <p
           className="rise mx-auto mt-6 max-w-[34rem] text-[1.125rem] leading-relaxed text-night-muted sm:text-[1.25rem]"
@@ -38,7 +38,7 @@ export function Hero() {
         >
           <a
             href="#forma"
-            className="inline-flex h-13 w-full items-center justify-center rounded-full bg-tomato px-8 text-[1.0625rem] font-medium whitespace-nowrap text-white transition-colors hover:bg-tomato-dark sm:w-auto"
+            className="inline-flex h-13 w-full items-center justify-center rounded-full bg-tomato px-8 text-[1.0625rem] font-medium whitespace-nowrap text-white transition-[background-color,transform] hover:bg-tomato-dark active:scale-[0.98] sm:w-auto"
           >
             {siteConfig.cta}
           </a>
@@ -56,7 +56,7 @@ export function Hero() {
           {setup}&nbsp;€ už įdiegimą, toliau {monthly}&nbsp;€ per mėnesį
         </p>
 
-        <div className="rise mt-14 sm:mt-20" style={delay(420)}>
+        <div className="rise mt-14 sm:mt-16 lg:mt-14" style={delay(420)}>
           <HeroStory stand={<TableStand />} standCompact={<TableStand compact />} />
         </div>
       </div>

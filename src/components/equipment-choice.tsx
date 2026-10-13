@@ -66,10 +66,10 @@ export function EquipmentPicker() {
           return (
             <label
               key={option.value}
-              className={`group relative flex cursor-pointer flex-col rounded-2xl p-6 transition-[background-color,box-shadow,color] duration-300 has-[:focus-visible]:outline-3 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-tomato ${
+              className={`group relative flex cursor-pointer flex-col rounded-[1.5rem] p-6 transition-[background-color,box-shadow,color,transform] duration-300 active:scale-[0.99] sm:rounded-[2rem] sm:p-7 has-[:focus-visible]:outline-3 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-tomato ${
                 selected
                   ? "bg-night text-night-text shadow-[0_24px_40px_-24px_rgb(0_0_0/0.6)]"
-                  : "bg-white ring-1 ring-line hover:ring-ink-2"
+                  : "bg-white shadow-[0_1px_2px_rgb(0_0_0/0.04)] hover:shadow-[0_18px_36px_-24px_rgb(0_0_0/0.35)]"
               }`}
             >
               <input
@@ -87,7 +87,7 @@ export function EquipmentPicker() {
                 <span
                   aria-hidden="true"
                   className={`flex size-6 shrink-0 items-center justify-center rounded-full transition-colors duration-300 ${
-                    selected ? "bg-tomato" : "ring-[1.5px] ring-line ring-inset group-hover:ring-ink-2"
+                    selected ? "bg-tomato" : "ring-[1.5px] ring-[#d6d1c8] ring-inset group-hover:ring-ink-2"
                   }`}
                 >
                   <svg
@@ -128,7 +128,7 @@ export function EquipmentPicker() {
 
       <div aria-live="polite" className="mt-4 min-h-0">
         {choice && (
-          <p className="animate-fade-up rounded-2xl bg-paper-2 px-5 py-4 text-center text-[16px] text-ink">
+          <p className="animate-fade-up rounded-[1.25rem] bg-white px-5 py-4 text-center text-[16px] text-ink">
             Jūsų kaina: <strong className="font-semibold">{setup}&nbsp;€</strong> už įdiegimą, toliau{" "}
             <strong className="font-semibold">{total}&nbsp;€</strong> per mėnesį.
           </p>

@@ -10,7 +10,7 @@ export function Pricing() {
   ];
   return (
     <section id="kaina" aria-labelledby="kaina-title" className="scroll-mt-14 bg-paper">
-      <div className="mx-auto max-w-5xl px-4 py-20 sm:px-6 sm:py-28">
+      <div className="mx-auto max-w-3xl px-4 py-20 sm:px-6 sm:py-28">
         <Reveal className="text-center">
           <h2
             id="kaina-title"
@@ -23,7 +23,7 @@ export function Pricing() {
           </p>
         </Reveal>
 
-        <div className="mx-auto mt-10 grid max-w-3xl grid-cols-1 gap-3 sm:mt-16 sm:grid-cols-2 sm:gap-5">
+        <div className="mt-10 grid grid-cols-1 gap-3 sm:mt-16 sm:grid-cols-2 sm:gap-4">
           {tiles.map((tile, index) => (
             <Reveal
               key={tile.label}
@@ -42,27 +42,27 @@ export function Pricing() {
         </div>
 
         {/* Equipment: own tablets or rent everything */}
-        <Reveal className="mt-4 rounded-[2rem] bg-white p-7 sm:mt-5 sm:p-10">
-          <h3 className="text-[1.6rem] leading-tight font-semibold tracking-[-0.03em] sm:text-[1.9rem]">
-            Planšetės: savos arba nuomojamos
-          </h3>
-          <p className="mt-2 max-w-[40rem] text-ink-2">
-            Užsakymai rodomi planšetėse virtuvėje, bare ir salėje.
-          </p>
-          <div className="mt-7">
+        <Reveal className="mt-16 sm:mt-24">
+          <div className="text-center">
+            <h3 className="text-[1.75rem] leading-tight font-semibold tracking-[-0.03em] text-balance sm:text-[2.25rem]">
+              Planšetės: savos arba nuomojamos.
+            </h3>
+            <p className="mt-3 text-[1.0625rem] text-ink-2">Pasirinkite, ir iškart matysite savo kainą.</p>
+          </div>
+          <div className="mt-8">
             <EquipmentPicker />
           </div>
 
-          <p className="mt-6 text-center text-[15px] text-ink-2">
-            Reikia tik stabilaus interneto. Nieko nepasirašote, kol viskas aišku.
-          </p>
-          <div className="mt-8 text-center">
+          <div className="mt-10 text-center">
             <a
               href="#forma"
-              className="inline-flex h-13 w-full items-center justify-center rounded-full bg-tomato px-8 text-[1.0625rem] font-medium whitespace-nowrap text-white transition-colors hover:bg-tomato-dark sm:w-auto"
+              className="inline-flex h-13 w-full items-center justify-center rounded-full bg-tomato px-8 text-[1.0625rem] font-medium whitespace-nowrap text-white transition-[background-color,transform] hover:bg-tomato-dark active:scale-[0.98] sm:w-auto"
             >
               {siteConfig.cta}
             </a>
+            <p className="mt-4 text-[15px] text-ink-2">
+              Reikia tik stabilaus interneto. Nieko nepasirašote, kol viskas aišku.
+            </p>
           </div>
         </Reveal>
       </div>
