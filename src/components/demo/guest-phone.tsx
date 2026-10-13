@@ -3,6 +3,7 @@
 import { forwardRef, useEffect, useRef, useState, type Dispatch } from "react";
 import { categories, formatOrderNumber, formatPrice, getItem, linesTotal, menu, restaurant, type Category } from "@/lib/data";
 import { StatusBar } from "@/components/status-bar";
+import { PaymentSheet } from "@/components/payment-sheet";
 import { cartLines, guestStatus, type DemoAction, type DemoState, type Payment } from "./store";
 
 export type PhoneScreen = "menu" | "cart" | "paying" | "done";
@@ -24,6 +25,30 @@ export const GuestPhone = forwardRef<HTMLDivElement, GuestPhoneProps>(function G
   const [payment, setPayment] = useState<Payment>("kortele");
   const scrollRef = useRef<HTMLDivElement>(null);
   const headingRef = useRef<HTMLHeadingElement>(null);
+  const screenRef = useRef<HTMLDivElement>(null);
+  // The menu "loads" for a moment the first time the phone comes into view, as after a real scan.
+  const [loaded, setLoaded] = useState(false);
+  useEffect(() => {
+    const node = screenRef.current;
+    if (!node || typeof IntersectionObserver === "undefined") {
+      setLoaded(true);
+      return;
+    }
+    let timer = 0;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry.isIntersecting) return;
+        observer.disconnect();
+        timer = window.setTimeout(() => setLoaded(true), 900);
+      },
+      { threshold: 0.3 },
+    );
+    observer.observe(node);
+    return () => {
+      observer.disconnect();
+      window.clearTimeout(timer);
+    };
+  }, []);
 
   const lines = cartLines(state.cart);
   const count = lines.reduce((sum, line) => sum + line.quantity, 0);
@@ -53,7 +78,7 @@ export const GuestPhone = forwardRef<HTMLDivElement, GuestPhoneProps>(function G
     const timer = window.setTimeout(() => {
       onSubmit("kortele");
       setScreen("done");
-    }, 1300);
+    }, 1900);
     return () => window.clearTimeout(timer);
   }, [current, onSubmit]);
 
@@ -71,7 +96,7 @@ export const GuestPhone = forwardRef<HTMLDivElement, GuestPhoneProps>(function G
     <div ref={ref} className="mx-auto w-full max-w-[370px]">
       <div className="rounded-[3.1rem] bg-[#2a2826] p-[3px] shadow-[0_50px_90px_-40px_rgb(0_0_0/0.65),inset_0_1px_0_rgb(255_255_255/0.18)]">
         <div className="rounded-[2.95rem] bg-black p-[10px]">
-        <div className="relative flex h-[600px] flex-col overflow-hidden rounded-[2.4rem] bg-[#fffdf9] sm:h-[640px]">
+        <div ref={screenRef} className="relative flex h-[600px] flex-col overflow-hidden rounded-[2.4rem] bg-[#fffdf9] sm:h-[640px]">
           <StatusBar />
 
           <div className="shrink-0 border-b border-line px-5 pt-1 pb-3">
@@ -82,7 +107,8 @@ export const GuestPhone = forwardRef<HTMLDivElement, GuestPhoneProps>(function G
           </div>
 
           <div ref={scrollRef} className="no-scrollbar relative min-h-0 flex-1 overflow-y-auto overscroll-contain">
-            {current === "menu" && (
+            {current === "menu" && !loaded && <MenuSkeleton />}
+            {current === "menu" && loaded && (
               <MenuScreen
                 headingRef={headingRef}
                 state={state}
@@ -93,7 +119,7 @@ export const GuestPhone = forwardRef<HTMLDivElement, GuestPhoneProps>(function G
               />
             )}
 
-            {current === "cart" && (
+            {(current === "cart" || current === "paying") && (
               <div className="px-5 pt-3 pb-6">
                 <button
                   type="button"
@@ -182,15 +208,6 @@ export const GuestPhone = forwardRef<HTMLDivElement, GuestPhoneProps>(function G
               </div>
             )}
 
-            {current === "paying" && (
-              <div className="flex h-full flex-col items-center justify-center gap-4 px-8 text-center">
-                <span aria-hidden="true" className="size-10 animate-spin rounded-full border-4 border-line border-t-tomato" />
-                <h3 ref={headingRef} tabIndex={-1} className="text-[1.4rem] font-semibold focus:outline-none">
-                  Apmokama…
-                </h3>
-                <p className="text-[15px] text-ink-2 tabular-nums">{formatPrice(total)}</p>
-              </div>
-            )}
 
             {current === "done" && order && (
               <div className="px-5 pt-4 pb-6">
@@ -234,15 +251,26 @@ export const GuestPhone = forwardRef<HTMLDivElement, GuestPhoneProps>(function G
             )}
           </div>
 
-          {current === "menu" && count > 0 && (
-            <div className="absolute inset-x-3 bottom-3">
+          <PaymentSheet
+            active={current === "paying"}
+            amount={formatPrice(total)}
+            merchant={`${restaurant.kind} „${restaurant.name}“`}
+            table={state.table}
+            approveAfter={1000}
+          />
+
+          {current === "menu" && loaded && count > 0 && (
+            <div className="absolute inset-x-3 bottom-3 animate-fade-up">
               <button
                 type="button"
                 onClick={() => setScreen("cart")}
                 className="flex h-14 w-full items-center justify-between rounded-2xl bg-ink px-4 text-white shadow-[0_10px_24px_-10px_rgb(0_0_0/0.6)]"
               >
                 <span className="text-[15px] font-semibold">
-                  Krepšelis <span className="ml-1 rounded-md bg-tomato px-1.5 tabular-nums">{count}</span>
+                  Krepšelis{" "}
+                  <span key={count} className="ml-1 inline-block animate-pop rounded-md bg-tomato px-1.5 tabular-nums">
+                    {count}
+                  </span>
                 </span>
                 <span className="text-[15px] font-semibold tabular-nums">Peržiūrėti · {formatPrice(total)}</span>
               </button>
@@ -254,6 +282,34 @@ export const GuestPhone = forwardRef<HTMLDivElement, GuestPhoneProps>(function G
     </div>
   );
 });
+
+/** Placeholder rows while the menu is loading. */
+function MenuSkeleton() {
+  return (
+    <div aria-busy="true" aria-label="Meniu kraunamas" className="px-5 pt-3">
+      <div className="h-0.5 overflow-hidden rounded-full bg-paper-2">
+        <div className="h-full w-2/3 animate-pulse rounded-full bg-tomato/70" />
+      </div>
+      <div className="mt-4 flex gap-2">
+        {[88, 104, 72].map((w) => (
+          <span key={w} className="h-9 animate-shimmer rounded-full bg-paper-2" style={{ width: w }} />
+        ))}
+      </div>
+      <ul className="mt-2">
+        {[0, 1, 2, 3].map((i) => (
+          <li key={i} className="flex items-center gap-3 border-b border-line py-4" style={{ animationDelay: `${i * 90}ms` }}>
+            <div className="min-w-0 flex-1 space-y-2">
+              <span className="block h-3.5 w-2/3 animate-shimmer rounded bg-paper-2" />
+              <span className="block h-3 w-5/6 animate-shimmer rounded bg-paper-2" />
+              <span className="block h-3 w-1/4 animate-shimmer rounded bg-paper-2" />
+            </div>
+            <span className="size-11 shrink-0 animate-shimmer rounded-full bg-paper-2" />
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
 
 function MenuScreen({
   headingRef,

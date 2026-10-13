@@ -5,6 +5,7 @@ import { formatOrderNumber, getItem, tables, type Station } from "@/lib/data";
 import { GuestPhone, type PhoneScreen } from "./guest-phone";
 import { StaffBoard, StationRail } from "./team-screens";
 import { cartLines, demoReducer, initialDemoState, type Payment } from "./store";
+import { playChime } from "./chime";
 
 type TeamTab = Station | "personalas";
 type View = "svecias" | TeamTab;
@@ -41,6 +42,9 @@ export function Demo() {
   const [teamTab, setTeamTab] = useState<TeamTab>("virtuve");
   const [phase, setPhase] = useState<{ screen: PhoneScreen; hasItems: boolean }>({ screen: "menu", hasItems: false });
   const [highlightId, setHighlightId] = useState<number | null>(null);
+  // Kitchen tablets ding when a ticket arrives; the bell swings and the sound can be muted.
+  const [soundOn, setSoundOn] = useState(true);
+  const [ring, setRing] = useState(0);
   const [now, setNow] = useState(0);
   const [message, setMessage] = useState("");
   const [flight, setFlight] = useState<Flight | null>(null);
@@ -100,6 +104,14 @@ export function Demo() {
 
       const wide = window.matchMedia("(min-width: 1024px)").matches;
       const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      const flies = wide && !reduce && !!phoneRef.current && !!teamRef.current;
+      // The ding comes as the ticket lands on the tablet.
+      timers.current.push(
+        window.setTimeout(() => {
+          setRing((r) => r + 1);
+          if (soundOn) playChime();
+        }, flies ? 850 : 150),
+      );
       if (wide && !reduce && phoneRef.current && teamRef.current) {
         setFlight({
           from: phoneRef.current.getBoundingClientRect(),
@@ -112,7 +124,7 @@ export function Demo() {
         timers.current.push(window.setTimeout(() => showStation(target), 1500));
       }
     },
-    [state.cart, state.nextId, announce, showStation],
+    [state.cart, state.nextId, announce, showStation, soundOn],
   );
 
   // Fly a small ticket from the phone to the start of the rail (desktop only).
@@ -273,7 +285,31 @@ export function Demo() {
               })}
             </div>
             <p className="font-display text-[1.3rem] font-semibold lg:hidden">{viewLabels[currentTeam]}</p>
-            <p className="text-[14px] text-kds-muted">Planšetė</p>
+            <div className="flex items-center gap-1">
+              <span
+                key={ring}
+                aria-hidden="true"
+                className={`flex size-9 origin-[50%_25%] items-center justify-center text-kds-muted ${ring > 0 ? "animate-ring text-tomato-bright" : ""}`}
+              >
+                <svg viewBox="0 0 24 24" className="size-[18px]" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M6 16V11a6 6 0 1 1 12 0v5l1.5 2h-15z" />
+                  <path d="M10 20.5a2 2 0 0 0 4 0" />
+                </svg>
+              </span>
+              <button
+                type="button"
+                aria-pressed={soundOn}
+                aria-label={soundOn ? "Išjungti garsą" : "Įjungti garsą"}
+                onClick={() => setSoundOn((on) => !on)}
+                className="flex min-h-11 items-center gap-1.5 rounded-full px-3 text-[14px] text-kds-muted transition-colors hover:bg-kds-2 hover:text-kds-text"
+              >
+                <svg viewBox="0 0 24 24" className="size-[18px]" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                  <path d="M4 9.5h3.5L12 6v12l-4.5-3.5H4z" />
+                  {soundOn ? <path d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11" /> : <path d="M16 9.5l5 5M21 9.5l-5 5" />}
+                </svg>
+                <span className="max-sm:sr-only">{soundOn ? "Garsas" : "Be garso"}</span>
+              </button>
+            </div>
           </div>
 
           <div id="demo-team-panel" className="min-h-[420px] pt-4 lg:min-h-[586px]">
@@ -319,6 +355,8 @@ export function Demo() {
             const id = state.nextId;
             dispatch({ type: "addExtra", at: clock() });
             setNow(clock());
+            setRing((r) => r + 1);
+            if (soundOn) playChime();
             announce(`Naujas užsakymas ${formatOrderNumber(id)} iš kito staliuko.`);
           }}
           className="inline-flex h-11 items-center gap-2 rounded-full bg-white px-4 ring-1 ring-line transition-colors hover:bg-paper-2"

@@ -4,6 +4,7 @@ import { useEffect, useRef, useState, type ReactNode } from "react";
 import { formatOrderNumber, formatPrice, getItem, heroOrder, linesTotal, restaurant, seedOrders } from "@/lib/data";
 import { Ticket } from "@/components/ticket";
 import { StatusBar } from "@/components/status-bar";
+import { PaymentSheet } from "@/components/payment-sheet";
 
 /**
  * A short, looping film of one order at table 4: the guest taps dishes, adds a note, pays,
@@ -140,7 +141,7 @@ export function HeroStory({ stand, standCompact }: { stand: ReactNode; standComp
                   </Screen>
 
                   {/* Cart */}
-                  <Screen show={screen === "cart"}>
+                  <Screen show={screen === "cart" || screen === "paying"}>
                     <div className="px-5 pt-3">
                       <p className="text-[19px] font-semibold tracking-[-0.02em]">Jūsų užsakymas</p>
                       <ul className="mt-2 divide-y divide-line text-[14px]">
@@ -180,13 +181,15 @@ export function HeroStory({ stand, standCompact }: { stand: ReactNode; standComp
                     </div>
                   </Screen>
 
-                  {/* Paying */}
-                  <Screen show={screen === "paying"}>
-                    <div className="flex h-full flex-col items-center justify-center gap-3">
-                      <span className="size-9 animate-spin rounded-full border-[3px] border-line border-t-tomato" />
-                      <p className="text-[17px] font-semibold">Apmokama…</p>
-                    </div>
-                  </Screen>
+                  {/* Paying: the card sheet slides up over the order */}
+                  <PaymentSheet
+                    active={screen === "paying"}
+                    amount={formatPrice(linesTotal(heroOrder.lines))}
+                    merchant={`${restaurant.kind} „${restaurant.name}“`}
+                    table={heroOrder.table}
+                    approveAfter={550}
+                    compact
+                  />
 
                   {/* Done */}
                   <Screen show={screen === "done"}>
@@ -250,7 +253,9 @@ export function HeroStory({ stand, standCompact }: { stand: ReactNode; standComp
             <div className="rounded-[1.85rem] bg-black p-3">
               <div className="h-[330px] overflow-hidden rounded-[1.1rem] bg-kds text-kds-text">
                 <div className="flex items-center justify-between border-b border-kds-line px-4 py-2.5 text-[13px]">
-                  <span className="font-semibold">Virtuvė</span>
+                  <span className="flex items-center gap-1.5 font-semibold">
+                    Virtuvė <Bell ringing={ticketStage === "naujas"} />
+                  </span>
                   <span className="text-kds-muted">Ruošti: {ticketStage && ticketStage !== "paruosta" ? 3 : 2}</span>
                 </div>
                 <div className="mx-4 mt-3 h-1.5 rounded-full bg-[#8f8a80]" />
@@ -307,7 +312,9 @@ export function HeroStory({ stand, standCompact }: { stand: ReactNode; standComp
         <div className="w-[136px] shrink-0 min-[380px]:w-[148px]">{standCompact}</div>
         <div className="h-[262px] w-[182px] shrink-0 overflow-hidden rounded-[1.25rem] bg-kds text-kds-text shadow-[0_0_0_6px_#000,0_0_0_8px_#2a2826,0_30px_50px_-25px_rgb(0_0_0/0.9)] min-[380px]:w-[192px]">
           <div className="flex items-center justify-between border-b border-kds-line px-3 py-2 text-[11.5px]">
-            <span className="font-semibold">Virtuvė</span>
+            <span className="flex items-center gap-1 font-semibold">
+              Virtuvė <Bell ringing={ticketStage === "naujas"} small />
+            </span>
             <span className="flex items-center gap-1.5 text-kds-muted">
               <span className={`size-1.5 rounded-full ${ticketStage ? "bg-ready-on-dark" : "animate-pulse bg-tomato-bright"}`} />
               {ticketStage === "paruosta" ? "Paruošta" : ticketStage === "ruosiama" ? "Ruošiama" : ticketStage ? "1 naujas" : "Laukiama"}
@@ -342,6 +349,26 @@ export function HeroStory({ stand, standCompact }: { stand: ReactNode; standComp
         </div>
       </div>
     </div>
+  );
+}
+
+/** Kitchen bell that swings when a new ticket lands. */
+function Bell({ ringing, small = false }: { ringing: boolean; small?: boolean }) {
+  return (
+    <svg
+      key={ringing ? "ring" : "still"}
+      viewBox="0 0 24 24"
+      className={`${small ? "size-3" : "size-3.5"} origin-top ${ringing ? "animate-ring text-tomato-bright" : "text-kds-muted"}`}
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
+      <path d="M6 16V11a6 6 0 1 1 12 0v5l1.5 2h-15z" />
+      <path d="M10 20.5a2 2 0 0 0 4 0" />
+    </svg>
   );
 }
 
