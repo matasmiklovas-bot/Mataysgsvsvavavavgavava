@@ -17,6 +17,13 @@ export type MenuItem = {
   station: Station;
   /** Notes the guest can tick, e.g. "be svogūnų". Printed on the ticket. */
   options: string[];
+  /**
+   * Square dish photo in public/menu. Sources: Pexels photos 15795823, 4202387, 18713424,
+   * 7837671, 9515248, 15954374, 13623762, 4134388, 5538223 (Pexels license, free for commercial
+   * use) and Wikimedia Commons "Šaltibarščiai, Pirmas blynas, Vilnius, June 2026.jpg" (CC0).
+   * Replace with the restaurant's own photos for a real prototype.
+   */
+  image?: string;
 };
 
 export const restaurant = {
@@ -38,8 +45,9 @@ export const categories: { id: Category; label: string }[] = [
 export const menu: MenuItem[] = [
   {
     id: "saltibarsciai",
+    image: "/menu/saltibarsciai.webp",
     name: "Šaltibarščiai",
-    description: "Su karštomis bulvėmis ir krapais",
+    description: "Su kiaušiniu, agurkais ir karštomis bulvėmis",
     price: 650,
     category: "sriubos",
     station: "virtuve",
@@ -47,8 +55,9 @@ export const menu: MenuItem[] = [
   },
   {
     id: "salotos",
+    image: "/menu/salotos.webp",
     name: "Sezoninės salotos",
-    description: "Pomidorai, agurkai, ridikėliai, varškės sūris",
+    description: "Avokadas, agurkai, pomidorai, sėklos",
     price: 890,
     category: "sriubos",
     station: "virtuve",
@@ -56,8 +65,9 @@ export const menu: MenuItem[] = [
   },
   {
     id: "cepelinai",
+    image: "/menu/cepelinai.webp",
     name: "Cepelinai su mėsa",
-    description: "2 vnt., grietinė, spirgučiai",
+    description: "3 vnt., su spirgučiais",
     price: 990,
     category: "pagrindiniai",
     station: "virtuve",
@@ -65,6 +75,7 @@ export const menu: MenuItem[] = [
   },
   {
     id: "mesainis",
+    image: "/menu/mesainis.webp",
     name: "Jautienos mėsainis",
     description: "Brandinta jautiena, čederis, karamelizuoti svogūnai",
     price: 1450,
@@ -74,6 +85,7 @@ export const menu: MenuItem[] = [
   },
   {
     id: "makaronai",
+    image: "/menu/makaronai.webp",
     name: "Naminiai makaronai",
     description: "Pomidorų padažas, parmezanas, bazilikas",
     price: 1190,
@@ -83,8 +95,9 @@ export const menu: MenuItem[] = [
   },
   {
     id: "kepsnys",
+    image: "/menu/kepsnys.webp",
     name: "Kiaulienos sprandinė",
-    description: "Ant grotelių, su keptomis bulvėmis",
+    description: "Ant grotelių, su česnaku ir čiobreliais",
     price: 1390,
     category: "pagrindiniai",
     station: "virtuve",
@@ -92,6 +105,7 @@ export const menu: MenuItem[] = [
   },
   {
     id: "pyragas",
+    image: "/menu/pyragas.webp",
     name: "Obuolių pyragas",
     description: "Su vaniliniais ledais",
     price: 590,
@@ -101,6 +115,7 @@ export const menu: MenuItem[] = [
   },
   {
     id: "kapucinas",
+    image: "/menu/kapucinas.webp",
     name: "Kapučinas",
     description: "Dvigubas espresas, pieno puta",
     price: 350,
@@ -110,6 +125,7 @@ export const menu: MenuItem[] = [
   },
   {
     id: "limonadas",
+    image: "/menu/limonadas.webp",
     name: "Naminis limonadas",
     description: "Citrina, mėta, 0,4 l",
     price: 450,
@@ -119,6 +135,7 @@ export const menu: MenuItem[] = [
   },
   {
     id: "alus",
+    image: "/menu/alus.webp",
     name: "Nefiltruotas alus",
     description: "Vietinė darykla, 0,5 l",
     price: 490,

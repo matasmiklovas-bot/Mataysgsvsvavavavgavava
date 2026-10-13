@@ -141,7 +141,18 @@ export const GuestPhone = forwardRef<HTMLDivElement, GuestPhoneProps>(function G
                         return (
                           <li key={line.itemId} className="py-3.5">
                             <div className="flex items-start justify-between gap-3">
-                              <div className="min-w-0">
+                              {item.image && (
+                                // eslint-disable-next-line @next/next/no-img-element
+                                <img
+                                  src={item.image}
+                                  alt=""
+                                  width={48}
+                                  height={48}
+                                  decoding="async"
+                                  className="size-12 shrink-0 rounded-xl bg-paper-2 object-cover"
+                                />
+                              )}
+                              <div className="min-w-0 flex-1">
                                 <p className="text-[15px] leading-snug font-semibold">{item.name}</p>
                                 <p className="text-[14px] text-ink-2 tabular-nums">
                                   {formatPrice(item.price * line.quantity)}
@@ -303,7 +314,7 @@ function MenuSkeleton() {
               <span className="block h-3 w-5/6 animate-shimmer rounded bg-paper-2" />
               <span className="block h-3 w-1/4 animate-shimmer rounded bg-paper-2" />
             </div>
-            <span className="size-11 shrink-0 animate-shimmer rounded-full bg-paper-2" />
+            <span className="size-24 shrink-0 animate-shimmer rounded-2xl bg-paper-2" />
           </li>
         ))}
       </ul>
@@ -365,7 +376,41 @@ function MenuScreen({
                 <p className="mt-0.5 text-[14px] leading-snug text-ink-2">{item.description}</p>
                 <p className="mt-1.5 text-[15px] font-semibold tabular-nums">{formatPrice(item.price)}</p>
               </div>
-              {quantity === 0 ? (
+              {item.image ? (
+                // Photo on the right with the add control sitting on its corner, as in food apps.
+                <div className="relative shrink-0 pb-3">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={item.image}
+                    alt=""
+                    width={96}
+                    height={96}
+                    loading="lazy"
+                    decoding="async"
+                    className="size-24 rounded-2xl bg-paper-2 object-cover"
+                  />
+                  <div className={`absolute bottom-0 ${quantity === 0 ? "-right-1.5" : "left-1/2 -translate-x-1/2"}`}>
+                    {quantity === 0 ? (
+                      <button
+                        type="button"
+                        onClick={() => dispatch({ type: "add", itemId: item.id })}
+                        aria-label={`Pridėti: ${item.name}`}
+                        className="flex size-11 items-center justify-center rounded-full bg-white text-[22px] leading-none font-semibold shadow-[0_4px_14px_-4px_rgb(0_0_0/0.35)] ring-1 ring-black/5 transition-transform active:scale-90"
+                      >
+                        +
+                      </button>
+                    ) : (
+                      <Stepper
+                        name={item.name}
+                        quantity={quantity}
+                        onAdd={() => dispatch({ type: "add", itemId: item.id })}
+                        onRemove={() => dispatch({ type: "remove", itemId: item.id })}
+                        floating
+                      />
+                    )}
+                  </div>
+                </div>
+              ) : quantity === 0 ? (
                 <button
                   type="button"
                   onClick={() => dispatch({ type: "add", itemId: item.id })}
@@ -395,14 +440,21 @@ function Stepper({
   quantity,
   onAdd,
   onRemove,
+  floating = false,
 }: {
   name: string;
   quantity: number;
   onAdd: () => void;
   onRemove: () => void;
+  /** White pill resting on a dish photo. */
+  floating?: boolean;
 }) {
   return (
-    <div className="flex shrink-0 items-center rounded-full border-2 border-ink">
+    <div
+      className={`flex shrink-0 items-center rounded-full ${
+        floating ? "animate-pop bg-white shadow-[0_4px_14px_-4px_rgb(0_0_0/0.35)] ring-1 ring-black/5" : "border-2 border-ink"
+      }`}
+    >
       <button
         type="button"
         onClick={onRemove}

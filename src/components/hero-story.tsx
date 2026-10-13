@@ -104,19 +104,34 @@ export function HeroStory({ stand, standCompact }: { stand: ReactNode; standComp
                           const tapping =
                             (item.id === "mesainis" && (t === 1 || t === 2)) || (item.id === "saltibarsciai" && t === 3);
                           return (
-                            <li key={item.id} className="flex items-center gap-3 py-3.5">
+                            <li key={item.id} className="flex items-center gap-3 py-3">
                               <div className="min-w-0 flex-1">
                                 <p className="text-[15px] leading-tight font-semibold">{item.name}</p>
                                 <p className="mt-0.5 text-[12.5px] leading-snug text-ink-2">{item.description}</p>
                                 <p className="mt-1 text-[14px] font-medium tabular-nums">{formatPrice(item.price)}</p>
                               </div>
-                              <span
-                                className={`relative flex size-9 shrink-0 items-center justify-center rounded-full text-[15px] font-semibold transition-colors duration-300 ${
-                                  qty > 0 ? "bg-ink text-white" : "border-[1.5px] border-ink"
-                                }`}
-                              >
-                                {qty > 0 ? qty : "+"}
-                                {tapping && <Tap key={t} />}
+                              <span className="relative shrink-0 pb-2">
+                                {item.image && (
+                                  // eslint-disable-next-line @next/next/no-img-element
+                                  <img
+                                    src={item.image}
+                                    alt=""
+                                    width={72}
+                                    height={72}
+                                    decoding="async"
+                                    className="size-[72px] rounded-xl bg-paper-2 object-cover"
+                                  />
+                                )}
+                                <span
+                                  className={`absolute -right-1 bottom-0 flex size-8 items-center justify-center rounded-full text-[14px] font-semibold shadow-[0_3px_10px_-3px_rgb(0_0_0/0.4)] transition-colors duration-300 ${
+                                    qty > 0 ? "bg-ink text-white" : "bg-white text-ink"
+                                  }`}
+                                >
+                                  <span key={qty} className={qty > 0 ? "animate-pop" : ""}>
+                                    {qty > 0 ? qty : "+"}
+                                  </span>
+                                  {tapping && <Tap key={t} />}
+                                </span>
                               </span>
                             </li>
                           );
