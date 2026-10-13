@@ -31,6 +31,9 @@
 
   --color-ready: #2e7d4f;
   --color-ready-on-dark: #63b783;
+  /* "Ruošiama" on kitchen and bar screens. */
+  --color-cooking: #b5761c;
+  --color-cooking-dark: #8a5a12;
 
   --font-display: var(--font-geist), ui-sans-serif, system-ui, sans-serif;
   --font-sans: var(--font-geist), ui-sans-serif, system-ui, sans-serif;
@@ -51,6 +54,94 @@
   --animate-sheet-up: sheet-up 0.42s var(--ease-out-soft) both;
   --animate-ring: ring 0.9s ease-in-out both;
   --animate-shimmer: shimmer 1.3s ease-in-out infinite;
+  /* Device screens: pushing to the next screen and back. */
+  --animate-slide-in-right: slide-in-right 0.38s var(--ease-out-soft) both;
+  --animate-slide-in-left: slide-in-left 0.38s var(--ease-out-soft) both;
+  --animate-scale-in: scale-in 0.35s var(--ease-out-soft) both;
+  --animate-sheet-down: sheet-down 0.26s ease-in both;
+  /* Tick drawing itself: give the path pathLength="1" and stroke-dasharray 1. */
+  --animate-check: check 0.45s 0.12s var(--ease-out-soft) both;
+  --animate-bump: bump 0.32s var(--ease-out-soft);
+  /* Determinate bar (scaleX, use origin-left) and an indeterminate loading sweep. */
+  --animate-progress: progress 1s var(--ease-out-soft) both;
+  --animate-indeterminate: indeterminate 1.15s ease-in-out infinite;
+  --animate-leave: leave 0.28s ease-in both;
+  --animate-img-in: img-in 0.5s var(--ease-out-soft) both;
+
+  @keyframes slide-in-right {
+    from {
+      opacity: 0;
+      transform: translateX(28px);
+    }
+  }
+
+  @keyframes slide-in-left {
+    from {
+      opacity: 0;
+      transform: translateX(-28px);
+    }
+  }
+
+  @keyframes scale-in {
+    from {
+      opacity: 0;
+      transform: scale(0.94);
+    }
+  }
+
+  @keyframes sheet-down {
+    to {
+      transform: translateY(100%);
+    }
+  }
+
+  @keyframes check {
+    from {
+      stroke-dashoffset: 1;
+    }
+    to {
+      stroke-dashoffset: 0;
+    }
+  }
+
+  @keyframes bump {
+    40% {
+      transform: scale(1.06);
+    }
+  }
+
+  @keyframes progress {
+    from {
+      transform: scaleX(0);
+    }
+    to {
+      transform: scaleX(1);
+    }
+  }
+
+  @keyframes indeterminate {
+    from {
+      transform: translateX(-100%);
+    }
+    to {
+      transform: translateX(260%);
+    }
+  }
+
+  @keyframes leave {
+    to {
+      opacity: 0;
+      transform: translateX(16px) scale(0.98);
+    }
+  }
+
+  @keyframes img-in {
+    from {
+      opacity: 0;
+      transform: scale(1.03);
+      filter: blur(6px);
+    }
+  }
 
   @keyframes sheet-up {
     from {
