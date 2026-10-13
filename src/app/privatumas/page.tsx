@@ -7,7 +7,7 @@ import { Footer } from "@/components/sections/footer";
 
 export const metadata: Metadata = {
   title: "Privatumo politika",
-  description: "Kaip „Kvitas“ tvarko duomenis, kuriuos paliekate demonstracijos užsakymo formoje.",
+  description: "Kaip „Kvitas“ tvarko duomenis, kuriuos paliekate prototipo užklausos formoje.",
   alternates: { canonical: "/privatumas" },
 };
 
@@ -31,8 +31,8 @@ export default function PrivacyPage() {
             Privatumo politika
           </h1>
           <p className="mt-5 text-[1.125rem] text-ink-2">
-            Ši politika paaiškina, kaip tvarkome duomenis, kuriuos paliekate demonstracijos
-            užsakymo formoje.
+            Ši politika paaiškina, kaip tvarkome duomenis, kuriuos paliekate prototipo užklausos
+            formoje.
           </p>
 
           <Section title="Kas tvarko duomenis">
@@ -47,8 +47,8 @@ export default function PrivacyPage() {
           </Section>
 
           <Section title="Kam juos naudojame">
-            Tik tam, kad atsakytume į jūsų užklausą, suderintume demonstracijos laiką ir, jei
-            susitarsime, parengtume pasiūlymą. Reklaminių laiškų nesiunčiame.
+            Tik tam, kad atsakytume į jūsų užklausą, paruoštume prototipą ir, jei susitarsime,
+            parengtume pasiūlymą. Reklaminių laiškų nesiunčiame.
           </Section>
 
           <Section title="Teisinis pagrindas">

@@ -8,6 +8,10 @@ import { SectionHeading } from "@/components/section-heading";
 */
 const faq: { q: string; a: string }[] = [
   {
+    q: "Ar galima išbandyti prieš perkant?",
+    a: "Taip. Nemokamai paruošime prototipą jūsų restoranui. Pažiūrėsite, kaip jis veikia, ir tik tada nuspręsite, ar pirkti.",
+  },
+  {
     q: "Ar reikia pirkti planšetes?",
     a: "Ne. Galite naudoti savas arba nuomotis visą įrangą iš mūsų už 50 € per mėnesį.",
   },

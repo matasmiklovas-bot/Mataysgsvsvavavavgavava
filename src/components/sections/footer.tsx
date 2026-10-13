@@ -30,7 +30,7 @@ export function Footer() {
               ))}
               <li>
                 <Link href="/#forma" className="inline-flex min-h-11 items-center transition-colors hover:text-white">
-                  Demonstracija
+                  Prototipas
                 </Link>
               </li>
               <li>

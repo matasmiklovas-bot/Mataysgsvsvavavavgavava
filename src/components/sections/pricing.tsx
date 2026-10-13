@@ -16,7 +16,7 @@ export function Pricing() {
         <SectionHeading
           id="kaina-title"
           title="Aiški kaina be smulkaus šrifto."
-          lead="Sumokate tik už įdiegimą. Visa kita nemokama."
+          lead="Pirmiausia nemokamas prototipas. Patiks, sumokate tik už įdiegimą, visa kita nemokama."
         />
 
         <div className="mt-10 grid grid-cols-1 gap-3 sm:mt-16 sm:grid-cols-2 sm:gap-4">
@@ -57,7 +57,7 @@ export function Pricing() {
               {siteConfig.cta}
             </a>
             <p className="mt-4 text-[15px] text-ink-2">
-              Reikia tik stabilaus interneto. Nieko nepasirašote, kol viskas aišku.
+              Prototipą jūsų restoranui paruošime nemokamai. Mokate tik tada, jei jis jums patinka.
             </p>
           </div>
         </Reveal>

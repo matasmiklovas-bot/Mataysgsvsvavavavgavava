@@ -26,8 +26,8 @@ export const siteConfig = {
     /** Optional rent of all equipment (tablets etc.) per month, EUR. */
     equipmentRent: 50,
   },
-  cta: "Užsisakyti demonstraciją",
-  ctaShort: "Demonstracija",
+  cta: "Gauti nemokamą prototipą",
+  ctaShort: "Prototipas",
   /**
    * TODO: fill in real contact details and company data.
    * Empty values are simply not shown on the page.

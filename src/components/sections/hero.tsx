@@ -54,7 +54,7 @@ export function Hero() {
           </a>
         </div>
         <p className="rise mt-6 text-[15px] text-balance text-night-muted" style={delay(300)}>
-          {setup}&nbsp;€ už įdiegimą, toliau {monthly}&nbsp;€ per mėnesį
+          Prototipas nemokamai. Patiks, tada {setup}&nbsp;€ už įdiegimą ir {monthly}&nbsp;€ per mėnesį.
         </p>
 
         <div className="rise mt-14 sm:mt-16 lg:mt-14" style={delay(420)}>

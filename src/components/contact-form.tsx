@@ -84,7 +84,7 @@ export function ContactForm() {
         .filter(Boolean)
         .join("\n");
       window.location.href = `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(
-        `Demonstracija: ${data.restaurant}`,
+        `Prototipas: ${data.restaurant}`,
       )}&body=${encodeURIComponent(body)}`;
       setStatus("mail");
       return;
@@ -97,7 +97,7 @@ export function ContactForm() {
         headers: { "Content-Type": "application/json", Accept: "application/json" },
         body: JSON.stringify({
           ...(FORM_ACCESS_KEY ? { access_key: FORM_ACCESS_KEY } : {}),
-          subject: `Demonstracija: ${data.restaurant}`,
+          subject: `Prototipas: ${data.restaurant}`,
           ...data,
         }),
       });
@@ -119,7 +119,7 @@ export function ContactForm() {
         <p className="mt-6 text-[2rem] leading-tight font-semibold tracking-[-0.03em]">Ačiū, {sentName}!</p>
         {status === "sent" ? (
           <p className="mx-auto mt-3 max-w-[26rem] text-ink-2">
-            Gavome jūsų užklausą. Netrukus susisieksime ir suderinsime demonstracijos laiką.
+            Gavome jūsų užklausą. Netrukus susisieksime dėl prototipo.
           </p>
         ) : (
           <p className="mx-auto mt-3 max-w-[26rem] text-ink-2">
@@ -210,7 +210,7 @@ export function ContactForm() {
           </p>
         )}
         <p className="mt-4 text-[16px] text-ink-2">
-          Siųsdami sutinkate, kad su jumis susisiektume dėl demonstracijos.{" "}
+          Siųsdami sutinkate, kad su jumis susisiektume dėl prototipo.{" "}
           <Link href="/privatumas" className="font-semibold text-ink underline underline-offset-4">
             Privatumo politika
           </Link>

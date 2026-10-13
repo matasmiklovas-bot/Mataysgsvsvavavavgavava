@@ -15,8 +15,8 @@ export function Contact() {
         <SectionHeading
           id="forma-title"
           tone="light"
-          title="Pažiūrėkime, kaip tai veiktų jūsų restorane."
-          lead="Paliksite kontaktus, paskambinsime ir parodysime. Tai nieko neįpareigoja."
+          title="Nemokamas prototipas jūsų restoranui."
+          lead="Paliksite kontaktus, paruošime prototipą ir parodysime. Patiks, pirksite. Nepatiks, nieko nemokate."
         />
         <Reveal className="text-center">
           {(phone || email) && (
