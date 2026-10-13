@@ -6,18 +6,14 @@ import { SectionHeading } from "@/components/section-heading";
 export function DemoSection() {
   return (
     <section id="demo" aria-labelledby="demo-title" className="scroll-mt-14 bg-paper">
-      <div className="mx-auto max-w-7xl px-4 pt-16 pb-16 sm:px-6 sm:pt-24 sm:pb-24">
+      <div className="mx-auto max-w-7xl px-4 pt-20 pb-16 sm:px-6 sm:pt-28 sm:pb-24">
         <SectionHeading
           id="demo-title"
           title={<>Užsisakykite patys, lyg sėdėtumėte prie {guestTable} staliuko.</>}
-          lead={
-            <>
-              Įsidėkite patiekalą, užsakykite ir stebėkite, kur keliauja užsakymas.{" "}
-              <span className="text-ink-2/90">Niekas nesiunčiama, pinigai nenuskaitomi.</span>
-            </>
-          }
+          lead="Įsidėkite patiekalą, užsakykite ir stebėkite, kur keliauja užsakymas."
         />
-        <Reveal className="mt-10 sm:mt-14" delay={100}>
+        <p className="mt-3 text-center text-[15px] text-ink-2">Niekas nesiunčiama, pinigai nenuskaitomi.</p>
+        <Reveal className="mt-12 sm:mt-16" delay={100}>
           <Demo />
         </Reveal>
       </div>

@@ -7,7 +7,7 @@ export function Footer() {
   const { email, phone, company, companyCode } = siteConfig.contacts;
   return (
     <footer className="border-t border-white/10 bg-night text-[15px] text-night-muted">
-      <div className="mx-auto max-w-7xl px-4 pt-14 pb-[max(2.5rem,env(safe-area-inset-bottom))] sm:px-6">
+      <div className="mx-auto max-w-6xl px-4 pt-14 pb-[max(2.5rem,env(safe-area-inset-bottom))] sm:px-6">
         <div className="flex flex-col gap-10 border-b border-white/10 pb-10 md:flex-row md:items-start md:justify-between">
           <div className="max-w-[22rem]">
             <Logo tone="light" />

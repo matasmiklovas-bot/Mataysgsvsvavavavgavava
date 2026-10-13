@@ -57,7 +57,7 @@ export function Header({ overHero = false }: HeaderProps) {
             : "border-transparent bg-night/0"
         }`}
       >
-        <div className="mx-auto flex h-14 max-w-7xl items-center justify-between gap-4 px-4 sm:px-6">
+        <div className="mx-auto flex h-14 max-w-6xl items-center justify-between gap-4 px-4 sm:px-6">
           <Link
             href="/"
             className="-mx-1 flex min-h-11 items-center rounded-lg px-1"
@@ -70,7 +70,7 @@ export function Header({ overHero = false }: HeaderProps) {
             <NavLinks />
           </nav>
           <div className="flex items-center gap-1.5">
-            <Link href="/#forma" className={`${buttonClass({ size: "sm" })} relative after:absolute after:inset-x-0 after:-inset-y-1 after:content-[""]`} onClick={() => setOpen(false)}>
+            <Link href="/#forma" className={buttonClass({ size: "sm" })} onClick={() => setOpen(false)}>
               <span className="sm:hidden">{siteConfig.ctaShort}</span>
               <span className="max-sm:hidden">{siteConfig.cta}</span>
             </Link>

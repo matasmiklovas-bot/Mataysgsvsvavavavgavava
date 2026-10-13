@@ -38,11 +38,6 @@
 
   --ease-out-soft: cubic-bezier(0.2, 0.7, 0.2, 1);
 
-  /* Radius scale: controls are precise, panels a little softer, large surfaces softest. */
-  --radius-control: 10px;
-  --radius-panel: 14px;
-  --radius-surface: 20px;
-
   --animate-ticket-in: ticket-in 0.8s var(--ease-out-soft) both;
   --animate-flash: flash 1.6s ease-out 2;
   --animate-scan: scan 3.4s ease-in-out infinite;
@@ -205,10 +200,10 @@ body {
 /* Scroll reveal (see <Reveal>). Content is visible without JavaScript. */
 .js .reveal {
   opacity: 0;
-  transform: translate3d(0, 14px, 0);
+  transform: translate3d(0, 20px, 0);
   transition:
-    opacity 0.7s var(--ease-out-soft),
-    transform 0.7s var(--ease-out-soft);
+    opacity 0.9s var(--ease-out-soft),
+    transform 0.9s var(--ease-out-soft);
   transition-delay: var(--delay, 0ms);
 }
 .js .reveal[data-shown] {
