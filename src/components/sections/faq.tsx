@@ -12,7 +12,7 @@ const faq: { q: string; a: string }[] = [
   },
   {
     q: "Kiek kainuoja priežiūra?",
-    a: "Nieko. Palaikymas neribotas, o meniu, kainų ar kitus pakeitimus, kurių paprašysite, atliekame nemokamai.",
+    a: "Nieko. Sistema ir priežiūra kainuoja 0 € per mėnesį. Viskuo rūpinamės mes: palaikymas neribotas, o meniu, kainų ar kitus pakeitimus, kurių paprašysite, atliekame nemokamai.",
   },
   {
     q: "Kaip su kasos aparatu ir čekiais?",
@@ -44,7 +44,7 @@ const faq: { q: string; a: string }[] = [
   },
   {
     q: "Ar yra minimalus sutarties terminas?",
-    a: "Sutarties sąlygas aptariame prieš pasirašant, kad viskas būtų aišku iš anksto. Kaina: 400 € už įdiegimą, 1 € per mėnesį, o jei nuomojatės įrangą, dar 50 € per mėnesį.",
+    a: "Sutarties sąlygas aptariame prieš pasirašant, kad viskas būtų aišku iš anksto. Kaina: 400 € už įdiegimą, toliau 0 € per mėnesį. Jei nuomojatės įrangą, 50 € per mėnesį.",
   },
   {
     q: "Ką daryti svečiams, kurie nenori skenuoti?",

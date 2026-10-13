@@ -15,18 +15,16 @@ export const siteConfig = {
   name: "Kvitas",
   title: "Kvitas · QR užsakymai restoranams, kavinėms ir barams",
   description:
-    "Svečias nuskenuoja kodą ant staliuko ir užsisako telefone. Patiekalai iškart patenka į virtuvės planšetę, gėrimai į baro. 400 € už įdiegimą ir 1 € per mėnesį, priežiūra nemokama.",
+    "Svečias nuskenuoja kodą ant staliuko ir užsisako telefone. Patiekalai iškart patenka į virtuvės planšetę, gėrimai į baro. 400 € už įdiegimą, o toliau 0 € per mėnesį: sistema ir priežiūra nemokamos.",
   url: resolveSiteUrl(),
   locale: "lt_LT",
   pricing: {
     /** One-time setup, EUR. */
     setup: 400,
-    /** System fee per month, EUR. */
-    monthly: 1,
+    /** Monthly fee for the system, support and changes on request, EUR. */
+    monthly: 0,
     /** Optional rent of all equipment (tablets etc.) per month, EUR. */
     equipmentRent: 50,
-    /** Support and changes on request, EUR. */
-    maintenance: 0,
   },
   cta: "Užsisakyti demonstraciją",
   ctaShort: "Demonstracija",

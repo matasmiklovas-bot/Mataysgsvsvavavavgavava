@@ -2,11 +2,10 @@ import { siteConfig } from "@/config/site";
 import { Reveal } from "@/components/reveal";
 
 export function Pricing() {
-  const { setup, monthly, equipmentRent, maintenance } = siteConfig.pricing;
+  const { setup, monthly, equipmentRent } = siteConfig.pricing;
   const tiles = [
     { label: "Įdiegimas", amount: setup, note: "vieną kartą" },
-    { label: "Sistema", amount: monthly, note: "per mėnesį" },
-    { label: "Priežiūra", amount: maintenance, note: "pakeitimai pagal jūsų prašymą" },
+    { label: "Kas mėnesį", amount: monthly, note: "sistema, priežiūra ir pakeitimai" },
   ];
   return (
     <section id="kaina" aria-labelledby="kaina-title" className="scroll-mt-14 bg-paper">
@@ -19,11 +18,11 @@ export function Pricing() {
             Aiški kaina be smulkaus šrifto.
           </h2>
           <p className="mx-auto mt-5 max-w-[30rem] text-[1.125rem] text-balance text-ink-2 sm:text-[1.25rem]">
-            Vieną kartą sumokate už įdiegimą. Toliau tik {monthly}&nbsp;€ per mėnesį.
+            Vieną kartą sumokate už įdiegimą. Sistema, priežiūra ir visi pakeitimai toliau nieko nekainuoja.
           </p>
         </Reveal>
 
-        <div className="mt-10 grid grid-cols-1 gap-3 sm:mt-16 sm:grid-cols-3 sm:gap-5">
+        <div className="mx-auto mt-10 grid max-w-3xl grid-cols-1 gap-3 sm:mt-16 sm:grid-cols-2 sm:gap-5">
           {tiles.map((tile, index) => (
             <Reveal
               key={tile.label}
@@ -70,8 +69,8 @@ export function Pricing() {
 
           <dl className="mt-8 divide-y divide-line border-t border-line">
             <PriceRow term="Priežiūra">
-              Neribota ir nemokama. Meniu, kainų ar kitus pakeitimus, kurių paprašysite, atliekame be
-              papildomo mokesčio.
+              Viskuo rūpinamės mes, neribotai ir nemokamai. Meniu, kainų ar kitus pakeitimus, kurių
+              paprašysite, atliekame be jokio mokesčio.
             </PriceRow>
             <PriceRow term="Ko reikia iš jūsų">Stabilaus interneto salėje, virtuvėje ir bare.</PriceRow>
             <PriceRow term="Prieš apsisprendžiant">
