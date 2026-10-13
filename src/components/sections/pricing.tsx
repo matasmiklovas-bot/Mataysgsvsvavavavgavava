@@ -33,21 +33,22 @@ export function Pricing() {
         </div>
 
         <Reveal className="mt-4 rounded-[2rem] bg-white p-7 sm:mt-5 sm:p-10">
+          {/* TODO (site owner): add exact scope of setup, tablet requirements, VAT and contract terms when confirmed. */}
           <dl className="divide-y divide-line">
-            <PriceRow term="Kas įeina į 400 €">
-              <span className="todo">
-                [TODO: kas tiksliai įeina į įdiegimą: meniu suvedimas, QR kodai staliukams, mokymai, planšečių paruošimas?]
-              </span>
+            <PriceRow term="Įdiegimas, 400 €">
+              Mokama vieną kartą, kai sistema paruošiama jūsų restoranui: meniu, staliukams, virtuvei,
+              barui ir personalui.
+            </PriceRow>
+            <PriceRow term="Naudojimas, 1 € per mėnesį">
+              Mokama kas mėnesį, kol sistema veikia jūsų restorane.
             </PriceRow>
             <PriceRow term="Ko reikia iš jūsų">
-              Planšetės virtuvei, barui ir personalui bei internetas.{" "}
-              <span className="todo">[TODO: ar planšetes perkate patys, kokie modeliai tinka, kiek jų reikia]</span>
+              Planšetės virtuvei, barui ir personalui bei stabilus internetas salėje. Kokių planšečių
+              reikia, pasakysime per demonstraciją.
             </PriceRow>
-            <PriceRow term="Kodėl tik 1 € per mėnesį">
-              <span className="todo">[TODO: paaiškinimas, kodėl mėnesio mokestis toks mažas]</span>
-            </PriceRow>
-            <PriceRow term="Sutartis ir PVM">
-              <span className="todo">[TODO: minimalus terminas, kaip nutraukti, ar kainos su PVM, ar yra kitų mokesčių]</span>
+            <PriceRow term="Prieš apsisprendžiant">
+              Parodysime demonstraciją ir atsakysime į klausimus apie planšetes, mokėjimus kortele ir
+              sutarties sąlygas. Nieko nepasirašote, kol viskas aišku.
             </PriceRow>
           </dl>
           <div className="mt-8 text-center">

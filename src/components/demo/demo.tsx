@@ -294,8 +294,10 @@ export function Demo() {
       </div>
 
       {/* Demo-only controls, kept outside the devices. */}
-      <div className="mt-6 flex flex-wrap items-center gap-x-6 gap-y-2 border-t border-line pt-4 text-[16px] text-ink-2">
-        <span className="font-semibold text-ink">Demonstracijos valdymas</span>
+      <div className="mt-8 flex flex-wrap items-center justify-center gap-x-6 gap-y-1 rounded-2xl bg-paper-2 px-5 py-3 text-[15px] text-ink-2 lg:mt-12">
+        <span className="w-full text-center text-[13px] font-semibold tracking-[0.04em] text-ink sm:w-auto">
+          Demonstracijos valdymas
+        </span>
         <label className="flex min-h-11 items-center gap-2">
           Svečio staliukas
           <select

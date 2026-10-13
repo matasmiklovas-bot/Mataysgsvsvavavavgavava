@@ -12,7 +12,7 @@ import { siteConfig } from "@/config/site";
 const FORM_ENDPOINT = process.env.NEXT_PUBLIC_FORM_ENDPOINT ?? "";
 const FORM_ACCESS_KEY = process.env.NEXT_PUBLIC_FORM_ACCESS_KEY ?? "";
 
-const CONTACT_EMAIL = siteConfig.contacts.email.startsWith("[TODO") ? "" : siteConfig.contacts.email;
+const CONTACT_EMAIL = siteConfig.contacts.email;
 
 type Values = { restaurant: string; name: string; contact: string; tables: string; message: string };
 type Field = keyof Values;
@@ -108,12 +108,12 @@ export function ContactForm() {
         <p className="text-[2.2rem] leading-tight font-semibold tracking-[-0.03em]">Ačiū, {sentName}!</p>
         {status === "sent" ? (
           <p className="mt-3 text-ink-2">
-            Susisieksime <span className="todo">[TODO: per kiek laiko]</span>.
+            Gavome jūsų užklausą. Netrukus susisieksime ir suderinsime demonstracijos laiką.
           </p>
         ) : (
           <p className="mt-3 text-ink-2">
-            Atsidarė jūsų el. pašto programa su paruoštu laišku. Išsiųskite jį ir susisieksime{" "}
-            <span className="todo">[TODO: per kiek laiko]</span>.
+            Atsidarė jūsų el. pašto programa su paruoštu laišku. Išsiųskite jį, ir netrukus
+            susisieksime.
           </p>
         )}
       </div>
@@ -179,8 +179,16 @@ export function ContactForm() {
         </button>
         {status === "error" && (
           <p role="alert" className="mt-3 text-[16px] text-tomato-dark">
-            Nepavyko išsiųsti. Pabandykite dar kartą arba parašykite mums{" "}
-            {CONTACT_EMAIL ? <a className="underline" href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a> : <span className="todo">[TODO: el. paštas]</span>}.
+            Nepavyko išsiųsti. Patikrinkite interneto ryšį ir pabandykite dar kartą
+            {CONTACT_EMAIL ? (
+              <>
+                {" "}arba parašykite{" "}
+                <a className="underline" href={`mailto:${CONTACT_EMAIL}`}>
+                  {CONTACT_EMAIL}
+                </a>
+              </>
+            ) : null}
+            .
           </p>
         )}
         <p className="mt-4 text-[16px] text-ink-2">

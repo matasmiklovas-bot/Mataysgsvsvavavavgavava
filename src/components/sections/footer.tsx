@@ -7,40 +7,47 @@ export function Footer() {
   const { email, phone, company, companyCode } = siteConfig.contacts;
   return (
     <footer className="bg-paper text-[15px] text-ink-2">
-      <div className="mx-auto max-w-6xl px-4 py-12 sm:px-6">
-        <div className="grid grid-cols-1 gap-8 border-b border-line pb-8 md:grid-cols-[1.2fr_1fr_1fr]">
-          <div>
+      <div className="mx-auto max-w-6xl px-4 pt-14 pb-10 sm:px-6">
+        <div className="flex flex-col gap-10 border-b border-line pb-10 md:flex-row md:items-start md:justify-between">
+          <div className="max-w-[22rem]">
             <Logo />
-            <p className="mt-3 max-w-[22rem]">QR užsakymai restoranams, kavinėms ir barams Lietuvoje.</p>
-          </div>
-          <div>
-            <p className="font-semibold text-ink">Kontaktai</p>
-            <p className="mt-2"><span className="todo">{email}</span></p>
-            <p className="mt-1"><span className="todo">{phone}</span></p>
-            <p className="mt-3">
-              <span className="todo">{company}</span>, <span className="todo">{companyCode}</span>
-            </p>
+            <p className="mt-4">QR užsakymai restoranams, kavinėms ir barams Lietuvoje.</p>
+            {(email || phone) && (
+              <p className="mt-4 flex flex-col gap-1 text-ink">
+                {phone && <a href={`tel:${phone.replace(/\s/g, "")}`} className="hover:underline">{phone}</a>}
+                {email && <a href={`mailto:${email}`} className="hover:underline">{email}</a>}
+              </p>
+            )}
           </div>
           <nav aria-label="Poraštės nuorodos">
-            <ul className="grid gap-0">
+            <ul className="grid grid-cols-2 gap-x-12 sm:flex sm:gap-x-8">
               {navItems.map((item) => (
                 <li key={item.href}>
-                  <a href={item.href} className="inline-flex min-h-11 items-center hover:text-ink hover:underline">
+                  <a href={item.href} className="inline-flex min-h-11 items-center hover:text-ink">
                     {item.label}
                   </a>
                 </li>
               ))}
               <li>
-                <Link href="/privatumas" className="inline-flex min-h-11 items-center hover:text-ink hover:underline">
+                <Link href="/#forma" className="inline-flex min-h-11 items-center hover:text-ink">
+                  Demonstracija
+                </Link>
+              </li>
+              <li>
+                <Link href="/privatumas" className="inline-flex min-h-11 items-center hover:text-ink">
                   Privatumo politika
                 </Link>
               </li>
             </ul>
           </nav>
         </div>
-        <p className="pt-6">
-          © <CurrentYear /> {siteConfig.name}
-        </p>
+        <div className="flex flex-col gap-2 pt-6 text-[14px] sm:flex-row sm:justify-between">
+          <p>
+            © <CurrentYear /> {company || siteConfig.name}
+            {companyCode && <> · įm. k. {companyCode}</>}
+          </p>
+          <p>Sukurta restoranams Lietuvoje</p>
+        </div>
       </div>
     </footer>
   );

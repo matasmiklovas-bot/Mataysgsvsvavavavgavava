@@ -24,12 +24,15 @@ export const siteConfig = {
   },
   cta: "Užsisakyti demonstraciją",
   ctaShort: "Demonstracija",
-  // TODO: fill in real contact details and company data.
+  /**
+   * TODO: fill in real contact details and company data.
+   * Empty values are simply not shown on the page.
+   */
   contacts: {
-    email: "[TODO: el. paštas]",
-    phone: "[TODO: telefonas]",
-    company: "[TODO: įmonės pavadinimas]",
-    companyCode: "[TODO: įmonės kodas]",
+    email: "" as string,
+    phone: "" as string,
+    company: "" as string,
+    companyCode: "" as string,
   },
 } as const;
 

@@ -19,15 +19,17 @@ const roles: Role[] = [
     text: "Užsakymą įveda pats svečias. Planšetėje padavėjas mato, kas jau paruošta ir prie kurio staliuko nešti, o laiką skiria žmonėms salėje.",
     fragment: (
       <div className="rounded-2xl bg-kds p-3 text-kds-text">
-        <div className="flex items-center gap-3 rounded-md bg-kds-2 p-3">
+        <div className="flex flex-wrap items-center gap-3 rounded-xl bg-kds-2 p-3">
           <span className="flex size-11 shrink-0 items-center justify-center rounded bg-slip font-display text-[1.5rem] font-semibold text-ink">
             {heroOrder.table}
           </span>
-          <div className="min-w-0 flex-1">
+          <div className="min-w-[10rem] flex-1">
             <p className="font-semibold">Nešti į staliuką {heroOrder.table}</p>
             <p className="text-[14px] text-kds-muted">2× Jautienos mėsainis, 1× Šaltibarščiai</p>
           </div>
-          <span className="rounded-full bg-ready px-3.5 py-2 text-[14px] font-semibold text-white">Nunešta</span>
+          <span className="rounded-full bg-ready px-3.5 py-2 text-[14px] font-semibold text-white max-[400px]:w-full max-[400px]:text-center">
+            Nunešta
+          </span>
         </div>
       </div>
     ),
@@ -74,8 +76,7 @@ const roles: Role[] = [
     text: (
       <>
         Kuriuos mokėjimo būdus rodyti, nusprendžiate jūs: kortele telefonu, grynaisiais padavėjui
-        arba abu. Kas sumokėjo telefonu, tas nelaukia sąskaitos ir išeina, kai nori.{" "}
-        <span className="todo">[TODO: ar savininkas mato užsakymų istoriją ir apyvartą?]</span>
+        arba abu. Kas sumokėjo telefonu, tas nelaukia sąskaitos ir išeina, kai nori.
       </>
     ),
     fragment: (
