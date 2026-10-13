@@ -294,16 +294,17 @@ export function Demo() {
       </div>
 
       {/* Demo-only controls, kept outside the devices. */}
-      <div className="mt-8 flex flex-wrap items-center justify-center gap-x-6 gap-y-1 rounded-2xl bg-paper-2 px-5 py-3 text-[15px] text-ink-2 lg:mt-12">
-        <span className="w-full text-center text-[13px] font-semibold tracking-[0.04em] text-ink sm:w-auto">
-          Demonstracijos valdymas
-        </span>
-        <label className="flex min-h-11 items-center gap-2">
-          Svečio staliukas
+      <div
+        role="group"
+        aria-label="Demonstracijos valdymas"
+        className="mt-8 flex flex-wrap items-center justify-center gap-2 text-[15px] text-ink lg:mt-12"
+      >
+        <label className="flex h-11 items-center gap-1 rounded-full bg-white pr-2 pl-4 ring-1 ring-line transition-shadow focus-within:ring-2 focus-within:ring-ink">
+          <span className="text-ink-2">Svečio staliukas</span>
           <select
             value={state.table}
             onChange={(e) => dispatch({ type: "setTable", table: Number(e.target.value) })}
-            className="h-10 rounded border border-line bg-paper px-2 text-ink"
+            className="h-11 cursor-pointer rounded-full bg-transparent pr-1 pl-1 font-semibold text-ink focus:outline-none"
           >
             {tables.map((t) => (
               <option key={t} value={t}>
@@ -320,9 +321,10 @@ export function Demo() {
             setNow(clock());
             announce(`Naujas užsakymas ${formatOrderNumber(id)} iš kito staliuko.`);
           }}
-          className="min-h-11 underline underline-offset-4 hover:text-ink"
+          className="inline-flex h-11 items-center gap-2 rounded-full bg-white px-4 ring-1 ring-line transition-colors hover:bg-paper-2"
         >
-          Pridėti užsakymą iš kito staliuko
+          <span aria-hidden="true" className="text-ink-2">+</span>
+          Užsakymas iš kito staliuko
         </button>
         <button
           type="button"
@@ -333,8 +335,9 @@ export function Demo() {
             setTeamTab("virtuve");
             announce("Demonstracija pradėta iš naujo.");
           }}
-          className="min-h-11 underline underline-offset-4 hover:text-ink"
+          className="inline-flex h-11 items-center gap-2 rounded-full bg-white px-4 ring-1 ring-line transition-colors hover:bg-paper-2"
         >
+          <span aria-hidden="true" className="text-ink-2">↺</span>
           Pradėti iš naujo
         </button>
       </div>

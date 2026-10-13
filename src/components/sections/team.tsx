@@ -129,7 +129,7 @@ export function Team() {
               as="article"
               key={role.role}
               delay={(index % 2) * 120}
-              className="flex flex-col justify-between gap-8 overflow-hidden rounded-[2rem] bg-paper p-7 sm:p-9"
+              className="flex flex-col justify-between gap-7 overflow-hidden rounded-[1.75rem] bg-paper p-6 sm:gap-8 sm:rounded-[2rem] sm:p-9"
             >
               <div>
                 <p className="text-[16px] font-semibold text-tomato-dark">{role.role}</p>

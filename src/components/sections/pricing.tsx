@@ -16,8 +16,11 @@ export function Pricing() {
             id="kaina-title"
             className="mx-auto max-w-[18ch] text-[2.4rem] leading-[1.04] font-semibold tracking-[-0.04em] text-balance sm:text-[3.5rem] lg:text-[4rem]"
           >
-            {setup}&nbsp;€ už įdiegimą, {monthly}&nbsp;€ per mėnesį, o priežiūra nemokama.
+            Aiški kaina be smulkaus šrifto.
           </h2>
+          <p className="mx-auto mt-5 max-w-[30rem] text-[1.125rem] text-balance text-ink-2 sm:text-[1.25rem]">
+            Vieną kartą sumokate už įdiegimą. Toliau tik {monthly}&nbsp;€ per mėnesį.
+          </p>
         </Reveal>
 
         <div className="mt-10 grid grid-cols-1 gap-3 sm:mt-16 sm:grid-cols-3 sm:gap-5">

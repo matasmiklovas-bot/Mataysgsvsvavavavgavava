@@ -1,6 +1,6 @@
 "use client";
 
-import type { Dispatch } from "react";
+import { useEffect, useRef, useState, type Dispatch } from "react";
 import { formatOrderNumber, formatPrice, getItem, linesTotal, type Station } from "@/lib/data";
 import { Ticket } from "@/components/ticket";
 import { linesForStation, type DemoAction, type DemoState, type Order, type TicketStatus } from "./store";
@@ -32,6 +32,18 @@ type StationRailProps = {
 export function StationRail({ station, state, now, highlightId, dispatch, announce }: StationRailProps) {
   const tickets = state.orders.filter((order) => order.status[station] && !order.delivered[station]);
   const active = tickets.filter((order) => order.status[station] !== "paruosta").length;
+  const railRef = useRef<HTMLUListElement>(null);
+  // Fade the right edge only when there really are more tickets to scroll to.
+  const [overflowing, setOverflowing] = useState(false);
+  useEffect(() => {
+    const rail = railRef.current;
+    if (!rail) return;
+    const check = () => setOverflowing(rail.scrollWidth - rail.clientWidth > 4);
+    check();
+    const observer = new ResizeObserver(check);
+    observer.observe(rail);
+    return () => observer.disconnect();
+  }, [tickets.length]);
 
   return (
     <div>
@@ -43,7 +55,12 @@ export function StationRail({ station, state, now, highlightId, dispatch, announ
           aria-hidden="true"
           className="mx-4 h-2 rounded-full bg-[#8f8a80] shadow-[0_4px_10px_-4px_rgb(0_0_0/0.9)] sm:mx-5"
         />
-        <ul className="no-scrollbar -mt-1 flex snap-x gap-4 overflow-x-auto overscroll-x-contain px-4 pt-0 pb-5 [mask-image:linear-gradient(to_right,#000_88%,transparent)] sm:px-5">
+        <ul
+          ref={railRef}
+          className={`no-scrollbar -mt-1 flex snap-x gap-4 overflow-x-auto overscroll-x-contain px-4 pt-0 pb-5 sm:px-5 ${
+            overflowing ? "[mask-image:linear-gradient(to_right,#000_86%,transparent)]" : ""
+          }`}
+        >
           {tickets.map((order) => {
             const status = order.status[station]!;
             const age = ageLabel(order.placedAt, now);

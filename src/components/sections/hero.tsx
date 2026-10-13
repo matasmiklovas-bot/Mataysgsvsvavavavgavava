@@ -27,12 +27,11 @@ export function Hero() {
           Svečiai užsisako patys, o virtuvė užsakymą mato iškart.
         </h1>
         <p
-          className="rise mx-auto mt-6 max-w-[38rem] text-[1.125rem] leading-relaxed text-night-muted sm:text-[1.25rem]"
+          className="rise mx-auto mt-6 max-w-[34rem] text-[1.125rem] leading-relaxed text-night-muted sm:text-[1.25rem]"
           style={delay(160)}
         >
-          Svečias nuskenuoja kodą ant staliuko, ir meniu atsidaro telefone, be programėlės.
-          Patiekalai iškart atsiranda virtuvės planšetėje, gėrimai baro, o padavėjas mato, ką ir
-          prie kurio staliuko nešti.
+          Svečias nuskenuoja kodą ant staliuko ir užsisako savo telefone, be programėlės. Virtuvė,
+          baras ir padavėjas viską mato tą pačią sekundę.
         </p>
         <div
           className="rise mt-9 flex flex-col items-center justify-center gap-4 sm:flex-row sm:gap-8"
@@ -54,7 +53,7 @@ export function Hero() {
             </span>
           </a>
         </div>
-        <p className="rise mt-6 text-[15px] text-night-muted" style={delay(300)}>
+        <p className="rise mt-6 text-[15px] text-balance text-night-muted" style={delay(300)}>
           {setup}&nbsp;€ už įdiegimą, {monthly}&nbsp;€ per mėnesį, priežiūra nemokama
         </p>
 
