@@ -53,7 +53,7 @@ export function Pricing() {
           <div className="mt-8 text-center">
             <a
               href="#forma"
-              className="inline-flex h-13 w-full items-center justify-center rounded-full bg-tomato px-8 text-[1.0625rem] font-medium whitespace-nowrap text-white transition-colors hover:bg-tomato-bright sm:w-auto"
+              className="inline-flex h-13 w-full items-center justify-center rounded-full bg-tomato px-8 text-[1.0625rem] font-medium whitespace-nowrap text-white transition-colors hover:bg-tomato-dark sm:w-auto"
             >
               {siteConfig.cta}
             </a>

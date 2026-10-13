@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { formatOrderNumber, formatPrice, getItem, heroOrder, linesTotal, restaurant, seedOrders } from "@/lib/data";
 import { Ticket } from "@/components/ticket";
+import { StatusBar } from "@/components/status-bar";
 
 /**
  * A short, looping film of one order at table 4: the guest taps dishes, adds a note, pays,
@@ -81,9 +82,7 @@ export function HeroStory({ stand }: { stand: ReactNode }) {
           <div className="rounded-[3rem] bg-[#2a2826] p-[3px] shadow-[0_40px_80px_-30px_rgb(0_0_0/0.9),inset_0_1px_0_rgb(255_255_255/0.18)]">
             <div className="rounded-[2.85rem] bg-black p-[9px]">
               <div className="relative flex h-[540px] flex-col overflow-hidden rounded-[2.35rem] bg-[#fffdf9] text-ink sm:h-[580px]">
-                <div className="flex h-9 shrink-0 items-center justify-center">
-                  <span className="h-[22px] w-[84px] rounded-full bg-black" />
-                </div>
+                <StatusBar compact />
                 <div className="border-b border-line px-5 pb-3">
                   <p className="text-[12px] text-ink-2">
                     {restaurant.kind} „{restaurant.name}“
@@ -213,7 +212,17 @@ export function HeroStory({ stand }: { stand: ReactNode }) {
                         {guestStatus === 1 && "Ruošiama. Atnešime prie staliuko."}
                         {guestStatus === 2 && "Paruošta, padavėjas jau neša."}
                       </p>
-                      <p className="mt-4 border-t border-line pt-3 text-[13.5px] text-ink-2">
+                      <ul className="mt-4 space-y-1 border-t border-line pt-3 text-[14px]">
+                        {heroOrder.lines.map((line) => (
+                          <li key={line.itemId}>
+                            {line.quantity}× {getItem(line.itemId).name}
+                            {line.notes.length > 0 && (
+                              <span className="block text-[13px] text-tomato-dark">{line.notes.join(", ")}</span>
+                            )}
+                          </li>
+                        ))}
+                      </ul>
+                      <p className="mt-3 border-t border-line pt-3 text-[13.5px] text-ink-2">
                         Apmokėta kortele · <span className="tabular-nums">{formatPrice(total)}</span>
                       </p>
                     </div>
@@ -268,7 +277,7 @@ export function HeroStory({ stand }: { stand: ReactNode }) {
                         orderId={order.id}
                         table={order.table}
                         station="Virtuvė"
-                        time={`prieš ${order.minutesAgo} min.`}
+                        time={`${order.minutesAgo} min.`}
                         lines={order.lines.filter((l) => getItem(l.itemId).station === "virtuve")}
                         status={{ label: "Ruošiama", tone: "cooking" }}
                         compact
@@ -284,9 +293,16 @@ export function HeroStory({ stand }: { stand: ReactNode }) {
 
       {/* Phones: the ticket appears under the device instead of on a tablet. */}
       <div aria-hidden="true" className="mx-auto mt-6 h-[236px] w-[236px] md:hidden">
+        <p className="mb-2 text-center text-[13px] text-night-muted">
+          {ticketStage ? "Tuo metu virtuvės planšetėje" : "Virtuvės planšetė laukia užsakymo"}
+        </p>
+        {!ticketStage && (
+          <div className="flex h-[150px] items-center justify-center rounded-md border border-dashed border-night-line font-mono text-[12px] text-night-muted">
+            #024 · Staliukas 4
+          </div>
+        )}
         {ticketStage && (
           <div key="mobile-ticket" className="animate-ticket-in">
-            <p className="mb-2 text-center text-[13px] text-night-muted">Tuo metu virtuvės planšetėje</p>
             <Ticket
               orderId={heroOrder.id}
               table={heroOrder.table}
@@ -312,8 +328,10 @@ export function HeroStory({ stand }: { stand: ReactNode }) {
 function Screen({ show, children }: { show: boolean; children: ReactNode }) {
   return (
     <div
-      className={`absolute inset-0 transition-all duration-500 ease-[var(--ease-out-soft)] ${
-        show ? "translate-x-0 opacity-100" : "pointer-events-none translate-x-4 opacity-0"
+      className={`absolute inset-0 transition-[opacity,transform] ease-[var(--ease-out-soft)] ${
+        show
+          ? "translate-x-0 opacity-100 delay-150 duration-500"
+          : "pointer-events-none -translate-x-6 opacity-0 duration-200"
       }`}
     >
       {children}

@@ -2,6 +2,7 @@
 
 import { forwardRef, useEffect, useRef, useState, type Dispatch } from "react";
 import { categories, formatOrderNumber, formatPrice, getItem, linesTotal, menu, restaurant, type Category } from "@/lib/data";
+import { StatusBar } from "@/components/status-bar";
 import { cartLines, guestStatus, type DemoAction, type DemoState, type Payment } from "./store";
 
 export type PhoneScreen = "menu" | "cart" | "paying" | "done";
@@ -71,9 +72,7 @@ export const GuestPhone = forwardRef<HTMLDivElement, GuestPhoneProps>(function G
       <div className="rounded-[3.1rem] bg-[#2a2826] p-[3px] shadow-[0_50px_90px_-40px_rgb(0_0_0/0.65),inset_0_1px_0_rgb(255_255_255/0.18)]">
         <div className="rounded-[2.95rem] bg-black p-[10px]">
         <div className="relative flex h-[600px] flex-col overflow-hidden rounded-[2.4rem] bg-[#fffdf9] sm:h-[640px]">
-          <div aria-hidden="true" className="flex h-10 shrink-0 items-center justify-center">
-            <span className="h-[24px] w-[92px] rounded-full bg-black" />
-          </div>
+          <StatusBar />
 
           <div className="shrink-0 border-b border-line px-5 pt-1 pb-3">
             <p className="text-[13px] text-ink-2">
@@ -174,7 +173,7 @@ export const GuestPhone = forwardRef<HTMLDivElement, GuestPhoneProps>(function G
                     <button
                       type="button"
                       onClick={confirm}
-                      className="mt-5 flex h-13 w-full items-center justify-center rounded-2xl bg-tomato text-[16px] font-semibold text-white hover:bg-tomato-bright"
+                      className="mt-5 flex h-13 w-full items-center justify-center rounded-2xl bg-tomato text-[16px] font-semibold text-white hover:bg-tomato-dark"
                     >
                       {payment === "kortele" ? `Apmokėti ${formatPrice(total)}` : "Užsakyti"}
                     </button>

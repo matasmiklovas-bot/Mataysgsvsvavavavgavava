@@ -276,7 +276,7 @@ export function Demo() {
             <p className="text-[14px] text-kds-muted">Planšetė</p>
           </div>
 
-          <div id="demo-team-panel" className="min-h-[420px] pt-4">
+          <div id="demo-team-panel" className="min-h-[420px] pt-4 lg:min-h-[586px]">
             {currentTeam === "personalas" ? (
               <StaffBoard state={state} now={now} dispatch={dispatch} announce={announce} />
             ) : (

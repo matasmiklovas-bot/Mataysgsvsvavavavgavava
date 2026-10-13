@@ -14,8 +14,8 @@ export default function OpengraphImage() {
           width: "100%",
           height: "100%",
           display: "flex",
-          background: "#f4efe6",
-          color: "#1d1b18",
+          background: "#0c0b0a",
+          color: "#f5f3ef",
           padding: "70px 80px",
           justifyContent: "space-between",
           alignItems: "center",
@@ -23,13 +23,13 @@ export default function OpengraphImage() {
       >
         <div style={{ display: "flex", flexDirection: "column", maxWidth: 640 }}>
           <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
-            <div style={{ display: "flex", width: 34, height: 44, background: "#1d1b18", borderBottom: "6px solid #c63d24" }} />
+            <div style={{ display: "flex", width: 34, height: 44, background: "#f5f3ef", borderBottom: "6px solid #e5583c" }} />
             <div style={{ fontSize: 40 }}>Stalas</div>
           </div>
           <div style={{ marginTop: 56, fontSize: 68, lineHeight: 1.05, letterSpacing: -2 }}>
             Svečiai užsisako patys, o virtuvė užsakymą mato iškart.
           </div>
-          <div style={{ marginTop: 32, fontSize: 30, color: "#5b564d" }}>
+          <div style={{ marginTop: 32, fontSize: 30, color: "#a39f97" }}>
             {`${setup} € už įdiegimą ir ${monthly} € per mėnesį`}
           </div>
         </div>
@@ -39,6 +39,7 @@ export default function OpengraphImage() {
             flexDirection: "column",
             width: 330,
             background: "#fbf8f1",
+            color: "#1d1d1f",
             padding: "28px 28px 36px",
             fontSize: 24,
             boxShadow: "0 20px 40px rgba(0,0,0,0.25)",

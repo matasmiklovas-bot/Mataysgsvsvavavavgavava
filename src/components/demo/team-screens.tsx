@@ -43,7 +43,7 @@ export function StationRail({ station, state, now, highlightId, dispatch, announ
           aria-hidden="true"
           className="mx-4 h-2 rounded-full bg-[#8f8a80] shadow-[0_4px_10px_-4px_rgb(0_0_0/0.9)] sm:mx-5"
         />
-        <ul className="no-scrollbar -mt-1 flex snap-x gap-4 overflow-x-auto overscroll-x-contain px-4 pt-0 pb-5 sm:px-5">
+        <ul className="no-scrollbar -mt-1 flex snap-x gap-4 overflow-x-auto overscroll-x-contain px-4 pt-0 pb-5 [mask-image:linear-gradient(to_right,#000_88%,transparent)] sm:px-5">
           {tickets.map((order) => {
             const status = order.status[station]!;
             const age = ageLabel(order.placedAt, now);
