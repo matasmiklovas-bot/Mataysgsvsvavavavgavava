@@ -3,25 +3,31 @@ import { heroOrder, restaurant } from "@/lib/data";
 import { HeroStory } from "@/components/hero-story";
 import { QrCode } from "@/components/qr-code";
 import { LogoMark } from "@/components/logo";
+import { buttonClass } from "@/components/ui";
 
 const delay = (ms: number) => ({ "--delay": `${ms}ms` }) as React.CSSProperties;
 
 export function Hero() {
   const { setup, monthly } = siteConfig.pricing;
   return (
-    <section aria-labelledby="hero-title" className="relative isolate overflow-hidden bg-night text-night-text">
-      {/* Warm pool of light on the "table" under the devices */}
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-x-0 bottom-0 -z-10 h-[70%] bg-[radial-gradient(60%_55%_at_50%_75%,rgb(229_150_90/0.14),transparent_70%)]"
-      />
-      <div className="mx-auto max-w-6xl px-4 pt-16 pb-16 text-center sm:px-6 sm:pt-24 lg:pt-20 lg:pb-24">
-        <p className="rise text-[15px] text-night-muted sm:text-[17px]" style={delay(0)}>
+    <section aria-labelledby="hero-title" className="relative isolate -mt-14 overflow-hidden bg-night text-night-text">
+      {/* Light: a soft glow above the headline and a slowly drifting warm pool under the devices. */}
+      <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10">
+        <div className="absolute inset-x-0 top-0 h-[34rem] bg-[radial-gradient(50%_60%_at_50%_0%,rgb(255_236_214/0.07),transparent_70%)]" />
+        <div className="absolute inset-x-[-10%] bottom-[-8%] h-[72%] animate-glow bg-[radial-gradient(55%_50%_at_50%_70%,rgb(229_140_80/0.17),transparent_70%)] will-change-transform" />
+        <div className="absolute inset-x-0 bottom-0 h-px bg-[linear-gradient(90deg,transparent,rgb(255_255_255/0.08),transparent)]" />
+      </div>
+      <div className="mx-auto max-w-6xl px-4 pt-[7.5rem] pb-16 text-center sm:px-6 sm:pt-[9.5rem] lg:pt-[8.5rem] lg:pb-24 [@media(max-height:520px)]:pt-24">
+        <p
+          className="rise inline-flex items-center gap-2 rounded-full border border-white/12 bg-white/[0.04] px-3.5 py-1.5 text-[14px] text-night-text/85 sm:text-[15px]"
+          style={delay(0)}
+        >
+          <span aria-hidden="true" className="size-1.5 rounded-full bg-tomato-bright shadow-[0_0_10px_2px_rgb(229_88_60/0.6)]" />
           QR užsakymai restoranams, kavinėms ir barams
         </p>
         <h1
           id="hero-title"
-          className="rise mx-auto mt-4 max-w-[15ch] text-[2.6rem] leading-[1.02] font-semibold tracking-[-0.045em] text-balance sm:text-[4.25rem] lg:text-[4.75rem] xl:max-w-none"
+          className="rise mx-auto mt-6 max-w-[15ch] text-[2.6rem] leading-[1.02] font-semibold tracking-[-0.045em] text-balance sm:text-[4.25rem] lg:text-[4.75rem] xl:max-w-none"
           style={delay(80)}
         >
           Svečiai užsisako patys, <br className="max-xl:hidden" />o virtuvė užsakymą mato iškart.
@@ -38,7 +44,7 @@ export function Hero() {
         >
           <a
             href="#forma"
-            className="inline-flex h-13 w-full items-center justify-center rounded-full bg-tomato px-8 text-[1.0625rem] font-medium whitespace-nowrap text-white transition-[background-color,transform] hover:bg-tomato-dark active:scale-[0.98] sm:w-auto"
+            className={buttonClass({ fullOnMobile: true })}
           >
             {siteConfig.cta}
           </a>

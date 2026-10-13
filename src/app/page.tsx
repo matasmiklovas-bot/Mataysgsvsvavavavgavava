@@ -33,7 +33,7 @@ export default function Home() {
       >
         Pereiti prie turinio
       </a>
-      <Header />
+      <Header overHero />
       <main id="turinys" tabIndex={-1} className="focus:outline-none">
         <Hero />
         <DemoSection />

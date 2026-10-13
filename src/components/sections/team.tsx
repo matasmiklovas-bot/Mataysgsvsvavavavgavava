@@ -2,6 +2,7 @@ import type { ReactNode } from "react";
 import { formatPrice, heroOrder, heroOrderTime, linesTotal, seedOrders } from "@/lib/data";
 import { Ticket } from "@/components/ticket";
 import { Reveal } from "@/components/reveal";
+import { SectionHeading } from "@/components/section-heading";
 
 const barOrder = seedOrders[1];
 
@@ -110,14 +111,7 @@ export function Team() {
   return (
     <section aria-labelledby="team-title" className="bg-white">
       <div className="mx-auto max-w-6xl px-4 py-20 sm:px-6 sm:py-28">
-        <Reveal className="mx-auto max-w-3xl text-center">
-          <h2
-            id="team-title"
-            className="text-[2.4rem] leading-[1.04] font-semibold tracking-[-0.04em] text-balance sm:text-[3.5rem] lg:text-[4rem]"
-          >
-            Kas pasikeičia salėje, virtuvėje ir bare.
-          </h2>
-        </Reveal>
+        <SectionHeading id="team-title" eyebrow="Kasdienis darbas" title="Kas pasikeičia salėje, virtuvėje ir bare." />
         <div className="mt-12 grid grid-cols-1 gap-4 sm:mt-16 md:grid-cols-2 md:gap-5">
           {roles.map((role, index) => (
             <Reveal

@@ -45,6 +45,42 @@
   --animate-stamp: stamp 0.45s cubic-bezier(0.3, 1.4, 0.5, 1) both;
   --animate-travel: travel 0.9s cubic-bezier(0.4, 0, 0.2, 1) both;
   --animate-fade-up: fade-up 0.45s var(--ease-out-soft) both;
+  --animate-fade-in: fade-in 0.3s ease-out both;
+  --animate-menu-item: menu-item 0.45s var(--ease-out-soft) both;
+  --animate-glow: glow 18s ease-in-out infinite alternate;
+  --animate-pop: pop 0.5s cubic-bezier(0.3, 1.4, 0.5, 1) both;
+
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+    }
+  }
+
+  @keyframes menu-item {
+    from {
+      opacity: 0;
+      transform: translateY(-8px);
+    }
+  }
+
+  /* Slow drift of the warm light behind the hero devices. */
+  @keyframes glow {
+    from {
+      transform: translate3d(-6%, 0, 0) scale(1);
+      opacity: 0.75;
+    }
+    to {
+      transform: translate3d(6%, -4%, 0) scale(1.12);
+      opacity: 1;
+    }
+  }
+
+  @keyframes pop {
+    from {
+      opacity: 0;
+      transform: scale(0.6);
+    }
+  }
 
   @keyframes fade-up {
     from {
@@ -127,7 +163,6 @@
 html {
   background: var(--color-paper);
   -webkit-text-size-adjust: 100%;
-  scroll-padding-top: 4rem;
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -178,10 +213,10 @@ body {
 /* Scroll reveal (see <Reveal>). Content is visible without JavaScript. */
 .js .reveal {
   opacity: 0;
-  transform: translate3d(0, 28px, 0);
+  transform: translate3d(0, 20px, 0);
   transition:
-    opacity 1s var(--ease-out-soft),
-    transform 1s var(--ease-out-soft);
+    opacity 0.9s var(--ease-out-soft),
+    transform 0.9s var(--ease-out-soft);
   transition-delay: var(--delay, 0ms);
 }
 .js .reveal[data-shown] {

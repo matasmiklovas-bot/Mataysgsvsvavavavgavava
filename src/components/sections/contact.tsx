@@ -1,6 +1,7 @@
 import { siteConfig } from "@/config/site";
 import { ContactForm } from "@/components/contact-form";
 import { Reveal } from "@/components/reveal";
+import { SectionHeading } from "@/components/section-heading";
 
 export function Contact() {
   const { email, phone } = siteConfig.contacts;
@@ -11,17 +12,14 @@ export function Contact() {
         className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-[60%] bg-[radial-gradient(50%_60%_at_50%_0%,rgb(229_150_90/0.10),transparent_70%)]"
       />
       <div className="mx-auto max-w-2xl px-4 py-20 sm:px-6 sm:py-28">
+        <SectionHeading
+          id="forma-title"
+          eyebrow="Susisiekime"
+          tone="light"
+          title="Pažiūrėkime, kaip tai veiktų jūsų restorane."
+          lead="Paliksite kontaktus, paskambinsime ir parodysime. Tai nieko neįpareigoja."
+        />
         <Reveal className="text-center">
-          <h2
-            id="forma-title"
-            className="mx-auto max-w-[16ch] text-[2.4rem] leading-[1.04] font-semibold tracking-[-0.04em] text-balance sm:text-[3.5rem]"
-          >
-            Pažiūrėkime, kaip tai veiktų jūsų restorane.
-          </h2>
-          <p className="mx-auto mt-5 max-w-[30rem] text-[1.125rem] leading-relaxed text-balance text-night-muted">
-            Paliksite kontaktus, paskambinsime ir parodysime. Tai nieko neįpareigoja.
-          </p>
-
           {(phone || email) && (
             <dl className="mt-8 flex flex-wrap justify-center gap-x-10 gap-y-4 text-[1.0625rem]">
               {phone && (

@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useId, useState, type FormEvent } from "react";
 import { siteConfig } from "@/config/site";
+import { buttonClass } from "@/components/ui";
 import { equipmentLabel, setEquipment, useEquipment, type Equipment } from "@/components/equipment-choice";
 
 /**
@@ -109,14 +110,19 @@ export function ContactForm() {
 
   if (status === "sent" || status === "mail") {
     return (
-      <div role="status" className="py-6">
-        <p className="text-[2.2rem] leading-tight font-semibold tracking-[-0.03em]">Ačiū, {sentName}!</p>
+      <div role="status" className="animate-fade-up py-8 text-center">
+        <span className="mx-auto flex size-16 animate-pop items-center justify-center rounded-full bg-ready text-white shadow-[0_16px_30px_-14px_rgb(46_125_79/0.8)]">
+          <svg viewBox="0 0 24 24" className="size-8" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+            <path d="M5 12.5l4.5 4.5L19 7.5" />
+          </svg>
+        </span>
+        <p className="mt-6 text-[2rem] leading-tight font-semibold tracking-[-0.03em]">Ačiū, {sentName}!</p>
         {status === "sent" ? (
-          <p className="mt-3 text-ink-2">
+          <p className="mx-auto mt-3 max-w-[26rem] text-ink-2">
             Gavome jūsų užklausą. Netrukus susisieksime ir suderinsime demonstracijos laiką.
           </p>
         ) : (
-          <p className="mt-3 text-ink-2">
+          <p className="mx-auto mt-3 max-w-[26rem] text-ink-2">
             Atsidarė jūsų el. pašto programa su paruoštu laišku. Išsiųskite jį, ir netrukus
             susisieksime.
           </p>
@@ -178,9 +184,16 @@ export function ContactForm() {
         <button
           type="submit"
           disabled={status === "sending"}
-          className="inline-flex h-13 w-full items-center justify-center rounded-full bg-tomato px-8 text-[1.0625rem] font-medium whitespace-nowrap text-white transition-[background-color,transform] hover:bg-tomato-dark active:scale-[0.98] disabled:opacity-70"
+          className={buttonClass({ full: true })}
         >
-          {status === "sending" ? "Siunčiama…" : siteConfig.cta}
+          {status === "sending" ? (
+            <>
+              <span aria-hidden="true" className="size-4 animate-spin rounded-full border-2 border-white/40 border-t-white" />
+              Siunčiama…
+            </>
+          ) : (
+            siteConfig.cta
+          )}
         </button>
         {status === "error" && (
           <p role="alert" className="mt-3 text-[16px] text-tomato-dark">
