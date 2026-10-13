@@ -32,7 +32,7 @@ export const equipmentLabel: Record<Equipment, string> = {
   nuoma: `Įrangos nuoma, ${siteConfig.pricing.equipmentRent} € per mėnesį`,
 };
 
-const { setup, monthly, equipmentRent } = siteConfig.pricing;
+const { oneTime, perMonth, equipmentRent } = siteConfig.pricing;
 
 const options: {
   value: Equipment;
@@ -56,7 +56,7 @@ const options: {
 /** Pick own tablets or rent everything; shows the resulting price right away. */
 export function EquipmentPicker() {
   const choice = useEquipment();
-  const total = monthly + (choice === "nuoma" ? equipmentRent : 0);
+  const rent = choice === "nuoma" ? equipmentRent : 0;
 
   return (
     <div>
@@ -129,8 +129,9 @@ export function EquipmentPicker() {
       <div aria-live="polite" className="mt-4 min-h-0">
         {choice && (
           <p className="animate-fade-up rounded-[1.25rem] bg-white px-5 py-4 text-center text-[16px] text-ink">
-            Jūsų kaina: <strong className="font-semibold">{setup}&nbsp;€</strong> už įdiegimą, toliau{" "}
-            <strong className="font-semibold">{total}&nbsp;€</strong> per mėnesį.
+            Jūsų kaina: <strong className="font-semibold">{oneTime}&nbsp;€</strong> vieną kartą
+            {rent > 0 ? <> ir {rent}&nbsp;€ per mėnesį už įrangą, arba </> : " arba "}
+            <strong className="font-semibold">{perMonth + rent}&nbsp;€</strong> per mėnesį.
           </p>
         )}
       </div>

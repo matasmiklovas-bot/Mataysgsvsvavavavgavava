@@ -18,8 +18,8 @@ const structuredData = {
   url: siteConfig.url,
   inLanguage: "lt",
   offers: [
-    { "@type": "Offer", name: "Įdiegimas", price: siteConfig.pricing.setup, priceCurrency: "EUR" },
-    { "@type": "Offer", name: "Mėnesio mokestis (sistema ir priežiūra)", price: siteConfig.pricing.monthly, priceCurrency: "EUR" },
+    { "@type": "Offer", name: "Vienkartinis mokėjimas", price: siteConfig.pricing.oneTime, priceCurrency: "EUR" },
+    { "@type": "Offer", name: "Mėnesinis mokėjimas", price: siteConfig.pricing.perMonth, priceCurrency: "EUR" },
     { "@type": "Offer", name: "Įrangos nuoma per mėnesį", price: siteConfig.pricing.equipmentRent, priceCurrency: "EUR" },
   ],
 };

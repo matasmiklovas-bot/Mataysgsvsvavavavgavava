@@ -17,7 +17,7 @@ const faq: { q: string; a: string }[] = [
   },
   {
     q: "Kiek kainuoja priežiūra?",
-    a: "Nieko. Priežiūra ir visi pakeitimai, kurių paprašysite, nemokami.",
+    a: "Nieko papildomai. Priežiūra ir visi pakeitimai, kurių paprašysite, įskaičiuoti ir mokant 550 € vieną kartą, ir 200 € per mėnesį.",
   },
   {
     q: "Kaip su kasos aparatu ir čekiais?",

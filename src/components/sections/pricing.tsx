@@ -5,18 +5,18 @@ import { buttonClass } from "@/components/ui";
 import { EquipmentPicker } from "@/components/equipment-choice";
 
 export function Pricing() {
-  const { setup, monthly } = siteConfig.pricing;
+  const { oneTime, perMonth } = siteConfig.pricing;
   const tiles = [
-    { label: "Įdiegimas", amount: setup, note: "vieną kartą" },
-    { label: "Kas mėnesį", amount: monthly, note: "sistema, priežiūra ir pakeitimai" },
+    { label: "Vienu mokėjimu", amount: oneTime, note: "vieną kartą, be mėnesio mokesčio" },
+    { label: "Kas mėnesį", amount: perMonth, note: "be įdiegimo mokesčio" },
   ];
   return (
     <section id="kaina" aria-labelledby="kaina-title" className="scroll-mt-14 bg-paper">
       <div className="mx-auto max-w-3xl px-4 py-20 sm:px-6 sm:py-28">
         <SectionHeading
           id="kaina-title"
-          title="Aiški kaina be smulkaus šrifto."
-          lead="Pirmiausia nemokamas prototipas. Patiks, sumokate tik už įdiegimą, visa kita nemokama."
+          title="Du būdai mokėti, jokio smulkaus šrifto."
+          lead="Pirmiausia nemokamas prototipas. Patiks, renkatės, kaip mokėti. Priežiūra ir pakeitimai įskaičiuoti abiem atvejais."
         />
 
         <div className="mt-10 grid grid-cols-1 gap-3 sm:mt-16 sm:grid-cols-2 sm:gap-4">

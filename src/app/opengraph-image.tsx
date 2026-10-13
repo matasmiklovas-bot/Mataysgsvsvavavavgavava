@@ -6,7 +6,7 @@ export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
 export default function OpengraphImage() {
-  const { setup, monthly } = siteConfig.pricing;
+  const { oneTime, perMonth } = siteConfig.pricing;
   return new ImageResponse(
     (
       <div
@@ -30,7 +30,7 @@ export default function OpengraphImage() {
             Svečiai užsisako patys, o virtuvė užsakymą mato iškart.
           </div>
           <div style={{ marginTop: 32, fontSize: 30, color: "#a39f97" }}>
-            {`${setup} € įdiegimas · ${monthly} € per mėnesį · priežiūra nemokama`}
+            {`${oneTime} € vieną kartą arba ${perMonth} € per mėnesį · priežiūra įskaičiuota`}
           </div>
         </div>
         <div

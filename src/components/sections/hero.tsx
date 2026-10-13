@@ -8,7 +8,7 @@ import { buttonClass } from "@/components/ui";
 const delay = (ms: number) => ({ "--delay": `${ms}ms` }) as React.CSSProperties;
 
 export function Hero() {
-  const { setup, monthly } = siteConfig.pricing;
+  const { oneTime, perMonth } = siteConfig.pricing;
   return (
     <section aria-labelledby="hero-title" className="relative isolate -mt-14 overflow-hidden bg-night text-night-text">
       {/* Warm pool of light on the "table" under the devices */}
@@ -54,7 +54,7 @@ export function Hero() {
           </a>
         </div>
         <p className="rise mt-6 text-[15px] text-balance text-night-muted" style={delay(300)}>
-          Prototipas nemokamai. Patiks, tada {setup}&nbsp;€ už įdiegimą ir {monthly}&nbsp;€ per mėnesį.
+          Prototipas nemokamai. Patiks, tada {oneTime}&nbsp;€ vieną kartą arba {perMonth}&nbsp;€ per mėnesį.
         </p>
 
         <div className="rise mt-14 sm:mt-16 lg:mt-14" style={delay(420)}>
