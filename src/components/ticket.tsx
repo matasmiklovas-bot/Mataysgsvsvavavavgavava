@@ -60,7 +60,8 @@ export function Ticket({ orderId, table, station, time, late, lines, payment, st
             <span className="text-[13px] text-ink-2 uppercase">{payment}</span>
             {status && (
               <span
-                className={`-rotate-3 border-2 px-1.5 text-[12.5px] font-semibold tracking-[0.1em] uppercase ${statusTone[status.tone]}`}
+                key={status.label}
+                className={`animate-stamp border-2 px-1.5 text-[12.5px] font-semibold tracking-[0.1em] uppercase ${statusTone[status.tone]}`}
               >
                 {status.label}
               </span>

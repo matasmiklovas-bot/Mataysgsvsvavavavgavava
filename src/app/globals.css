@@ -42,6 +42,8 @@
   --animate-flash: flash 1.6s ease-out 2;
   --animate-scan: scan 2.6s ease-in-out infinite;
   --animate-tap: tap 0.6s ease-out both;
+  --animate-stamp: stamp 0.45s cubic-bezier(0.3, 1.4, 0.5, 1) both;
+  --animate-travel: travel 0.9s cubic-bezier(0.4, 0, 0.2, 1) both;
 
   @keyframes ticket-in {
     from {
@@ -71,6 +73,34 @@
     }
     50% {
       top: 88%;
+    }
+  }
+
+  @keyframes stamp {
+    from {
+      opacity: 0;
+      transform: scale(1.8) rotate(-12deg);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1) rotate(-3deg);
+    }
+  }
+
+  @keyframes travel {
+    from {
+      left: 0;
+      opacity: 0;
+    }
+    15% {
+      opacity: 1;
+    }
+    85% {
+      opacity: 1;
+    }
+    to {
+      left: 100%;
+      opacity: 0;
     }
   }
 
@@ -179,6 +209,21 @@ body {
 
 details > summary {
   list-style: none;
+}
+
+/* Smooth accordion where the browser supports animating to "auto" height. */
+:root {
+  interpolate-size: allow-keywords;
+}
+details::details-content {
+  block-size: 0;
+  overflow: hidden;
+  transition:
+    block-size 0.35s var(--ease-out-soft),
+    content-visibility 0.35s allow-discrete;
+}
+details[open]::details-content {
+  block-size: auto;
 }
 details > summary::-webkit-details-marker {
   display: none;

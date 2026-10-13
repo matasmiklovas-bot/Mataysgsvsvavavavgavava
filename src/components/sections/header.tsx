@@ -1,5 +1,6 @@
 import Link from "next/link";
-import { navItems, siteConfig } from "@/config/site";
+import { siteConfig } from "@/config/site";
+import { NavLinks } from "@/components/nav-links";
 import { Logo } from "@/components/logo";
 
 export function Header() {
@@ -10,18 +11,7 @@ export function Header() {
           <Logo tone="light" />
         </Link>
         <nav aria-label="Pagrindinė navigacija" className="hidden md:block">
-          <ul className="flex items-center gap-8">
-            {navItems.map((item) => (
-              <li key={item.href}>
-                <a
-                  href={item.href}
-                  className="inline-flex min-h-11 items-center text-[14px] text-night-text/80 transition-colors hover:text-white"
-                >
-                  {item.label}
-                </a>
-              </li>
-            ))}
-          </ul>
+          <NavLinks />
         </nav>
         <Link
           href="/#forma"

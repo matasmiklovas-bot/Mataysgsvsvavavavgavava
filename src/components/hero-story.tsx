@@ -234,7 +234,16 @@ export function HeroStory({ stand }: { stand: ReactNode }) {
         </div>
 
         {/* Kitchen tablet */}
-        <div className="hidden w-[480px] shrink-0 md:block">
+        <div className="relative hidden w-[480px] shrink-0 md:block">
+          {/* Connection from the phone: a dot travels across when the order is sent. */}
+          <div className="absolute top-[42%] right-full h-[2px] w-6 bg-[repeating-linear-gradient(to_right,rgb(163_159_151/0.45)_0_4px,transparent_4px_8px)] lg:w-10">
+            {t === 7 && (
+              <span
+                key="travel"
+                className="absolute top-1/2 size-2.5 -translate-x-1/2 -translate-y-1/2 animate-travel rounded-full bg-tomato-bright shadow-[0_0_10px_2px_rgb(229_88_60/0.6)]"
+              />
+            )}
+          </div>
           <div className="rounded-[2rem] bg-[#2a2826] p-[3px] shadow-[0_40px_80px_-30px_rgb(0_0_0/0.9),inset_0_1px_0_rgb(255_255_255/0.18)]">
             <div className="rounded-[1.85rem] bg-black p-3">
               <div className="h-[330px] overflow-hidden rounded-[1.1rem] bg-kds text-kds-text">
