@@ -11,11 +11,11 @@ export function Contact() {
         aria-hidden="true"
         className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-[60%] bg-[radial-gradient(50%_60%_at_50%_0%,rgb(229_150_90/0.10),transparent_70%)]"
       />
-      <div className="mx-auto max-w-2xl px-4 py-20 sm:px-6 sm:py-28">
+      <div className="mx-auto max-w-3xl px-4 py-20 sm:px-6 sm:py-28">
         <SectionHeading
           id="forma-title"
           tone="light"
-          title="Nemokamas prototipas jūsų restoranui."
+          title={<>Nemokamas prototipas <br className="max-sm:hidden" />jūsų restoranui.</>}
           lead="Paliksite kontaktus, paruošime prototipą ir parodysime. Patiks, pirksite. Nepatiks, nieko nemokate."
         />
         <Reveal className="text-center">
@@ -44,7 +44,7 @@ export function Contact() {
             </dl>
           )}
         </Reveal>
-        <Reveal delay={120} className="mt-12 rounded-[2rem] bg-paper p-6 text-ink shadow-[0_40px_80px_-40px_rgb(0_0_0/0.8)] sm:mt-14 sm:p-10">
+        <Reveal delay={120} className="mx-auto max-w-2xl mt-12 rounded-[2rem] bg-paper p-6 text-ink shadow-[0_40px_80px_-40px_rgb(0_0_0/0.8)] sm:mt-14 sm:p-10">
           <ContactForm />
         </Reveal>
       </div>

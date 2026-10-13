@@ -22,7 +22,7 @@ export function Hero() {
         </p>
         <h1
           id="hero-title"
-          className="rise mx-auto mt-4 max-w-[15ch] text-[2.6rem] leading-[1.02] font-semibold tracking-[-0.045em] text-balance sm:text-[4.25rem] lg:text-[4.75rem] xl:max-w-none"
+          className="rise mx-auto mt-4 max-w-[15ch] text-[2.25rem] max-sm:max-w-none leading-[1.02] font-semibold tracking-[-0.045em] text-balance sm:text-[4.25rem] lg:text-[4.75rem] xl:max-w-none"
           style={delay(80)}
         >
           Svečiai užsisako patys, <br className="max-xl:hidden" />o virtuvė užsakymą mato iškart.
