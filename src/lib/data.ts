@@ -18,9 +18,11 @@ export type MenuItem = {
   /** Notes the guest can tick, e.g. "be svogūnų". Printed on the ticket. */
   options: string[];
   /**
-   * Square dish photo in public/menu. Sources: Pexels photos 15795823, 4202387, 18713424,
-   * 7837671, 9515248, 15954374, 13623762, 4134388, 5538223 (Pexels license, free for commercial
-   * use) and Wikimedia Commons "Šaltibarščiai, Pirmas blynas, Vilnius, June 2026.jpg" (CC0).
+   * Square dish photo in public/menu (640 px WebP). Sources, all free for commercial use:
+   * Pexels photos 3872373, 4202381, 17499948, 4340676, 2638019, 4021980 (Pexels license);
+   * CC0 via Openverse/rawpixel: rawpixel 447950 (burger, Jakub Kapusnak), rawpixel 5963185
+   * (steak), Flickr/JohannPiber beer (Openverse de4aa9b3-a062-4bf1-a7ff-a5f485c1964b);
+   * Wikimedia Commons "Litavsko jelo šaltibarščiai.jpg" (CC0).
    * Replace with the restaurant's own photos for a real prototype.
    */
   image?: string;
@@ -57,11 +59,11 @@ export const menu: MenuItem[] = [
     id: "salotos",
     image: "/menu/salotos.webp",
     name: "Sezoninės salotos",
-    description: "Avokadas, agurkai, pomidorai, sėklos",
+    description: "Kinoja, brokoliai, agurkai, pomidorai",
     price: 890,
     category: "sriubos",
     station: "virtuve",
-    options: ["padažas atskirai", "be sūrio"],
+    options: ["padažas atskirai", "be kinojos"],
   },
   {
     id: "cepelinai",
@@ -96,12 +98,12 @@ export const menu: MenuItem[] = [
   {
     id: "kepsnys",
     image: "/menu/kepsnys.webp",
-    name: "Kiaulienos sprandinė",
-    description: "Ant grotelių, su česnaku ir čiobreliais",
+    name: "Jautienos kepsnys",
+    description: "Su žolelių sviestu, bulvytėmis ir daržovėmis",
     price: 1390,
     category: "pagrindiniai",
     station: "virtuve",
-    options: ["be česnakų padažo"],
+    options: ["be sviesto"],
   },
   {
     id: "pyragas",
@@ -199,7 +201,7 @@ export const seedOrders: SeedOrder[] = [
     payment: "kortele",
     minutesAgo: 6,
     lines: [
-      { itemId: "kepsnys", quantity: 1, notes: ["be česnakų padažo"] },
+      { itemId: "kepsnys", quantity: 1, notes: ["be sviesto"] },
       { itemId: "limonadas", quantity: 1, notes: [] },
     ],
     status: { virtuve: "ruosiama", baras: "naujas" },
