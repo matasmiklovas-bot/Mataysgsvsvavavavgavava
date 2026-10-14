@@ -22,7 +22,8 @@ export type MenuItem = {
    * Pexels photos 3872373, 4202381, 17499948, 4340676, 2638019, 4021980 (Pexels license);
    * CC0 via Openverse/rawpixel: rawpixel 447950 (burger, Jakub Kapusnak), rawpixel 5963185
    * (steak), Flickr/JohannPiber beer (Openverse de4aa9b3-a062-4bf1-a7ff-a5f485c1964b);
-   * Wikimedia Commons "Litavsko jelo šaltibarščiai.jpg" (CC0).
+   * Wikimedia Commons "Šaltibarščiai (cold beet soup).jpg" by Continentaleurope, CC BY 4.0,
+   * cropped and set on a light background (credited in the footer).
    * Replace with the restaurant's own photos for a real prototype.
    */
   image?: string;

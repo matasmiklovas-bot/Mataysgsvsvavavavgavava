@@ -52,6 +52,21 @@ export function Footer() {
           </p>
           <p>Sukurta restoranams Lietuvoje</p>
         </div>
+        {/* CC BY 4.0 requires a visible credit and a note that the photo was changed. */}
+        <p className="mt-3 text-[13px] text-night-muted/80">
+          Šaltibarščių nuotrauka:{" "}
+          <a
+            href="https://commons.wikimedia.org/w/index.php?curid=177162547"
+            className="underline underline-offset-2 hover:text-white"
+          >
+            Continentaleurope
+          </a>
+          ,{" "}
+          <a href="https://creativecommons.org/licenses/by/4.0/" className="underline underline-offset-2 hover:text-white">
+            CC BY 4.0
+          </a>
+          , apkarpyta ir pakeistas fonas.
+        </p>
       </div>
     </footer>
   );
