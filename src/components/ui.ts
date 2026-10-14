@@ -10,10 +10,11 @@ type ButtonOptions = {
   full?: boolean;
 };
 
+// Tailwind v4 scales with the `scale` property, not `transform`, so it is listed explicitly.
 const base =
-  "inline-flex items-center justify-center gap-2 rounded-full font-medium whitespace-nowrap select-none " +
-  "transition-[background-color,box-shadow,transform] duration-200 ease-out active:scale-[0.97] " +
-  "disabled:pointer-events-none disabled:opacity-60";
+  "inline-flex items-center justify-center gap-2 rounded-full font-medium whitespace-nowrap select-none touch-manipulation " +
+  "transition-[background-color,box-shadow,scale] duration-150 ease-out active:scale-[0.98] " +
+  "disabled:pointer-events-none disabled:opacity-60 aria-disabled:pointer-events-none";
 
 const primary =
   "bg-tomato text-white shadow-[inset_0_1px_0_rgb(255_255_255/0.16),0_1px_2px_rgb(0_0_0/0.18)] hover:bg-tomato-dark";

@@ -81,7 +81,7 @@ export function Header({ overHero = false }: HeaderProps) {
               aria-controls={menuId}
               aria-label={open ? "Uždaryti meniu" : "Atidaryti meniu"}
               onClick={() => setOpen((value) => !value)}
-              className="relative -mr-2 flex size-11 items-center justify-center rounded-full text-night-text transition-colors hover:bg-white/10 md:hidden"
+              className="relative -mr-2 flex size-11 touch-manipulation items-center justify-center rounded-full text-night-text transition-[background-color,scale] duration-150 hover:bg-white/10 active:scale-[0.92] md:hidden"
             >
               <span
                 aria-hidden="true"
@@ -100,25 +100,33 @@ export function Header({ overHero = false }: HeaderProps) {
         </div>
       </div>
 
-      {/* Phone menu: a sheet under the bar with large, easy-to-tap links. */}
+      {/*
+        Phone menu: a sheet under the bar with large, easy-to-tap links. It stays mounted so it can
+        fade out; `inert` keeps it out of the tab order and the accessibility tree while closed, and
+        visibility flips only after the fade (immediately on open, so focus can move in).
+      */}
       <div
         id={menuId}
         ref={panelRef}
-        hidden={!open}
-        className="absolute inset-x-0 top-full border-b border-white/10 bg-night/95 backdrop-blur-xl md:hidden"
+        inert={!open}
+        className={`absolute inset-x-0 top-full border-b border-white/10 bg-night/95 backdrop-blur-xl md:hidden ${
+          open
+            ? "visible translate-y-0 opacity-100 [transition:opacity_.3s_var(--ease-out-soft),translate_.3s_var(--ease-out-soft),visibility_0s]"
+            : "pointer-events-none invisible -translate-y-2 opacity-0 [transition:opacity_.2s_ease-in,translate_.2s_ease-in,visibility_0s_.2s]"
+        }`}
       >
         <nav aria-label="Meniu" className="px-4 pt-2 pb-6">
           <ul>
             {navItems.map((item, index) => (
               <li
                 key={item.href}
-                className="animate-menu-item border-b border-white/10"
+                className={`border-b border-white/10 ${open ? "animate-menu-item" : ""}`}
                 style={{ animationDelay: `${index * 45}ms` }}
               >
                 <a
                   href={item.href}
                   onClick={() => setOpen(false)}
-                  className="flex min-h-14 items-center justify-between text-[1.375rem] font-medium tracking-[-0.02em] text-night-text"
+                  className="flex min-h-14 touch-manipulation items-center justify-between rounded-sm text-[1.375rem] font-medium tracking-[-0.02em] text-night-text transition-opacity duration-150 active:opacity-60"
                 >
                   {item.label}
                   <span aria-hidden="true" className="text-night-muted">
@@ -131,22 +139,22 @@ export function Header({ overHero = false }: HeaderProps) {
           <Link
             href="/#forma"
             onClick={() => setOpen(false)}
-            className={`${buttonClass({ full: true })} animate-menu-item mt-6`}
+            className={`${buttonClass({ full: true })} ${open ? "animate-menu-item" : ""} mt-6`}
             style={{ animationDelay: `${navItems.length * 45}ms` }}
           >
             {siteConfig.cta}
           </Link>
         </nav>
       </div>
-      {open && (
-        <button
-          type="button"
-          tabIndex={-1}
-          aria-hidden="true"
-          onClick={() => setOpen(false)}
-          className="fixed inset-0 top-14 -z-10 animate-fade-in cursor-default bg-black/40 md:hidden"
-        />
-      )}
+      <button
+        type="button"
+        tabIndex={-1}
+        aria-hidden="true"
+        onClick={() => setOpen(false)}
+        className={`fixed inset-0 top-14 -z-10 cursor-default bg-black/40 transition-opacity duration-300 md:hidden ${
+          open ? "opacity-100" : "pointer-events-none opacity-0"
+        }`}
+      />
     </header>
   );
 }

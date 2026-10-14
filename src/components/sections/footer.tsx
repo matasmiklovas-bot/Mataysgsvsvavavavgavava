@@ -3,6 +3,10 @@ import { cacheLife } from "next/cache";
 import { navItems, siteConfig } from "@/config/site";
 import { Logo } from "@/components/logo";
 
+const navLink = "inline-flex min-h-11 items-center rounded-sm transition-colors duration-150 hover:text-white active:text-white/70";
+const contactLink =
+  "inline-flex min-h-10 items-center rounded-sm underline decoration-white/0 underline-offset-4 transition-[text-decoration-color] duration-200 hover:decoration-white/60";
+
 export function Footer() {
   const { email, phone, company, companyCode } = siteConfig.contacts;
   return (
@@ -11,11 +15,11 @@ export function Footer() {
         <div className="flex flex-col gap-10 border-b border-white/10 pb-10 md:flex-row md:items-start md:justify-between">
           <div className="max-w-[22rem]">
             <Logo tone="light" />
-            <p className="mt-4">QR užsakymai restoranams, kavinėms ir barams Lietuvoje.</p>
+            <p className="mt-4 text-pretty">QR užsakymai restoranams, kavinėms ir barams Lietuvoje.</p>
             {(email || phone) && (
-              <p className="mt-4 flex flex-col gap-1 text-night-text">
-                {phone && <a href={`tel:${phone.replace(/\s/g, "")}`} className="hover:underline">{phone}</a>}
-                {email && <a href={`mailto:${email}`} className="hover:underline">{email}</a>}
+              <p className="mt-3 flex flex-col items-start text-night-text">
+                {phone && <a href={`tel:${phone.replace(/\s/g, "")}`} className={contactLink}>{phone}</a>}
+                {email && <a href={`mailto:${email}`} className={contactLink}>{email}</a>}
               </p>
             )}
           </div>
@@ -23,18 +27,18 @@ export function Footer() {
             <ul className="grid grid-cols-2 gap-x-12 sm:flex sm:gap-x-8">
               {navItems.map((item) => (
                 <li key={item.href}>
-                  <a href={item.href} className="inline-flex min-h-11 items-center transition-colors hover:text-white">
+                  <a href={item.href} className={navLink}>
                     {item.label}
                   </a>
                 </li>
               ))}
               <li>
-                <Link href="/#forma" className="inline-flex min-h-11 items-center transition-colors hover:text-white">
+                <Link href="/#forma" className={navLink}>
                   Prototipas
                 </Link>
               </li>
               <li>
-                <Link href="/privatumas" className="inline-flex min-h-11 items-center transition-colors hover:text-white">
+                <Link href="/privatumas" className={navLink}>
                   Privatumo politika
                 </Link>
               </li>

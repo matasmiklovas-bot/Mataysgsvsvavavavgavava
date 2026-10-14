@@ -49,18 +49,19 @@ export function Faq() {
         <Reveal className="mt-12 border-t border-line">
           {faq.map((item) => (
             <details key={item.q} className="group border-b border-line">
-              <summary className="flex min-h-16 cursor-pointer items-center justify-between gap-6 rounded-lg py-5 text-[1.1875rem] font-medium tracking-[-0.01em] transition-colors hover:text-tomato-dark">
-                {item.q}
+              <summary className="flex min-h-16 cursor-pointer touch-manipulation items-center justify-between gap-6 rounded-lg py-5 text-[1.1875rem] font-medium tracking-[-0.01em] select-none">
+                <span className="text-pretty transition-colors duration-150 group-active:text-ink-2">{item.q}</span>
+                {/* Explicit `rotate` and `scale`: Tailwind v4 animates them as their own properties. */}
                 <span
                   aria-hidden="true"
-                  className="flex size-8 shrink-0 items-center justify-center rounded-full bg-paper text-ink transition-[transform,background-color,color] duration-300 ease-[var(--ease-out-soft)] group-open:rotate-45 group-open:bg-ink group-open:text-white"
+                  className="flex size-8 shrink-0 items-center justify-center rounded-full bg-paper text-ink-2 transition-[rotate,scale,background-color,color] duration-300 ease-[var(--ease-out-soft)] group-hover:bg-paper-2 group-hover:text-ink group-active:scale-[0.92] group-open:rotate-180 group-open:text-ink"
                 >
-                  <svg viewBox="0 0 16 16" className="size-3.5" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round">
-                    <path d="M8 3v10M3 8h10" />
+                  <svg viewBox="0 0 16 16" className="size-3.5" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M3.5 6l4.5 4.5L12.5 6" />
                   </svg>
                 </span>
               </summary>
-              <p className="max-w-[60ch] pb-6 text-ink-2">{item.a}</p>
+              <p className="max-w-[60ch] pb-6 text-pretty text-ink-2">{item.a}</p>
             </details>
           ))}
         </Reveal>

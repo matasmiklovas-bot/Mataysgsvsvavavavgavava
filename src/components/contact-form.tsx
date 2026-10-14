@@ -1,9 +1,10 @@
 "use client";
 
 import Link from "next/link";
-import { useId, useState, type FormEvent } from "react";
+import { useEffect, useId, useRef, useState, type FormEvent } from "react";
 import { siteConfig } from "@/config/site";
 import { buttonClass } from "@/components/ui";
+import { playSound } from "@/components/demo/sounds";
 import { equipmentLabel, setEquipment, useEquipment, type Equipment } from "@/components/equipment-choice";
 
 /**
@@ -45,6 +46,13 @@ export function ContactForm() {
   const [status, setStatus] = useState<"idle" | "sending" | "sent" | "mail" | "error">("idle");
   const [sentName, setSentName] = useState("");
   const equipment = useEquipment();
+  const doneRef = useRef<HTMLParagraphElement>(null);
+
+  // The form is replaced by the thank-you note; move focus there so keyboard users aren't dropped.
+  const done = status === "sent" || status === "mail";
+  useEffect(() => {
+    if (done) doneRef.current?.focus();
+  }, [done]);
 
   function set(field: Field, value: string) {
     const next = { ...values, [field]: value };
@@ -54,6 +62,7 @@ export function ContactForm() {
 
   async function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    if (status === "sending") return;
     const form = event.currentTarget;
     const found = validate(values);
     setErrors(found);
@@ -102,27 +111,34 @@ export function ContactForm() {
         }),
       });
       if (!response.ok) throw new Error(String(response.status));
+      playSound("success");
       setStatus("sent");
     } catch {
       setStatus("error");
     }
   }
 
-  if (status === "sent" || status === "mail") {
+  if (done) {
     return (
       <div role="status" className="animate-fade-up py-8 text-center">
-        <span className="mx-auto flex size-16 animate-pop items-center justify-center rounded-full bg-ready text-white shadow-[0_16px_30px_-14px_rgb(46_125_79/0.8)]">
+        <span className="mx-auto flex size-16 animate-scale-in items-center justify-center rounded-full bg-ready text-white">
           <svg viewBox="0 0 24 24" className="size-8" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-            <path d="M5 12.5l4.5 4.5L19 7.5" />
+            <path d="M5 12.5l4.5 4.5L19 7.5" pathLength="1" className="animate-check [stroke-dasharray:1]" />
           </svg>
         </span>
-        <p className="mt-6 text-[2rem] leading-tight font-semibold tracking-[-0.03em]">Ačiū, {sentName}!</p>
+        <p
+          ref={doneRef}
+          tabIndex={-1}
+          className="mt-6 text-[2rem] leading-tight font-semibold tracking-[-0.03em] text-balance outline-none!"
+        >
+          Ačiū, {sentName}!
+        </p>
         {status === "sent" ? (
-          <p className="mx-auto mt-3 max-w-[26rem] text-ink-2">
+          <p className="mx-auto mt-3 max-w-[26rem] text-pretty text-ink-2">
             Gavome jūsų užklausą. Netrukus susisieksime dėl prototipo.
           </p>
         ) : (
-          <p className="mx-auto mt-3 max-w-[26rem] text-ink-2">
+          <p className="mx-auto mt-3 max-w-[26rem] text-pretty text-ink-2">
             Atsidarė jūsų el. pašto programa su paruoštu laišku. Išsiųskite jį, ir netrukus
             susisieksime.
           </p>
@@ -153,14 +169,21 @@ export function ContactForm() {
         <legend className="font-semibold">
           Įranga <span className="font-normal text-ink-2">(neprivaloma)</span>
         </legend>
-        <div className="mt-2 grid grid-cols-2 gap-2">
+        {/* A native-feeling segmented control: one white thumb slides to the chosen side. */}
+        <div className="relative mt-2 grid grid-cols-2 rounded-full bg-paper-2 p-1">
+          <span
+            aria-hidden="true"
+            className={`absolute inset-y-1 left-1 w-[calc(50%-0.25rem)] rounded-full bg-white shadow-[0_1px_2px_rgb(0_0_0/0.08),0_2px_6px_-2px_rgb(0_0_0/0.12)] transition-[translate,scale,opacity] duration-300 ease-[var(--ease-out-soft)] ${
+              equipment ? "scale-100 opacity-100" : "scale-95 opacity-0"
+            } ${equipment === "nuoma" ? "translate-x-full" : "translate-x-0"}`}
+          />
           {(Object.keys(equipmentChips) as Equipment[]).map((option) => {
             const checked = equipment === option;
             return (
               <label
                 key={option}
-                className={`flex min-h-11 cursor-pointer items-center justify-center rounded-full border px-2 text-center text-[15px] whitespace-nowrap sm:text-[1.0625rem] has-[:focus-visible]:outline-3 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-tomato ${
-                  checked ? "border-ink bg-ink text-white" : "border-line bg-white hover:border-ink-2"
+                className={`relative flex min-h-11 cursor-pointer touch-manipulation items-center justify-center rounded-full px-2 text-center text-[15px] whitespace-nowrap transition-[color,scale] duration-150 select-none active:scale-[0.98] sm:text-[1.0625rem] has-[:focus-visible]:outline-3 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-tomato-bright ${
+                  checked ? "font-medium text-ink" : "text-ink-2 hover:text-ink"
                 }`}
               >
                 <input
@@ -168,7 +191,10 @@ export function ContactForm() {
                   name="equipment-form"
                   value={option}
                   checked={checked}
-                  onChange={() => setEquipment(option)}
+                  onChange={() => {
+                    playSound("tap");
+                    setEquipment(option);
+                  }}
                   className="sr-only"
                 />
                 {equipmentChips[option]}
@@ -181,22 +207,23 @@ export function ContactForm() {
       <Input label="Žinutė" optional name="message" multiline value={values.message} onChange={set} />
 
       <div>
+        {/* aria-disabled rather than disabled: the button keeps its colour and focus while sending. */}
         <button
           type="submit"
-          disabled={status === "sending"}
-          className={buttonClass({ full: true })}
+          aria-disabled={status === "sending" || undefined}
+          className={`${buttonClass({ full: true })} aria-disabled:bg-tomato-dark`}
         >
           {status === "sending" ? (
-            <>
-              <span aria-hidden="true" className="size-4 animate-spin rounded-full border-2 border-white/40 border-t-white" />
+            <span className="inline-flex animate-fade-in items-center gap-2.5">
+              <span aria-hidden="true" className="size-4 animate-spin rounded-full border-2 border-white/35 border-t-white" />
               Siunčiama…
-            </>
+            </span>
           ) : (
             siteConfig.cta
           )}
         </button>
         {status === "error" && (
-          <p role="alert" className="mt-3 text-[16px] text-tomato-dark">
+          <p role="alert" className="mt-3 animate-fade-up text-[16px] text-pretty text-tomato-dark">
             Nepavyko išsiųsti. Patikrinkite interneto ryšį ir pabandykite dar kartą
             {CONTACT_EMAIL ? (
               <>
@@ -209,9 +236,12 @@ export function ContactForm() {
             .
           </p>
         )}
-        <p className="mt-4 text-[16px] text-ink-2">
+        <p className="mt-4 text-[16px] text-pretty text-ink-2">
           Siųsdami sutinkate, kad su jumis susisiektume dėl prototipo.{" "}
-          <Link href="/privatumas" className="font-semibold text-ink underline underline-offset-4">
+          <Link
+            href="/privatumas"
+            className="rounded-sm font-semibold text-ink underline decoration-ink/30 underline-offset-4 transition-[text-decoration-color] duration-200 hover:decoration-ink"
+          >
             Privatumo politika
           </Link>
         </p>
@@ -237,8 +267,12 @@ type InputProps = {
 function Input({ label, name, value, onChange, onBlur, error, hint, required, optional, multiline, autoComplete }: InputProps) {
   const id = useId();
   const describedBy = [error ? `${id}-error` : null, hint ? `${id}-hint` : null].filter(Boolean).join(" ") || undefined;
-  const className = `w-full rounded-xl border bg-white px-4 text-[1.0625rem] text-ink outline-none transition-colors focus:border-ink focus:ring-4 focus:ring-ink/10 ${
-    error ? "border-tomato border-2" : "border-line hover:border-ink-2"
+  // Focus is shown by the ink border and a soft halo; the site-wide tomato outline is switched off
+  // here because on a text field red reads as an error. Errors add an inset ring, so nothing shifts.
+  const className = `w-full appearance-none rounded-xl border bg-white px-4 text-[1.0625rem] text-ink outline-none! transition-[border-color,box-shadow] duration-200 ease-out focus:ring-4 ${
+    error
+      ? "border-tomato inset-ring-1 inset-ring-tomato focus:ring-tomato/15"
+      : "border-line hover:border-[#c4c0b8] focus:border-ink focus:ring-ink/10"
   }`;
   return (
     <div>
@@ -248,7 +282,7 @@ function Input({ label, name, value, onChange, onBlur, error, hint, required, op
         {optional && <span className="font-normal text-ink-2"> (neprivaloma)</span>}
       </label>
       {hint && (
-        <p id={`${id}-hint`} className="text-[16px] text-ink-2">
+        <p id={`${id}-hint`} className="text-[15px] text-ink-2">
           {hint}
         </p>
       )}
@@ -277,8 +311,12 @@ function Input({ label, name, value, onChange, onBlur, error, hint, required, op
         />
       )}
       {error && (
-        <p id={`${id}-error`} className="mt-1.5 text-[16px] font-semibold text-tomato-dark">
-          {error}
+        <p id={`${id}-error`} className="mt-1.5 flex animate-fade-up items-start gap-1.5 text-[15px] font-medium text-tomato-dark">
+          <svg viewBox="0 0 16 16" className="mt-[3px] size-4 shrink-0" fill="none" stroke="currentColor" strokeWidth="1.6" aria-hidden="true">
+            <circle cx="8" cy="8" r="6.5" />
+            <path d="M8 4.75v3.75M8 11h.01" strokeLinecap="round" strokeWidth="2" />
+          </svg>
+          <span className="text-pretty">{error}</span>
         </p>
       )}
     </div>

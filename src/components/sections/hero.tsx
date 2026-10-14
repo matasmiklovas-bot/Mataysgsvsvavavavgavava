@@ -11,31 +11,24 @@ export function Hero() {
   const { oneTime, perMonth } = siteConfig.pricing;
   return (
     <section aria-labelledby="hero-title" className="relative isolate -mt-14 overflow-hidden bg-night text-night-text">
-      {/* Warm pool of light on the "table" under the devices */}
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-x-0 bottom-0 -z-10 h-[70%] bg-[radial-gradient(60%_55%_at_50%_75%,rgb(229_150_90/0.14),transparent_70%)]"
-      />
-      <div className="mx-auto max-w-6xl px-4 pt-[7.5rem] pb-16 text-center sm:px-6 sm:pt-[9.5rem] lg:pt-[8.5rem] lg:pb-24 [@media(max-height:520px)]:pt-24">
-        <p className="rise text-[15px] text-night-muted sm:text-[17px]" style={delay(0)}>
-          QR užsakymai restoranams, kavinėms ir barams
-        </p>
+      <div className="mx-auto max-w-6xl px-4 pt-[7rem] pb-16 text-center sm:px-6 sm:pt-[9rem] lg:pt-[8rem] lg:pb-24 [@media(max-height:520px)]:pt-24">
         <h1
           id="hero-title"
-          className="rise mx-auto mt-4 max-w-[15ch] text-[2.25rem] max-sm:max-w-none leading-[1.02] font-semibold tracking-[-0.045em] text-balance sm:text-[4.25rem] lg:text-[4.75rem] xl:max-w-none"
-          style={delay(80)}
+          className="rise mx-auto max-w-[15ch] text-[2.25rem] max-sm:max-w-none leading-[1.02] font-semibold tracking-[-0.045em] text-balance sm:text-[4.25rem] lg:text-[4.75rem] xl:max-w-none"
+          style={delay(0)}
         >
           Svečiai užsisako patys, <br className="max-xl:hidden" />o virtuvė užsakymą mato iškart.
         </h1>
         <p
-          className="rise mx-auto mt-6 max-w-[34rem] text-[1.125rem] leading-relaxed text-night-muted sm:text-[1.25rem]"
-          style={delay(160)}
+          className="rise mx-auto mt-6 max-w-[34rem] text-[1.125rem] leading-relaxed text-pretty text-night-muted sm:text-[1.25rem] sm:text-balance"
+          style={delay(100)}
         >
-          Svečias nuskenuoja kodą ir užsisako telefone. Virtuvė, baras ir padavėjas mato iškart.
+          QR užsakymai restoranams, kavinėms ir barams. Svečias nuskenuoja kodą ir užsisako telefone, o virtuvė,
+          baras ir padavėjas viską mato planšetėse.
         </p>
         <div
           className="rise mt-9 flex flex-col items-center justify-center gap-4 sm:flex-row sm:gap-8"
-          style={delay(240)}
+          style={delay(200)}
         >
           <a
             href="#forma"
@@ -45,19 +38,19 @@ export function Hero() {
           </a>
           <a
             href="#demo"
-            className="group inline-flex min-h-11 items-center gap-1.5 text-[1.0625rem] font-medium text-night-text hover:text-white"
+            className="group -mx-2 inline-flex min-h-11 touch-manipulation items-center gap-1.5 rounded-full px-2 text-[1.0625rem] font-medium text-night-text/85 transition-[color,scale] duration-150 select-none hover:text-white active:scale-[0.98]"
           >
             Išbandyti demonstraciją
-            <span aria-hidden="true" className="transition-transform duration-300 group-hover:translate-y-0.5">
+            <span aria-hidden="true" className="transition-transform duration-300 ease-[var(--ease-out-soft)] group-hover:translate-y-0.5">
               ↓
             </span>
           </a>
         </div>
-        <p className="rise mt-6 text-[15px] text-balance text-night-muted" style={delay(300)}>
+        <p className="rise mt-6 text-[15px] text-balance text-night-muted tabular-nums" style={delay(260)}>
           Prototipas nemokamai. Patiks, tada {oneTime}&nbsp;€ vieną kartą arba {perMonth}&nbsp;€ per mėnesį.
         </p>
 
-        <div className="rise mt-14 sm:mt-16 lg:mt-14" style={delay(420)}>
+        <div className="rise mt-14 sm:mt-16 lg:mt-14" style={delay(380)}>
           <HeroStory stand={<TableStand />} standCompact={<TableStand compact />} />
         </div>
       </div>
@@ -84,17 +77,13 @@ function TableStand({ compact = false }: { compact?: boolean }) {
           </span>
         </div>
 
-        <div className="relative mt-3 overflow-hidden rounded-2xl bg-white p-2 ring-1 ring-black/[0.06]">
+        <div className="mt-3 rounded-2xl bg-white p-2 ring-1 ring-black/[0.06]">
           <QrCode
             value={`${siteConfig.url}/#demo`}
             label="QR kodas, atidarantis demonstraciją"
             styled
             className="block h-auto w-full"
           />
-          {/* Soft scanning light */}
-          <span className="pointer-events-none absolute inset-x-0 h-12 -translate-y-1/2 animate-scan bg-[linear-gradient(to_bottom,transparent,rgb(229_88_60/0.16)_45%,rgb(229_88_60/0.16)_55%,transparent)]">
-            <span className="absolute inset-x-2 top-1/2 h-[1.5px] -translate-y-1/2 rounded-full bg-tomato-bright/90 shadow-[0_0_12px_2px_rgb(229_88_60/0.55)]" />
-          </span>
         </div>
 
         <div className={`mt-3 items-center gap-2 ${compact ? "hidden" : "flex"}`}>

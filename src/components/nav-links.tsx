@@ -34,14 +34,14 @@ export function NavLinks() {
             <a
               href={item.href}
               aria-current={current ? "location" : undefined}
-              className={`relative inline-flex min-h-11 items-center text-[14px] transition-colors hover:text-white ${
+              className={`relative inline-flex min-h-11 items-center rounded-sm text-[14px] transition-colors duration-150 hover:text-white active:text-white/60 ${
                 current ? "text-white" : "text-night-text/75"
               }`}
             >
               {item.label}
               <span
                 aria-hidden="true"
-                className={`absolute inset-x-0 bottom-2 h-px origin-left bg-white transition-transform duration-300 ${
+                className={`absolute inset-x-0 bottom-2 h-px origin-left bg-white transition-transform duration-300 ease-[var(--ease-out-soft)] ${
                   current ? "scale-x-100" : "scale-x-0"
                 }`}
               />

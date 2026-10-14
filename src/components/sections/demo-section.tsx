@@ -9,10 +9,10 @@ export function DemoSection() {
       <div className="mx-auto max-w-7xl px-4 pt-20 pb-16 sm:px-6 sm:pt-28 sm:pb-24">
         <SectionHeading
           id="demo-title"
-          title={<>Užsisakykite patys, lyg sėdėtumėte prie {guestTable} staliuko.</>}
+          title={<>Užsisakykite patys, lyg sėdėtumėte prie {guestTable}&nbsp;staliuko.</>}
           lead="Įsidėkite patiekalą, užsakykite ir stebėkite, kur keliauja užsakymas."
         />
-        <p className="mt-3 text-center text-[15px] text-ink-2">Niekas nesiunčiama, pinigai nenuskaitomi.</p>
+        <p className="mt-3 text-center text-[15px] text-pretty text-ink-2">Niekas nesiunčiama, pinigai nenuskaitomi.</p>
         <Reveal className="mt-12 sm:mt-16" delay={100}>
           <Demo />
         </Reveal>

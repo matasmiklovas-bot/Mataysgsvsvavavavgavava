@@ -28,7 +28,7 @@ export function Pricing() {
             >
               <div className="sm:contents">
                 <p className="text-[17px] font-semibold text-ink sm:font-normal sm:text-ink-2">{tile.label}</p>
-                <p className="mt-0.5 text-[15px] text-ink-2 sm:order-last sm:mt-3 sm:text-[16px]">{tile.note}</p>
+                <p className="mt-0.5 text-[15px] text-pretty text-ink-2 sm:order-last sm:mt-3 sm:text-[16px]">{tile.note}</p>
               </div>
               <p className="shrink-0 text-[2.75rem] leading-none font-semibold tracking-[-0.05em] tabular-nums sm:mt-2 sm:text-[4rem] sm:tracking-[-0.06em] lg:text-[5.25rem]">
                 {tile.amount}&nbsp;€
@@ -43,7 +43,7 @@ export function Pricing() {
             <h3 className="text-[1.75rem] leading-tight font-semibold tracking-[-0.03em] text-balance sm:text-[2.25rem]">
               Planšetės: savos arba nuomojamos.
             </h3>
-            <p className="mt-3 text-[1.0625rem] text-ink-2">Pasirinkite, ir iškart matysite savo kainą.</p>
+            <p className="mt-3 text-[1.0625rem] text-pretty text-ink-2">Pasirinkite, ir iškart matysite savo kainą.</p>
           </div>
           <div className="mt-8">
             <EquipmentPicker />
@@ -56,7 +56,7 @@ export function Pricing() {
             >
               {siteConfig.cta}
             </a>
-            <p className="mt-4 text-[15px] text-ink-2">
+            <p className="mx-auto mt-4 max-w-[30rem] text-[15px] text-balance text-ink-2">
               Prototipą jūsų restoranui paruošime nemokamai. Mokate tik tada, jei jis jums patinka.
             </p>
           </div>

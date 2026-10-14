@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import { formatPrice, heroOrder, heroOrderTime, linesTotal, seedOrders } from "@/lib/data";
+import { formatPrice, getItem, heroOrder, linesTotal, seedOrders } from "@/lib/data";
 import { Ticket } from "@/components/ticket";
 import { Reveal } from "@/components/reveal";
 import { SectionHeading } from "@/components/section-heading";
@@ -19,16 +19,51 @@ const roles: Role[] = [
     headline: "Padavėjas nebebėgioja su užrašų knygele.",
     text: "Planšetėje mato, kas paruošta ir prie kurio staliuko nešti.",
     fragment: (
-      <div className="rounded-2xl bg-kds p-3 text-kds-text">
-        <div className="flex flex-wrap items-center gap-3 rounded-xl bg-kds-2 p-3">
-          <span className="flex size-11 shrink-0 items-center justify-center rounded bg-slip font-display text-[1.5rem] font-semibold text-ink">
+      // A slice of the staff tablet: the same row the demo's "Personalas" screen shows.
+      <div className="@container rounded-2xl bg-kds p-3 text-kds-text sm:p-4">
+        <p className="flex items-baseline gap-2 px-0.5 text-[15px] font-semibold">
+          Nešti dabar <span className="text-[14px] font-normal text-kds-muted tabular-nums">1</span>
+        </p>
+        <div className="mt-2.5 grid grid-cols-[auto_minmax(0,1fr)] items-start gap-x-3 gap-y-3 rounded-xl bg-kds-2 p-3 @[22rem]:grid-cols-[auto_minmax(0,1fr)_auto] @[22rem]:items-center">
+          <span className="flex size-12 shrink-0 items-center justify-center rounded-xl bg-slip text-[22px] font-semibold text-ink tabular-nums">
             {heroOrder.table}
           </span>
-          <div className="min-w-[10rem] flex-1">
-            <p className="font-semibold">Nešti į staliuką {heroOrder.table}</p>
-            <p className="text-[14px] text-kds-muted">2× Jautienos mėsainis, 1× Šaltibarščiai</p>
+          <div className="min-w-0">
+            <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
+              <p className="text-[16px] font-semibold">Nešti į staliuką {heroOrder.table}</p>
+              <span className="rounded-full border border-kds-line px-2 py-px text-[12px] text-kds-muted">Virtuvė</span>
+            </div>
+            <div className="mt-2 space-y-1.5">
+              {heroOrder.lines.map((line, i) => {
+                const item = getItem(line.itemId);
+                return (
+                  <p key={line.itemId} className="flex items-center gap-2.5 text-[14px] leading-snug text-kds-muted">
+                    {item.image && (
+                      // eslint-disable-next-line @next/next/no-img-element
+                      <img
+                        src={item.image}
+                        alt=""
+                        width={28}
+                        height={28}
+                        loading="lazy"
+                        decoding="async"
+                        className="size-7 shrink-0 rounded-md bg-kds-line object-cover"
+                      />
+                    )}
+                    <span className="min-w-0">
+                      <span className="font-semibold text-kds-text tabular-nums">{line.quantity}×</span> {item.name}
+                      {i < heroOrder.lines.length - 1 && <span className="sr-only">,</span>}
+                    </span>
+                  </p>
+                );
+              })}
+            </div>
           </div>
-          <span className="rounded-full bg-ready px-3.5 py-2 text-[14px] font-semibold text-white max-[400px]:w-full max-[400px]:text-center">
+          {/* A picture of the button; the working one is in the demo above. */}
+          <span className="col-span-2 flex h-11 items-center justify-center gap-2 rounded-lg bg-ready px-4 text-[15px] font-semibold whitespace-nowrap text-white @[22rem]:col-span-1">
+            <svg viewBox="0 0 16 16" className="size-4" fill="none" aria-hidden="true">
+              <path d="M3.5 8.5l3 3 6-7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
             Nunešta
           </span>
         </div>
@@ -40,17 +75,17 @@ const roles: Role[] = [
     headline: "Pastaba „be svogūnų“ pasiekia virtuvę tiksliai.",
     text: "Jokių ranka rašytų lapelių ir pakartotinių klausimų.",
     fragment: (
-      <div className="rounded-2xl bg-kds px-5 pt-5 pb-1">
+      <StationPanel>
         <Ticket
           orderId={heroOrder.id}
           table={heroOrder.table}
           station="Virtuvė"
-          time={heroOrderTime}
+          time="0:42"
           lines={heroOrder.lines}
+          payment="Apmokėta"
           status={{ label: "Naujas", tone: "new" }}
-          className="mx-auto max-w-[260px]"
         />
-      </div>
+      </StationPanel>
     ),
   },
   {
@@ -58,17 +93,25 @@ const roles: Role[] = [
     headline: "Baras gauna tik gėrimus ir pradeda iškart.",
     text: "Virtuvė ir baras gauna atskirus bilietus.",
     fragment: (
-      <div className="rounded-2xl bg-kds px-5 pt-5 pb-1">
+      <StationPanel>
         <Ticket
           orderId={barOrder.id}
           table={barOrder.table}
           station="Baras"
-          time="19:38"
-          lines={barOrder.lines.filter((line) => line.itemId === "limonadas")}
+          time="3:18"
+          lines={barOrder.lines.filter((line) => getItem(line.itemId).station === "baras")}
+          payment="Apmokėta"
           status={{ label: "Paruošta", tone: "ready" }}
-          className="mx-auto max-w-[260px]"
-        />
-      </div>
+        >
+          <p className="flex h-11 items-center justify-center gap-2 text-[14px] text-ink-2">
+            <svg viewBox="0 0 16 16" className="size-4 text-ready" fill="none" aria-hidden="true">
+              <circle cx="8" cy="8" r="6.25" stroke="currentColor" strokeWidth="1.5" />
+              <path d="M8 4.75V8l2.25 1.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+            </svg>
+            Laukia padavėjo
+          </p>
+        </Ticket>
+      </StationPanel>
     ),
   },
   {
@@ -95,6 +138,15 @@ const roles: Role[] = [
     ),
   },
 ];
+
+/** A crop of the kitchen or bar screen: the dark display with one ticket card on it. */
+function StationPanel({ children }: { children: ReactNode }) {
+  return (
+    <div className="rounded-2xl bg-kds p-4 sm:p-5">
+      <div className="mx-auto max-w-[290px]">{children}</div>
+    </div>
+  );
+}
 
 function Switch({ on }: { on: boolean }) {
   return (
