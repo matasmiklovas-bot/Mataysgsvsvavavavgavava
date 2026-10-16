@@ -62,8 +62,9 @@ export default function PrivacyPage() {
           </Section>
 
           <Section title="Kam perduodame">
-            Duomenų neparduodame. Jie gali būti perduoti tik paslaugų teikėjams, per kuriuos
-            gauname formą ir el. laiškus, ir tik tiek, kiek reikia šiam tikslui.
+            Duomenų neparduodame. Formos užklausą mums el. paštu persiunčia paslauga FormSubmit
+            (formsubmit.co). Duomenis gauna tik šie paslaugų teikėjai ir tik tiek, kiek reikia šiam
+            tikslui.
           </Section>
 
           <Section title="Jūsų teisės">

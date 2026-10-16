@@ -7,15 +7,16 @@ import { buttonClass } from "@/components/ui";
 import { playSound } from "@/components/demo/sounds";
 import { equipmentLabel, setEquipment, useEquipment, type Equipment } from "@/components/equipment-choice";
 
-/**
- * Form delivery. TODO: paste a Formspree form URL (https://formspree.io/f/...) or
- * Web3Forms endpoint (https://api.web3forms.com/submit) here, plus the access key for Web3Forms.
- * While FORM_ENDPOINT is empty, submitting opens the visitor's e-mail app with a pre-filled message.
- */
-const FORM_ENDPOINT = process.env.NEXT_PUBLIC_FORM_ENDPOINT ?? "";
-const FORM_ACCESS_KEY = process.env.NEXT_PUBLIC_FORM_ACCESS_KEY ?? "";
-
 const CONTACT_EMAIL = siteConfig.contacts.email;
+
+/**
+ * Form delivery, as the owner asked: requests go by e-mail to the contact address through
+ * FormSubmit (no account; the address confirms once via an "Activate" e-mail after the first
+ * request). NEXT_PUBLIC_FORM_ENDPOINT (+ NEXT_PUBLIC_FORM_ACCESS_KEY for Web3Forms) overrides it.
+ */
+const FORM_ENDPOINT =
+  process.env.NEXT_PUBLIC_FORM_ENDPOINT || (CONTACT_EMAIL ? `https://formsubmit.co/ajax/${CONTACT_EMAIL}` : "");
+const FORM_ACCESS_KEY = process.env.NEXT_PUBLIC_FORM_ACCESS_KEY ?? "";
 
 type Values = { restaurant: string; name: string; contact: string; message: string };
 type Field = keyof Values;
@@ -107,10 +108,15 @@ export function ContactForm() {
         body: JSON.stringify({
           ...(FORM_ACCESS_KEY ? { access_key: FORM_ACCESS_KEY } : {}),
           subject: `Prototipas: ${data.restaurant}`,
+          _subject: `Prototipas: ${data.restaurant}`,
+          _template: "table",
           ...data,
         }),
       });
       if (!response.ok) throw new Error(String(response.status));
+      // FormSubmit answers 200 with success "false" when it did not accept the request.
+      const result = (await response.json().catch(() => ({}))) as { success?: boolean | string };
+      if (result.success === false || result.success === "false") throw new Error("rejected");
       playSound("success");
       setStatus("sent");
     } catch {
