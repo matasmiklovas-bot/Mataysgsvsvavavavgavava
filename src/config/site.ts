@@ -33,8 +33,8 @@ export const siteConfig = {
    * Empty values are simply not shown on the page.
    */
   contacts: {
-    email: "" as string,
-    phone: "" as string,
+    email: "matasmiklovas@gmail.com" as string,
+    phone: "+370 673 70577" as string,
     company: "" as string,
     companyCode: "" as string,
   },
