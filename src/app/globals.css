@@ -1,0 +1,408 @@
+@import "tailwindcss";
+
+/*
+  Two stages: a warm near-black "night" stage for the hero (dining room after dark),
+  and a calm warm-gray daylight stage for everything you read. Tomato red is the one accent,
+  used for the main action and for new orders. Kitchen tickets keep their paper colour.
+*/
+@theme {
+  --color-paper: #f5f4f1;
+  --color-paper-2: #ebe9e4;
+  --color-line: #dedbd4;
+  --color-ink: #1d1d1f;
+  --color-ink-2: #64615c;
+
+  --color-night: #0c0b0a;
+  --color-night-2: #171614;
+  --color-night-line: #2b2926;
+  --color-night-text: #f5f3ef;
+  --color-night-muted: #a39f97;
+
+  --color-tomato: #c63d24;
+  --color-tomato-dark: #a8321c;
+  --color-tomato-bright: #e5583c;
+
+  --color-kds: #161513;
+  --color-kds-2: #201e1b;
+  --color-kds-line: #36322c;
+  --color-kds-text: #ece7dd;
+  --color-kds-muted: #aaa497;
+  --color-slip: #fbf8f1;
+
+  --color-ready: #2e7d4f;
+  --color-ready-on-dark: #63b783;
+  /* "Ruošiama" on kitchen and bar screens. */
+  --color-cooking: #b5761c;
+  --color-cooking-dark: #8a5a12;
+
+  --font-display: var(--font-geist), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-geist), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-plex-mono), ui-monospace, monospace;
+
+  --ease-out-soft: cubic-bezier(0.2, 0.7, 0.2, 1);
+
+  --animate-ticket-in: ticket-in 0.8s var(--ease-out-soft) both;
+  --animate-flash: flash 1.6s ease-out 2;
+  --animate-scan: scan 3.4s ease-in-out infinite;
+  --animate-tap: tap 0.6s ease-out both;
+  --animate-stamp: stamp 0.45s cubic-bezier(0.3, 1.4, 0.5, 1) both;
+  --animate-travel: travel 0.9s cubic-bezier(0.4, 0, 0.2, 1) both;
+  --animate-fade-up: fade-up 0.45s var(--ease-out-soft) both;
+  --animate-fade-in: fade-in 0.3s ease-out both;
+  --animate-menu-item: menu-item 0.45s var(--ease-out-soft) both;
+  --animate-pop: pop 0.5s cubic-bezier(0.3, 1.4, 0.5, 1) both;
+  --animate-sheet-up: sheet-up 0.42s var(--ease-out-soft) both;
+  --animate-ring: ring 0.9s ease-in-out both;
+  --animate-shimmer: shimmer 1.3s ease-in-out infinite;
+  /* Device screens: pushing to the next screen and back. */
+  --animate-slide-in-right: slide-in-right 0.38s var(--ease-out-soft) both;
+  --animate-slide-in-left: slide-in-left 0.38s var(--ease-out-soft) both;
+  --animate-scale-in: scale-in 0.35s var(--ease-out-soft) both;
+  --animate-sheet-down: sheet-down 0.26s ease-in both;
+  /* Tick drawing itself: give the path pathLength="1" and stroke-dasharray 1. */
+  --animate-check: check 0.45s 0.12s var(--ease-out-soft) both;
+  --animate-bump: bump 0.32s var(--ease-out-soft);
+  /* Determinate bar (scaleX, use origin-left) and an indeterminate loading sweep. */
+  --animate-progress: progress 1s var(--ease-out-soft) both;
+  --animate-indeterminate: indeterminate 1.15s ease-in-out infinite;
+  --animate-leave: leave 0.28s ease-in both;
+  --animate-img-in: img-in 0.5s var(--ease-out-soft) both;
+
+  @keyframes slide-in-right {
+    from {
+      opacity: 0;
+      transform: translateX(28px);
+    }
+  }
+
+  @keyframes slide-in-left {
+    from {
+      opacity: 0;
+      transform: translateX(-28px);
+    }
+  }
+
+  @keyframes scale-in {
+    from {
+      opacity: 0;
+      transform: scale(0.94);
+    }
+  }
+
+  @keyframes sheet-down {
+    to {
+      transform: translateY(100%);
+    }
+  }
+
+  @keyframes check {
+    from {
+      stroke-dashoffset: 1;
+    }
+    to {
+      stroke-dashoffset: 0;
+    }
+  }
+
+  @keyframes bump {
+    40% {
+      transform: scale(1.06);
+    }
+  }
+
+  @keyframes progress {
+    from {
+      transform: scaleX(0);
+    }
+    to {
+      transform: scaleX(1);
+    }
+  }
+
+  @keyframes indeterminate {
+    from {
+      transform: translateX(-100%);
+    }
+    to {
+      transform: translateX(260%);
+    }
+  }
+
+  @keyframes leave {
+    to {
+      opacity: 0;
+      transform: translateX(16px) scale(0.98);
+    }
+  }
+
+  @keyframes img-in {
+    from {
+      opacity: 0;
+      transform: scale(1.03);
+      filter: blur(6px);
+    }
+  }
+
+  @keyframes sheet-up {
+    from {
+      transform: translateY(100%);
+    }
+  }
+
+  /* A bell that swings when a new ticket arrives. */
+  @keyframes ring {
+    0%,
+    100% {
+      transform: rotate(0);
+    }
+    15% {
+      transform: rotate(16deg);
+    }
+    30% {
+      transform: rotate(-14deg);
+    }
+    45% {
+      transform: rotate(10deg);
+    }
+    60% {
+      transform: rotate(-6deg);
+    }
+    75% {
+      transform: rotate(3deg);
+    }
+  }
+
+  @keyframes shimmer {
+    0%,
+    100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.45;
+    }
+  }
+
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+    }
+  }
+
+  @keyframes menu-item {
+    from {
+      opacity: 0;
+      transform: translateY(-8px);
+    }
+  }
+
+  @keyframes pop {
+    from {
+      opacity: 0;
+      transform: scale(0.6);
+    }
+  }
+
+  @keyframes fade-up {
+    from {
+      opacity: 0;
+      transform: translateY(6px);
+    }
+  }
+
+  @keyframes ticket-in {
+    from {
+      opacity: 0;
+      transform: translate3d(-40px, -24px, 0) rotate(-4deg);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  @keyframes flash {
+    0%,
+    100% {
+      box-shadow: 0 0 0 0 rgb(198 61 36 / 0);
+    }
+    30% {
+      box-shadow: 0 0 0 4px rgb(229 88 60 / 0.9);
+    }
+  }
+
+  @keyframes scan {
+    0%,
+    100% {
+      top: 8%;
+    }
+    50% {
+      top: 88%;
+    }
+  }
+
+  @keyframes stamp {
+    from {
+      opacity: 0;
+      transform: scale(1.8) rotate(-12deg);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1) rotate(-3deg);
+    }
+  }
+
+  @keyframes travel {
+    from {
+      left: 0;
+      opacity: 0;
+    }
+    15% {
+      opacity: 1;
+    }
+    85% {
+      opacity: 1;
+    }
+    to {
+      left: 100%;
+      opacity: 0;
+    }
+  }
+
+  @keyframes tap {
+    from {
+      opacity: 0.55;
+      transform: scale(0.4);
+    }
+    to {
+      opacity: 0;
+      transform: scale(1.8);
+    }
+  }
+}
+
+html {
+  background: var(--color-paper);
+  -webkit-text-size-adjust: 100%;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+body {
+  background: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  font-size: 1.0625rem;
+  line-height: 1.55;
+  letter-spacing: -0.005em;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: rgb(198 61 36 / 0.22);
+}
+
+:focus-visible {
+  outline: 3px solid var(--color-tomato-bright);
+  outline-offset: 3px;
+}
+
+/* A paper slip: kitchen ticket or bill, with a torn zig-zag bottom edge. */
+@utility slip {
+  background: var(--color-slip);
+  color: var(--color-ink);
+  font-family: var(--font-mono);
+  letter-spacing: 0;
+  --tooth: 6px;
+  mask: conic-gradient(from -45deg at bottom, #0000, #000 1deg 89deg, #0000 90deg) 50% / calc(2 * var(--tooth))
+    100%;
+  padding-bottom: calc(var(--tooth) + 0.875rem);
+}
+
+@utility no-scrollbar {
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* Scroll reveal (see <Reveal>). Content is visible without JavaScript. */
+.js .reveal {
+  opacity: 0;
+  transform: translate3d(0, 20px, 0);
+  transition:
+    opacity 0.9s var(--ease-out-soft),
+    transform 0.9s var(--ease-out-soft);
+  transition-delay: var(--delay, 0ms);
+}
+.js .reveal[data-shown] {
+  opacity: 1;
+  transform: none;
+}
+
+/* Hero entrance */
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 24px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.rise {
+  animation: rise 1.1s var(--ease-out-soft) both;
+  animation-delay: var(--delay, 0ms);
+}
+
+.todo {
+  background: #fff3c4;
+  color: #5c4500;
+  border-radius: 4px;
+  padding: 0 0.3em;
+  font-size: 0.92em;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}
+
+details > summary {
+  list-style: none;
+}
+
+/* Smooth accordion where the browser supports animating to "auto" height. */
+:root {
+  interpolate-size: allow-keywords;
+}
+details::details-content {
+  block-size: 0;
+  overflow: hidden;
+  transition:
+    block-size 0.35s var(--ease-out-soft),
+    content-visibility 0.35s allow-discrete;
+}
+details[open]::details-content {
+  block-size: auto;
+}
+details > summary::-webkit-details-marker {
+  display: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .js .reveal {
+    opacity: 1;
+    transform: none;
+  }
+}

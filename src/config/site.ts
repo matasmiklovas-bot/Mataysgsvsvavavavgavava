@@ -1,0 +1,47 @@
+/**
+ * Site-wide settings. Everything marked TODO must be filled in by the site owner.
+ */
+
+function resolveSiteUrl(): string {
+  // TODO: set NEXT_PUBLIC_SITE_URL to the real domain (used for canonical, OG, sitemap and the hero QR code).
+  const explicit = process.env.NEXT_PUBLIC_SITE_URL;
+  if (explicit) return explicit.replace(/\/$/, "");
+  const vercel = process.env.VERCEL_PROJECT_PRODUCTION_URL;
+  if (vercel) return `https://${vercel}`;
+  return "http://localhost:3000";
+}
+
+export const siteConfig = {
+  name: "Kvitas",
+  title: "Kvitas · QR užsakymai restoranams, kavinėms ir barams",
+  description:
+    "Svečias nuskenuoja kodą ant staliuko ir užsisako telefone. Patiekalai iškart patenka į virtuvės planšetę, gėrimai į baro. 550 € vieną kartą arba 200 € per mėnesį, priežiūra ir pakeitimai įskaičiuoti.",
+  url: resolveSiteUrl(),
+  locale: "lt_LT",
+  pricing: {
+    /** Option 1: pay once, EUR. Support and changes on request are included. */
+    oneTime: 550,
+    /** Option 2: pay per month instead, EUR. Support and changes on request are included. */
+    perMonth: 200,
+    /** Optional rent of all equipment (tablets etc.) per month, EUR. */
+    equipmentRent: 50,
+  },
+  cta: "Gauti nemokamą prototipą",
+  ctaShort: "Prototipas",
+  /**
+   * TODO: fill in real contact details and company data.
+   * Empty values are simply not shown on the page.
+   */
+  contacts: {
+    email: "matasmiklovas@gmail.com" as string,
+    phone: "+370 673 70577" as string,
+    company: "" as string,
+    companyCode: "" as string,
+  },
+} as const;
+
+export const navItems = [
+  { href: "/#demo", label: "Kaip veikia" },
+  { href: "/#kaina", label: "Kaina" },
+  { href: "/#duk", label: "DUK" },
+] as const;
