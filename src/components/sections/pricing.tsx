@@ -4,6 +4,14 @@ import { SectionHeading } from "@/components/section-heading";
 import { buttonClass } from "@/components/ui";
 import { EquipmentPicker } from "@/components/equipment-choice";
 
+/** What both payment options include. Only things the product actually does. */
+const included = [
+  "Meniu su nuotraukomis ir QR kodai staliukams",
+  "Virtuvės, baro ir padavėjų ekranai",
+  "Mokėjimas kortele telefonu arba grynaisiais",
+  "Priežiūra ir pakeitimai, kurių paprašysite",
+];
+
 export function Pricing() {
   const { oneTime, perMonth } = siteConfig.pricing;
   const tiles = [
@@ -36,6 +44,22 @@ export function Pricing() {
             </Reveal>
           ))}
         </div>
+
+        <Reveal delay={150} className="mt-4 rounded-[1.5rem] bg-white px-6 py-6 sm:rounded-[2rem] sm:px-10 sm:py-8">
+          <p className="text-[15px] font-semibold text-ink-2">Įskaičiuota abiem atvejais</p>
+          <ul className="mt-4 grid gap-x-8 gap-y-3 text-[16px] sm:grid-cols-2">
+            {included.map((item) => (
+              <li key={item} className="flex items-start gap-3">
+                <span aria-hidden="true" className="mt-0.5 flex size-5 shrink-0 items-center justify-center rounded-full bg-ink text-white">
+                  <svg viewBox="0 0 24 24" className="size-3" fill="none" stroke="currentColor" strokeWidth="3.2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M5 12.5l4.5 4.5L19 7.5" />
+                  </svg>
+                </span>
+                <span className="text-pretty">{item}</span>
+              </li>
+            ))}
+          </ul>
+        </Reveal>
 
         {/* Equipment: own tablets or rent everything */}
         <Reveal className="mt-16 sm:mt-24">
